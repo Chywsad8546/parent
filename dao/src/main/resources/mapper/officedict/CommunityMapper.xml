@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.toutiao.officedict.dao.mapper.officedict.CommunityMapper" >
+  <resultMap id="BaseResultMap" type="com.toutiao.officedict.dao.entity.officedict.Community" >
+    <id column="community_id" property="communityId" jdbcType="INTEGER" />
+    <result column="community_name" property="communityName" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="community_info" property="communityInfo" jdbcType="VARCHAR" />
+    <result column="coord_x" property="coordX" jdbcType="NUMERIC" />
+    <result column="coord_y" property="coordY" jdbcType="NUMERIC" />
+    <result column="community_pinyin" property="communityPinyin" jdbcType="VARCHAR" />
+    <result column="community_pinyin_initials" property="communityPinyinInitials" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    community_id, community_name, city_id, community_info, coord_x, coord_y, community_pinyin, 
+    community_pinyin_initials
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from community
+    where community_id = #{communityId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from community
+    where community_id = #{communityId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.toutiao.officedict.dao.entity.officedict.Community" >
+    insert into community (community_id, community_name, city_id, 
+      community_info, coord_x, coord_y, 
+      community_pinyin, community_pinyin_initials
+      )
+    values (#{communityId,jdbcType=INTEGER}, #{communityName,jdbcType=VARCHAR}, #{cityId,jdbcType=INTEGER}, 
+      #{communityInfo,jdbcType=VARCHAR}, #{coordX,jdbcType=NUMERIC}, #{coordY,jdbcType=NUMERIC}, 
+      #{communityPinyin,jdbcType=VARCHAR}, #{communityPinyinInitials,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.toutiao.officedict.dao.entity.officedict.Community" >
+    insert into community
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="communityId != null" >
+        community_id,
+      </if>
+      <if test="communityName != null" >
+        community_name,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="communityInfo != null" >
+        community_info,
+      </if>
+      <if test="coordX != null" >
+        coord_x,
+      </if>
+      <if test="coordY != null" >
+        coord_y,
+      </if>
+      <if test="communityPinyin != null" >
+        community_pinyin,
+      </if>
+      <if test="communityPinyinInitials != null" >
+        community_pinyin_initials,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="communityId != null" >
+        #{communityId,jdbcType=INTEGER},
+      </if>
+      <if test="communityName != null" >
+        #{communityName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="communityInfo != null" >
+        #{communityInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="coordX != null" >
+        #{coordX,jdbcType=NUMERIC},
+      </if>
+      <if test="coordY != null" >
+        #{coordY,jdbcType=NUMERIC},
+      </if>
+      <if test="communityPinyin != null" >
+        #{communityPinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="communityPinyinInitials != null" >
+        #{communityPinyinInitials,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.toutiao.officedict.dao.entity.officedict.Community" >
+    update community
+    <set >
+      <if test="communityName != null" >
+        community_name = #{communityName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="communityInfo != null" >
+        community_info = #{communityInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="coordX != null" >
+        coord_x = #{coordX,jdbcType=NUMERIC},
+      </if>
+      <if test="coordY != null" >
+        coord_y = #{coordY,jdbcType=NUMERIC},
+      </if>
+      <if test="communityPinyin != null" >
+        community_pinyin = #{communityPinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="communityPinyinInitials != null" >
+        community_pinyin_initials = #{communityPinyinInitials,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where community_id = #{communityId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.toutiao.officedict.dao.entity.officedict.Community" >
+    update community
+    set community_name = #{communityName,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=INTEGER},
+      community_info = #{communityInfo,jdbcType=VARCHAR},
+      coord_x = #{coordX,jdbcType=NUMERIC},
+      coord_y = #{coordY,jdbcType=NUMERIC},
+      community_pinyin = #{communityPinyin,jdbcType=VARCHAR},
+      community_pinyin_initials = #{communityPinyinInitials,jdbcType=VARCHAR}
+    where community_id = #{communityId,jdbcType=INTEGER}
+  </update>
+</mapper>

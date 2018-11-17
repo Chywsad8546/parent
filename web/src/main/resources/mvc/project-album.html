@@ -1,0 +1,664 @@
+<link href="/static/plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
+<link href="/static/plugins/bower_components/fileinput/fileinput.min.css" rel="stylesheet" type="text/css">
+<link href="/static/plugins/bower_components/Magnific-Popup-master/dist/magnific-popup.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/toutiao/css/user-defined.css">
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+            <div class="white-box">
+                <h3 class="box-title">--相册管理--</h3>
+                <ul id="album-tabs" class="nav customtab nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <!--图片类型（0-全部图片，1-实景图，2-效果图，3-交通图，4-外景图，5-周边配套图，6-活动现场图，7-样板间等）-->
+                        <a href="#pic-all" role="tab" data-toggle="tab" aria-expanded="false" data-type="0">
+                            <!--<span class="visible-xs"><i class="ti-user"></i></span>-->
+                            <span class="hidden-xs">全部图片</span>
+                        </a>
+                    </li>
+                    <li role="presentation" class="">
+                        <!--图片类型（1-实景图，2-效果图，3-交通图，4-外景图，5-周边配套图，6-活动现场图，7-样板间等）-->
+                        <a href="#pic-traffic" role="tab" data-toggle="tab" aria-expanded="false" data-type="3">
+                            <!--<span class="visible-xs"><i class="ti-user"></i></span>-->
+                            <span class="hidden-xs">交通图</span>
+                        </a>
+                    </li>
+                    <li role="presentation" class="">
+                        <a href="#pic-outdoor" role="tab" data-toggle="tab" aria-expanded="false" data-type="4">
+                            <!--<span class="visible-xs"><i class="ti-email"></i></span>-->
+                            <span class="hidden-xs">外景图</span>
+                        </a>
+                    </li>
+                    <li role="presentation" class="">
+                        <a href="#pic-real" role="tab" data-toggle="tab" aria-expanded="false" data-type="1">
+                            <!--<span class="visible-xs"><i class="ti-settings"></i></span>-->
+                            <span class="hidden-xs">实景图</span>
+                        </a>
+                    </li>
+                    <li role="presentation" class="">
+                        <a href="#pic-design" role="tab" data-toggle="tab" aria-expanded="false" data-type="2">
+                            <!--<span class="visible-xs"><i class="ti-settings"></i></span>-->
+                            <span class="hidden-xs">效果图</span>
+                        </a>
+                    </li>
+                    <li role="presentation" class="">
+                        <a href="#pic-layout" role="tab" data-toggle="tab" aria-expanded="false" data-type="8">
+                            <!--<span class="visible-xs"><i class="ti-settings"></i></span>-->
+                            <span class="hidden-xs">户型图</span>
+                        </a>
+                    </li>
+                    <li role="presentation" class="">
+                        <a href="#pic-sample" role="tab" data-toggle="tab" aria-expanded="false" data-type="7">
+                            <span class="hidden-xs">样板间</span>
+                        </a>
+                    </li>
+                    <li role="presentation" class="">
+                        <a href="#pic-scene" role="tab" data-toggle="tab" aria-expanded="false" data-type="6">
+                            <span class="hidden-xs">项目现场</span>
+                        </a>
+                    </li>
+                    <li role="presentation" class="">
+                        <a href="#pic-support" role="tab" data-toggle="tab" aria-expanded="false" data-type="5">
+                            <span class="hidden-xs">周边配套图</span>
+                        </a>
+                    </li>
+                    <li role="presentation" class="">
+                        <a href="#pic-sellAllow" role="tab" data-toggle="tab" aria-expanded="false" data-type="9">
+                            <span class="hidden-xs">销售许可证</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <!--全部图片-->
+                    <div role="tabpanel" class="tab-pane fade active in" id="pic-all">
+                        <!--data-type图片类别-->
+                        <!--图片类型（1-实景图，2-效果图，3-交通图，4-外景图，5-周边配套图，6-活动现场图等）-->
+                        <!--<button type="button" name="other-image-upload-btn" class="btn btn-info" data-type="3">上传图片</button>-->
+
+                        <!--图片列表start-->
+                        <div data-table="otherImageTable" id="allImage"  class="panel block5" style="position: static; zoom: 1;">
+                     <!--       <div class="row">
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="thumbnail">
+                                        <img src="..." alt="...">
+                                        <div class="caption">
+                                            <h3>Thumbnail label</h3>
+                                            <p>...</p>
+                                            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>-->
+                        </div>
+                        <!--图片列表end-->
+                    </div>
+                    <!--交通图start-->
+                    <div role="tabpanel"  class="tab-pane fade" id="pic-traffic">
+                        <!--data-type图片类别-->
+                        <!--图片类型（1-实景图，2-效果图，3-交通图，4-外景图，5-周边配套图，6-活动现场图等）-->
+                        <button type="button"  name="other-image-upload-btn" class="btn btn-primary" data-type="3">上传图片</button>
+
+                        <!--图片列表start-->
+                        <div data-table="otherImageTable"  id="otherAllPhoto3" class="panel block5" style="position: static; zoom: 1;">
+
+                        </div>
+                        <!--图片列表end-->
+                    </div>
+                    <!--交通图end-->
+
+                    <!--外景图start-->
+                    <div role="tabpanel" class="tab-pane fade" id="pic-outdoor">
+                        <!--data-type图片类别-->
+                        <!--图片类型（1-实景图，2-效果图，3-交通图，4-外景图，5-周边配套图，6-活动现场图等）-->
+                        <button type="button" name="other-image-upload-btn" class="btn btn-primary" data-type="4">上传图片</button>
+
+                        <!--图片列表start-->
+                        <div data-table="otherImageTable" id="otherAllPhoto4" class="panel block5" style="position: static; zoom: 1;">
+
+                        </div>
+                        <!--图片列表end-->
+                    </div>
+                    <!--外景图end-->
+
+                    <!--实景图start-->
+                    <div role="tabpanel" class="tab-pane fade" id="pic-real">
+                        <!--data-type图片类别-->
+                        <!--图片类型（1-实景图，2-效果图，3-交通图，4-外景图，5-周边配套图，6-活动现场图等）-->
+                        <button type="button" name="other-image-upload-btn" class="btn btn-primary" data-type="1">上传图片</button>
+
+                        <!--图片列表start-->
+                        <div data-table="otherImageTable"  id="otherAllPhoto1" class="panel block5" style="position: static; zoom: 1;">
+                        </div>
+                        <!--图片列表end-->
+                    </div>
+                    <!--实景图end-->
+
+                    <!--效果图start-->
+                    <div role="tabpanel" class="tab-pane fade" id="pic-design">
+                        <!--data-type图片类别-->
+                        <!--图片类型（1-实景图，2-效果图，3-交通图，4-外景图，5-周边配套图，6-活动现场图等）-->
+                        <button type="button" name="other-image-upload-btn" class="btn btn-primary" data-type="2">上传图片</button>
+
+                        <!--图片列表start-->
+                        <div data-table="otherImageTable" id="otherAllPhoto2" class="panel block5" style="position: static; zoom: 1;">
+                        </div>
+                        <!--图片列表end-->
+                    </div>
+                    <!--效果图end-->
+
+                    <!--户型图start-->
+                    <div role="tabpanel" class="tab-pane fade" id="pic-layout">
+                        <!--data-type图片类别-->
+                        <!--图片类型（1-实景图，2-效果图，3-交通图，4-外景图，5-周边配套图，6-活动现场图, 7-样板间，8-户型图等-->
+                        <button type="button" name="other-image-upload-btn" class="btn btn-primary" data-type="8">上传图片</button>
+
+                        <!--图片列表start-->
+                        <div data-table="otherImageTable" id="otherAllPhoto8" class="panel block5" style="position: static; zoom: 1;">
+                        </div>
+                        <!--图片列表end-->
+                    </div>
+                    <!--户型图end-->
+
+                    <!--样板间start-->
+                    <div role="tabpanel" class="tab-pane fade" id="pic-sample">
+                        <!--data-type图片类别-->
+                        <!--图片类型（1-实景图，2-效果图，3-交通图，4-外景图，5-周边配套图，6-活动现场图，7-样板间等）-->
+                        <button type="button" name="other-image-upload-btn" class="btn btn-primary" data-type="7">上传图片</button>
+
+                        <!--图片列表start-->
+                        <div data-table="otherImageTable" id="otherAllPhoto7" class="panel block5" style="position: static; zoom: 1;">
+                        </div>
+                        <!--图片列表end-->
+                    </div>
+                    <!--样板间end-->
+
+                    <!--项目现场start-->
+                    <div role="tabpanel" class="tab-pane fade" id="pic-scene">
+                        <!--data-type图片类别-->
+                        <!--图片类型（1-实景图，2-效果图，3-交通图，4-外景图，5-周边配套图，6-活动现场图，7-样板间等）-->
+                        <button type="button" name="other-image-upload-btn" class="btn btn-primary" data-type="6">上传图片</button>
+
+                        <!--图片列表start-->
+                        <div data-table="otherImageTable" id="otherAllPhoto6" class="panel block5" style="position: static; zoom: 1;">
+                        </div>
+                        <!--图片列表end-->
+                    </div>
+                    <!--项目现场end-->
+
+                    <!--周边配套图start-->
+                    <div role="tabpanel" class="tab-pane fade" id="pic-support">
+                        <!--data-type图片类别-->
+                        <!--图片类型（1-实景图，2-效果图，3-交通图，4-外景图，5-周边配套图，6-活动现场图，7-样板间等）-->
+                        <button type="button" name="other-image-upload-btn" class="btn btn-primary" data-type="5">上传图片</button>
+
+                        <!--图片列表start-->
+                        <div data-table="otherImageTable" id="otherAllPhoto5" class="panel block5" style="position: static; zoom: 1;">
+                        </div>
+                        <!--图片列表end-->
+                    </div>
+                    <!--周边配套图end-->
+
+                    <!--销售许可start-->
+                    <div role="tabpanel" class="tab-pane fade" id="pic-sellAllow">
+                        <!--data-type图片类别-->
+                        <!--图片类型（1-实景图，2-效果图，3-交通图，4-外景图，5-周边配套图，6-活动现场图，7-样板间等）-->
+                        <button type="button" name="other-image-upload-btn" class="btn btn-primary" data-type="9">上传图片</button>
+
+                        <!--图片列表start-->
+                        <div data-table="otherImageTable" id="otherAllPhoto9" class="panel block5" style="position: static; zoom: 1;">
+                        </div>
+                        <!--图片列表end-->
+                    </div>
+                    <!--销售许可end-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <div class="col-md-4">
+        <!--楼盘图片上传start-->
+        <div id="other-upload-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">上传图片</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" id="other-image-upload-form" enctype="multipart/form-data" method="post">
+                            <input name="newcode" type="hidden" value="">
+                            <input name="imgType" type="hidden" value="">
+
+                            <div class="form-group">
+                                <label for="other-file-select" class="col-sm-2 control-label">选择文件:</label>
+                                <div class="col-sm-9">
+                                    <input id="other-file-select" type="file" name="file">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="other-img-title" class="col-sm-2 control-label">标题:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="other-img-title" name="title">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="other-img-desc" class="col-sm-2 control-label">图片描述:</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" id="other-img-desc" name="imgDesc"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="other-image-save" type="button" class="btn btn-danger waves-effect waves-light">保存</button>
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--楼盘图片上传end-->
+    </div>
+</div>
+
+<script type="text/html" id="photoShow">
+    <div class="row">
+    {{each ress}}
+   <!-- <div>{{$index}}. {{$value.user}}</div>-->
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <a class="image-popup-vertical-fit" href="http://s1.qn.toutiaofangchan.com/{{$value.imgPath}}-original">
+                    <img src="http://s1.qn.toutiaofangchan.com/{{$value.imgPath}}-ttfc1200x640" width='600' alt="{{$value.projname}}">
+                </a>
+                <div class="caption">
+                    <h3> {{$value.id}}</h3>
+                    <p>{{$value.title}}</p>
+                      {{if $value.isLogPic==null || $value.isLogPic==0 && $value.remark ==null}}
+                    <p><a href="#" class="btn btn-primary other-image-title" data-id="{{$value.id}}" role="button">设为标题图</a></p>
+                    {{else if $value.isLogPic==1}}
+                    <p><a href="#" class="btn btn-primary other-image-cancleTitle" data-id="{{$value.id}}" role="button">取消标题图</a></p>
+                    {{else}}
+                    <p style="height: 32px"></p>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    {{/each}}
+    </div>
+</script>
+
+
+<script type="text/html" id="otherPhotoShow">
+    <div class="row">
+        {{each ress}}
+        <!-- <div>{{$index}}. {{$value.user}}</div>-->
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <a class="image-popup-vertical-fit" href="http://s1.qn.toutiaofangchan.com/{{$value.imgPath}}-original">
+                    <img src="http://s1.qn.toutiaofangchan.com/{{$value.imgPath}}-tt400x300" width='600' alt="{{$value.title}}">
+                </a>
+                <div class="caption">
+                    <h3> {{$value.id}}</h3>
+                    <p>{{$value.title}}</p>
+                    <p><a href="#" class="btn btn-primary other-image-del" data-id="{{$value.id}}" role="button">删除</a></p>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</script>
+
+<!-- Magnific popup JavaScript -->
+<script src="/static/plugins/bower_components/Magnific-Popup-master/dist/jquery.magnific-popup.min.js"></script>
+<script src="/static/plugins/bower_components/Magnific-Popup-master/dist/jquery.magnific-popup-init.js"></script>
+<script src="/static/plugins/bower_components/sweetalert/sweetalert.min.js"></script>
+<script src="/static/plugins/bower_components/fileinput/fileinput.min.js"></script>
+<script src="/static/plugins/bower_components/fileinput/locales/zh.js"></script>
+<script src="/static/js/jquery.validate.min.js"></script>
+<script src="/static/js/additional-methods.min.js"></script>
+<script src="/static/js/messages_zh.min.js"></script>
+<script src="/static/js/toutiao/validator-setDefaults.js"></script>
+<script src="https://cdn.bootcss.com/jquery.serializeJSON/2.8.1/jquery.serializejson.min.js"></script>
+<script src="/static/js/toutiao.table.js"></script>
+<script src="/static/js/toutiao/common.js"></script>
+<script src="/api/newHouse/newHouseApi.js"></script>
+<script src="/api/project/projectApi.js"></script>
+
+<!--<script src="/static/js/bootstrap-table-zh-CN.js"></script>-->
+<script type="text/javascript">
+    var _newCode = getQueryString('newcode');
+
+    var _imgPrefix = "http://s1.qn.toutiaofangchan.com/";
+
+    $('input[name="newcode"]').val(_newCode);
+    loadAllOtherImages($('#pic-all').find('div[data-table="otherImageTable"]'), _newCode, 0, 1);
+
+    $("#other-file-select").fileinput({
+        'language': 'zh',
+        'showUpload' : false,
+        'showCancel' : false,
+//      allowedPreviewTypes : [ 'image' ],
+        'allowedFileExtensions' : ['jpg', 'png','gif']
+    });
+
+    /**
+     * 初始化显示所有图片渲染
+     */
+    function  loadAllOtherImages(obj, newcode, imgType, pageNum) {
+
+        /*obj.ttTable({
+            paging:true,
+            columns:[
+                {
+                    field:"id",
+                    "title":"图片ID"
+                },
+                {
+                    field:"title",
+                    "title":"标题"
+                },
+                {
+                    render:function (d) {
+                        var imageType = d['imgType'];
+                        if(imageType==1){
+                            return "实景图";
+                        }else if(imageType==2){
+                            return "效果图";
+                        }else if(imageType==4){
+                            return "外景图";
+                        }
+                    },
+                    "title":"图片类型"
+                },
+                {
+                    render:function (d) {
+                        return "<a class='image-popup-vertical-fit' href='" + _imgPrefix + d['imgPath'] + "-ttfc1200x640" + "' title=''>"
+                            + "<img src='" + _imgPrefix + d['imgPath'] + "-tt400x300" + "' width='100'>"
+                            + "</a>";
+                    },
+                    "title":"图片（鼠标点击查看大图）"
+                },
+                {
+                    render:function (d) {
+                        var islogopic = d['isLogPic'];
+                        var remark = d['remark'];
+
+                        if((islogopic==null || islogopic==0) && remark ==null){
+
+                            return "<div class='button-box'>"
+                                + "<button class='btn btn-info other-image-title' data-id='" + d['id']+ "'>设置为标题图</button>"
+                                + "</div>";
+                        }else if(islogopic==1) {
+                            return "<span class='text-danger'>"+"当前楼盘标题图</span><br>"
+                                +"<button class='btn btn-info other-image-cancleTitle' data-id='" + d['id']+ "'>取消标题图</button>" + "</div>";
+                        }else {
+                            return "";
+                        }
+                    },
+
+                    "title":"管理"
+                }
+            ],
+            onPage:function (pageIndex,pagesize) {
+                console.log(pageIndex)
+                loadAllOtherImages(obj, newcode, imgType, pageIndex);
+            }
+        });*/
+
+        com.toutiao.officedict.pic.listHousingProjectOtherImages.do({"newcode":newcode, "imgType":imgType,"pageNum":pageNum},function(res, pageNum, pageSize, total){
+
+           /* obj.ttTable().showloading();
+            obj.ttTable().load(res, total, pageNum);*/
+            var ress={ress:res};
+            console.log(ress);
+
+            var upHtml = template('photoShow',ress);
+            $('#allImage').html(upHtml);
+
+            imagePopup();
+
+            //将该图作为标题图
+            $('.other-image-title').each(function () {
+                $(this).on('click', function () {
+                    var _id = $(this).data('id');
+                    com.toutiao.officedict.pic.titleHousingProjectOtherImage.do({"id":_id}, function (res) {
+                        if (res && res>0) {
+                            swal({
+                                title: "已标记为标题图",
+                                type: "success",
+                                confirmButtonText: "确定",
+                                closeOnConfirm: false
+                            }, function () {
+                                loadAllOtherImages(obj, _newCode, 0, 1);
+                                swal.close();
+                            });
+                        }
+                    })
+                });
+            });
+            $('.other-image-cancleTitle').each(function () {
+                $(this).on('click', function () {
+                    var _id = $(this).data('id');
+                    com.toutiao.officedict.pic.cancelTitleHousingProjectOtherImage.do({"id":_id}, function (res) {
+                        if (res && res>0) {
+                            swal({
+                                title: "已取消该标题图",
+                                type: "success",
+                                confirmButtonText: "确定",
+                                closeOnConfirm: false
+                            }, function () {
+                                loadAllOtherImages(obj, _newCode, 0, 1);
+                                swal.close();
+                            });
+                        }
+                    })
+                });
+            });
+        });
+    };
+    /**
+     * 除户型图外的其他图片渲染
+     */
+    function  loadOtherImages(obj, newcode, imgType, pageNum) {
+        /*obj.ttTable({
+            paging:true,
+            columns:[
+                {
+                    field:"id",
+                    "title":"图片ID"
+                },
+                {
+                    field:"title",
+                    "title":"标题"
+                },
+                {
+                    render:function (d) {
+                        return "<a class='image-popup-vertical-fit' href='" + _imgPrefix + d['imgPath'] + "-ttfc1200x640" + "' title=''>"
+                            + "<img src='" + _imgPrefix + d['imgPath'] + "-tt400x300" + "' width='100'>"
+                            + "</a>";
+                    },
+                    "title":"图片（鼠标点击查看大图）"
+                },
+                {
+                    field:"creatorId",
+                    "title":"上传人"
+                },
+                {
+                    field:"createTime",
+                    "title":"上传时间"
+                },
+                {
+                    field:"imgResolution",
+                    "title":"图片尺寸"
+                },
+                {
+                    render:function (d) {
+                        if (d['imgSize'] > 0) {
+                            return d['imgSize'] + "KB";
+                        }
+                        return "";
+                    },
+                    "title":"图片大小"
+                },
+                {
+                    render:function (d) {
+                        return "<div class='button-box'>"
+                            + "<button class='btn btn-info other-image-del' data-id='" + d['id']+ "'>删除</button>"
+                            + "</div>";
+                    },
+                    "title":"管理"
+                }
+            ],
+            onPage:function (pageIndex,pagesize) {
+                loadOtherImages(obj, _newCode, imgType, pageIndex);
+            }
+        });*/
+
+        com.toutiao.officedict.pic.listHousingProjectOtherImages.do({"newcode":newcode, "imgType":imgType,"pageNum":pageNum},function(res, pageNum, pageSize, total){
+         /*   obj.ttTable().showloading();
+            obj.ttTable().load(res, total, pageNum);*/
+            var otherRess={ress:res};
+            console.log(res);
+
+            var upHtml = template('otherPhotoShow',otherRess);
+            if(res.length!=0 && res!=""){
+                $('#otherAllPhoto'+res[0]['imgType']).html(upHtml);
+            }
+
+            imagePopup();
+
+            //删除除户型图外的其他图
+            $('.other-image-del').each(function () {
+                $(this).on('click', function () {
+                    var _id = $(this).data('id');
+                    com.toutiao.officedict.pic.deleteHousingProjectOtherImage.do({"id":_id}, function (res) {
+                        if (res && res>0) {
+                            var dateTime ={newcode:_newCode};
+                            com.toutiao.officedict.project.updateHousingProject.do(dateTime,function (res){
+                                if (res && res>0) {
+                                    swal({
+                                        title: "删除成功!",
+                                        type: "success",
+                                        confirmButonText: "确定",
+                                        closeOnConfirm: false
+                                    }, function () {
+                                        loadOtherImages(obj, newcode, imgType);
+                                        swal.close();
+                                    });
+                                };
+                            })
+                        }
+                    })
+                });
+            });
+        });
+    };
+
+
+    $('#other-upload-modal').on('hide.bs.modal', function () {
+        $(this).removeData('bs.modal');
+        $('#other-image-upload-form').trigger('reset');
+    });
+
+    //上传保存图片
+    $('#other-image-save').on('click', function () {
+        $('#other-image-upload-form').submit();
+    });
+
+    /**
+     * 除户型图外其他图弹出模式窗
+     */
+    $('button[name="other-image-upload-btn"]').each(function () {
+        $(this).on('click', function () {
+            var _imageType = $(this).data('type');
+
+            var _tableObj = $(this).parent('div[role="tabpanel"]').children('div[data-table="otherImageTable"]');
+
+            $('#other-image-upload-form').find('input[name="imgType"]').val(_imageType);
+            $('#other-upload-modal').modal();
+
+            //上传图片表单验证
+            $('#other-image-upload-form').validate({
+                rules: {
+                    file: 'required'
+                   /*title: 'required'*/
+                },
+                messages: {
+                 file: '请选择图片'
+                 /*      title: '请填写标题'*/
+                },
+                submitHandler: function(){
+                    var otherUploadFormData = new FormData($('#other-image-upload-form')[0]);
+
+                    console.log('###' + JSON.stringify(otherUploadFormData));
+
+                    com.toutiao.officedict.pic.saveHousingProjectOtherImage.do(otherUploadFormData, function (res, success, error) {
+                        if (res && res>0) {
+                            var dateTime ={newcode:_newCode};
+                            com.toutiao.officedict.project.updateHousingProject.do(dateTime,function (res){
+                               if (res && res>0) {
+                                   swal({
+                                       title: "保存成功!",
+                                       type: "success",
+                                       confirmButonText: "确定",
+                                       closeOnConfirm: false
+                                   }, function () {
+                                       $('#other-upload-modal').modal('hide');
+                                       loadOtherImages(_tableObj, _newCode, _imageType);
+                                       swal.close();
+                                   });
+                               };
+                            })
+                        }
+                    },function (jqXHR, textStatus, errorThrown) {
+                        console.log('error',jqXHR, textStatus, errorThrown)
+                    });
+
+                }
+            });
+        });
+    });
+
+    //Tab页切换
+    $('#album-tabs li:gt(0) a').on('click', function (e) {
+       var _imgType = $(this).data('type');
+       var _href = $(this).attr('href');
+       var _obj = $('' + _href + '').find('div[data-table="otherImageTable"]');
+       loadOtherImages(_obj, _newCode, _imgType);
+
+        e.preventDefault();
+        $(this).tab('show');
+    });
+
+    //图片弹出层
+    function imagePopup() {
+        $('.image-popup-vertical-fit').magnificPopup({
+            type: 'image',
+            closeOnContentClick: true,
+//            mainClass: 'mfp-img-mobile',
+            image: {
+                verticalFit: true
+            }
+        });
+    };
+
+    //获取当前时间
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds();
+        return currentdate;
+    }
+</script>

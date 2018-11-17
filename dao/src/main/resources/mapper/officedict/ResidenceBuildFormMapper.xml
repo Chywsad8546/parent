@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.toutiao.officedict.dao.mapper.officedict.ResidenceBuildFormMapper" >
+  <resultMap id="BaseResultMap" type="com.toutiao.officedict.dao.entity.officedict.ResidenceBuildForm" >
+    <id column="form_id" property="formId" jdbcType="INTEGER" />
+    <result column="build_form_name" property="buildFormName" jdbcType="VARCHAR" />
+    <result column="sorting" property="sorting" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    form_id, build_form_name, sorting
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from residence_build_form
+    where form_id = #{formId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from residence_build_form
+    where form_id = #{formId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.toutiao.officedict.dao.entity.officedict.ResidenceBuildForm" >
+    insert into residence_build_form (form_id, build_form_name, sorting
+      )
+    values (#{formId,jdbcType=INTEGER}, #{buildFormName,jdbcType=VARCHAR}, #{sorting,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.toutiao.officedict.dao.entity.officedict.ResidenceBuildForm" >
+    insert into residence_build_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="buildFormName != null" >
+        build_form_name,
+      </if>
+      <if test="sorting != null" >
+        sorting,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="buildFormName != null" >
+        #{buildFormName,jdbcType=VARCHAR},
+      </if>
+      <if test="sorting != null" >
+        #{sorting,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.toutiao.officedict.dao.entity.officedict.ResidenceBuildForm" >
+    update residence_build_form
+    <set >
+      <if test="buildFormName != null" >
+        build_form_name = #{buildFormName,jdbcType=VARCHAR},
+      </if>
+      <if test="sorting != null" >
+        sorting = #{sorting,jdbcType=INTEGER},
+      </if>
+    </set>
+    where form_id = #{formId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.toutiao.officedict.dao.entity.officedict.ResidenceBuildForm" >
+    update residence_build_form
+    set build_form_name = #{buildFormName,jdbcType=VARCHAR},
+      sorting = #{sorting,jdbcType=INTEGER}
+    where form_id = #{formId,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryResidenceBuildFormList" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM residence_build_form
+    ORDER BY sorting ASC, form_id ASC
+  </select>
+</mapper>

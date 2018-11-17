@@ -1,0 +1,337 @@
+<link href="/static/plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
+<style>
+    #unbound_area_name > li {
+        display: inline-block;
+        margin: 5px;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-wrapper">
+                    <div class="panel-heading">区县商圈配置</div>
+                    <div class="panel-body" id="tabs">
+                        <ul id="myTab" class="nav nav-tabs">
+                            <li class="active">
+                                <a id="newhouseId" data-toggle="tab" data-field="0">
+                                    新房
+                                </a>
+                            </li>
+                            <li>
+                                <a id="esfId" data-toggle="tab" data-field="1">
+                                    二手房
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="col-md-12" id="showBingingInfo">
+                            <div class="white-box">
+                                <div class="col-md-12 vtabs customvtab">
+                                    <ul class="nav tabs-vertical" id="district_name">
+                                        <p>区县</p>
+                                        <!--<li class="tab active">-->
+                                        <!--<a data-toggle="tab" href="#vhome3" aria-expanded="true"> <span class="visible-xs"><i class="ti-home"></i></span> <span class="hidden-xs">Home</span> </a>-->
+                                        <!--</li>-->
+                                    </ul>
+
+                                    <div class="tab-content p-t-0">
+                                        <div id="vhome3" class="tab-pane active">
+                                            <div class="col-md-3">
+                                                <p>已绑定商圈</p>
+                                                <!--<div class="col-md-5 pull-right">-->
+                                                <!--<p>Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a.</p>-->
+                                                <!--</div>-->
+                                                <div id="binging_area_table" class="panel panel-success block5" style="position: static; zoom: 1;">
+                                                    <ul class="nav tabs-vertical" id="binging_area_name">
+                                                    </ul>
+                                                </div>
+                                                <div class="form-actions">
+                                                    <button type="button" id="unbundling-area" class="btn btn-success"><i class="fa fa-check"></i>解绑商圈
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div id="vhome4" class="tab-pane active">
+                                                <div class="col-md-7 pull-right">
+                                                    <p>未绑定商圈</p>
+                                                    <div id="unbinging_area_table" class="panel panel-success block5" style="position: static; zoom: 1;">
+                                                        <ul class="nav tabs-vertical" id="unbound_area_name">
+                                                        </ul>
+                                                    </div>
+                                                    <div class="form-actions">
+                                                        <button type="button" id="bundling-area" class="btn btn-success"><i class="fa fa-check"></i>绑定商圈
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/static/js/template-web.js"></script>
+<script src="/static/js/toutiao.table.js"></script>
+<script src="/api/districtArea/districtAreaApi.js"></script>
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/static/plugins/bower_components/sweetalert/sweetalert.min.js"></script>
+<script type="text/javascript">
+
+    var tabIndex;
+    $(document).ready(function () {
+        var parameter;
+        var cityId = 12;
+        var houseType = Number($("#newhouseId").attr("data-field"));
+        tabIndex = houseType;
+        parameter = {cityId:cityId,houseType:tabIndex};
+        LoadOperation(parameter);
+
+    });
+
+    $("#newhouseId").click(function () {
+        refresh();
+        var parameter;
+        var houseType = Number($(this).attr("data-field"));
+        tabIndex = houseType;
+        var cityId = 12;
+        parameter = {cityId:cityId,houseType:tabIndex};
+        LoadOperation(parameter);
+
+    });
+
+    $("#esfId").click(function () {
+        refresh();
+        var parameter;
+        var houseType = Number($(this).attr("data-field"));
+        tabIndex = houseType;
+        var cityId = 12;
+        parameter = {cityId:cityId,houseType:tabIndex};
+        LoadOperation(parameter);
+
+    });
+
+    function refresh() {
+        $('li[id^="districtId_"]').each(function(i) {
+            $(this).remove();
+        });
+        $('li[id^="binging_area_id_"]').each(function(i) {
+            $(this).remove();
+        });
+        $('li[id^="unbound_area_id_"]').each(function(i) {
+            $(this).remove();
+        });
+    }
+
+
+    function LoadOperation(parameter) {
+
+        com.toutiao.officedict.project.districtAreaConfig.do(parameter,function(res){
+//            console.log(JSON.stringify(res.data));
+            for(var i = 0;i<res.data.length;i++){
+
+                $("#district_name").append("<li class='tab active'  id="+'districtId_'+i+">"+"" +
+                    "<input name='districtname' type='checkbox' value="+res.data[i].districtId+" router>"+res.data[i].districtName+"</input>"+"</li>");
+            }
+
+            $('li[id^="districtId_"]').each(function(i) {
+                $(this).click(function () {
+                    $("#binging_area_name").empty();
+                    var areaList = [];
+
+                    var id = $(this).attr("id").split("districtId_")[1];
+                    if(res.data[id].bindingAreas.length>0){
+                        for (var i = 0; i < res.data[id].bindingAreas.length; i++) {
+                            areaList.push(res.data[id].bindingAreas[i]);
+                            $("#binging_area_name").append("<li id ="+"binging_area_id_"+i+" class= 'active' value="+areaList[i].areaId+">"+"" +
+                                "<input name='bingingareaname' type='checkbox' value="+areaList[i].areaId+" router>"+areaList[i].areaName+"</input>"+"</li>");
+                        }
+                    }
+
+                });
+            });
+        },function (jqXHR, textStatus, errorThrown) {
+            console.log('liuxiaolu',jqXHR, textStatus, errorThrown)
+        });
+
+        console.log("districtAreaUnbound",parameter);
+        com.toutiao.officedict.project.districtAreaUnbound.do(parameter,function(res){
+            for(var i = 0;i<res.length;i++){
+                $("#unbound_area_name").append("<li id ="+"unbound_area_id_"+i+" class= 'active' value="+res[i].areaId+">"+"" +
+                    "<input name='unbungingareaname' type='checkbox' value="+res[i].areaId+" router>"+res[i].areaName+"</input>"+"</li>");
+            }
+        },function (jqXHR, textStatus, errorThrown) {
+            console.log('liuxiaolu',jqXHR, textStatus, errorThrown)
+        });
+
+    }
+
+    /**
+     * 解绑
+     */
+    $('#unbundling-area').click(function () {
+
+        var chk_district_value =[];
+        $('input[name="districtname"]:checked').each(function(){
+            chk_district_value.push(Number($(this).val()));
+        });
+
+        var chk_bingingarea_value =[];
+        $('input[name="bingingareaname"]:checked').each(function(){
+            chk_bingingarea_value.push(Number($(this).val()));
+        });
+
+        unbingingAction(chk_district_value,chk_bingingarea_value);
+
+
+    });
+
+    function unbingingAction(chk_district_value,chk_bingingarea_value) {
+        if(chk_district_value.length==0 && chk_bingingarea_value.length==0){
+            swal({
+                title: "请选择一个区域和已绑定商圈！",
+                type: "warning",
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
+        if(chk_district_value.length>0 && chk_bingingarea_value.length==0){
+            swal({
+                title: "请选择一个已绑定商圈！",
+                type: "warning",
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
+        if(chk_district_value.length==0 && chk_bingingarea_value.length>0){
+            swal({
+                title: "请选择一个区域！",
+                type: "warning",
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
+
+        if(chk_district_value.length > 0 && chk_bingingarea_value.length > 0){
+            swal({
+                title: "您确定要解绑区域商圈吗？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定",
+                closeOnConfirm: false
+            },function () {
+                var parameter = {
+                    "districtId":chk_district_value[0],
+                    "areaIds":chk_bingingarea_value,
+                    "houseType":tabIndex
+                };
+                com.toutiao.officedict.project.districtAreaUnbundling.do(parameter,function(res){
+                    if (res && res>0) {
+                        swal({
+                            title: "解绑成功!",
+                            type: "success",
+                            confirmButonText: "确定",
+                            closeOnConfirm: false
+                        }, function () {
+                            swal.close();
+                            top.location.reload();
+                        });
+
+                    }
+
+                },function (jqXHR, textStatus, errorThrown) {
+                    console.log('liuxiaolu',jqXHR, textStatus, errorThrown)
+                });
+            });
+        }
+    }
+
+    /**
+     * 绑定
+     */
+    $('#bundling-area').click(function () {
+
+        var chk_district_value =[];
+        $('input[name="districtname"]:checked').each(function(){
+            chk_district_value.push(Number($(this).val()));
+        });
+
+        var chk_unbungingarea_value =[];
+        $('input[name="unbungingareaname"]:checked').each(function(){
+            chk_unbungingarea_value.push(Number($(this).val()));
+        });
+
+        bingingAction(chk_district_value,chk_unbungingarea_value);
+
+    });
+
+    function bingingAction(chk_district_value,chk_unbungingarea_value) {
+        if(chk_district_value.length==0 && chk_unbungingarea_value.length==0){
+            swal({
+                title: "请选择一个区域和未绑定商圈！",
+                type: "warning",
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
+        if(chk_district_value.length>0 && chk_unbungingarea_value.length==0){
+            swal({
+                title: "请选择一个未绑定的商圈！",
+                type: "warning",
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
+        if(chk_district_value.length==0 && chk_unbungingarea_value.length>0){
+            swal({
+                title: "请选择一个区域！",
+                type: "warning",
+                timer: 2000,
+                showConfirmButton: false
+            });
+        }
+
+
+        if(chk_district_value.length > 0 && chk_unbungingarea_value.length > 0){
+            swal({
+                title: "您确定要绑定区域商圈吗？",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定",
+                closeOnConfirm: false
+            },function () {
+                var parameter = {
+                    "districtId":chk_district_value[0],
+                    "areaIds":chk_unbungingarea_value,
+                    "houseType":tabIndex
+                };
+                com.toutiao.officedict.project.districtAreaBinding.do(parameter,function(res){
+                    if (res && res>0) {
+                        swal({
+                            title: "绑定成功!",
+                            type: "success",
+                            confirmButonText: "确定",
+                            closeOnConfirm: false
+                        }, function () {
+                            swal.close();
+                            top.location.reload();
+                        });
+                    }
+
+                },function (jqXHR, textStatus, errorThrown) {
+                    console.log('liuxiaolu',jqXHR, textStatus, errorThrown)
+                });
+            });
+        }
+
+    }
+
+
+</script>

@@ -1,0 +1,489 @@
+<link href="/static/plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
+<link href="/static/plugins/bower_components/fileinput/fileinput.min.css" rel="stylesheet" type="text/css">
+<link href="/static/plugins/bower_components/Magnific-Popup-master/dist/magnific-popup.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/toutiao/css/user-defined.css">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+            <div class="white-box">
+                <h3 class="box-title">二手房-相册管理</h3>
+                <div class="panel-wrapper collapse in" aria-expanded="true">
+                    <div class="panel-body">
+                        <form id="pro_list_form" class="form-inline form-search" pageSize="15">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                  <!--      <div class="form-group">
+                                            <label class="control-label">id</label>
+                                            <input type="number" name="newcode" class="form-control" value="">
+                                        </div>-->
+                                        <div class="form-group">
+                                            <label class="control-label">楼盘名称</label>
+                                            <input type="text" name="projname" class="form-control" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">城市</label>
+                                            <select class="form-control" name="cityId" id="cityId" >
+                                                <option value=''>--选择城市--</option>
+                                                <option value='12'>北京</option>
+                                                <option value='13'>上海</option>
+                                                <option value='14'>天津</option>
+                                                <option value='204'>长沙</option>
+                                                <option value='26'>杭州</option>
+                                                <option value='65'>南京</option>
+                                                <option value='45'>成都</option>
+                                                <option value='142'>南宁</option>
+                                                <option value='67'>苏州</option>
+                                                <option value='155'>太原</option>
+                                                <option value='194'>武汉</option>
+                                                <option value='66'>无锡</option>
+                                                <option value='103'>郑州</option>
+                                                <option value='16'>广州</option>
+                                                <option value='17'>深圳</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-actions pull-right">
+                                            <button type="button" id="search-list-pro" class="btn btn-info"><i class="fa fa-check"></i> 查询
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <ul id="album-tabs" class="nav customtab nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <!--图片类型（0-全部图片，1-实景图，2-效果图，3-交通图，4-外景图，5-周边配套图，6-活动现场图，7-样板间等）-->
+                        <a href="#pic-all" role="tab" data-toggle="tab" aria-expanded="false" data-type="0">
+                            <!--<span class="visible-xs"><i class="ti-user"></i></span>-->
+                            <span class="hidden-xs">外景图 </span>
+                          <!--  <button type="button" name="image-qualified" class="btn btn-primary"  data-type="3">合格</button>
+                            <button type="button" name="image-unqualified" class="btn btn-primary" data-type="3">不合格</button>-->
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <!--全部图片-->
+                    <div role="tabpanel" class="tab-pane fade active in" id="pic-all">
+                        <!--data-type图片类别-->
+                        <!--图片类型（1-实景图，2-效果图，3-交通图，4-外景图，5-周边配套图，6-活动现场图等）-->
+
+                        <!--图片列表start-->
+                        <div data-table="otherImageTable" id="otherAllPhoto" class="panel block5" style="position: static; zoom: 1;">
+                        </div>
+                        <!--图片列表end-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="esfotherPhotoShow">
+    <div class="row">
+        {{each ress}}
+        <!-- <div>{{$index}}. {{$value.user}}</div>-->
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <a class="image-popup-vertical-fit" href="http://s1.qn.toutiaofangchan.com/{{$value.imgPath}}-original">
+                    <img src="http://s1.qn.toutiaofangchan.com/{{$value.imgPath}}-ttfc1200x640" width="600" alt="{{$value.projname}}">
+                </a>
+                <div class="caption">
+                    <h3> {{$value.id}}</h3>
+                    <h3> 楼盘名称：{{$value.projname}}</h3>
+                    <p><a href="#" class="btn btn-primary other-image-qualified" data-id="{{$value.id}}" role="button">合格</a>
+                    <a href="#" class="btn btn-primary other-image-unqualified" data-id="{{$value.id}}" role="button">不合格</a>
+                  <!--  <input type="checkbox" name="imgCheck" style="zoom: 200%; margin-left: 8%" value="{{$value.id}}">-->
+                    </p>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <div class="row clear toutiao-table-page" >
+        <div style="margin-left: 25%" class="col-md-9">
+        <ul  class="pagination pagination-lg m-b-0">
+            {{if pageEnd<=1}}
+            <li> <a class="imagePageing" data-page="1" href="#">1</a> </li>
+            {{else if pageNum>=5&&pageNum<(pageEnd-5)}}
+            <li> <a class="imagePageing" data-page="1" href="#">首页</a> </li>
+            <li> {{if pageNum>1}}<a class="imagePageing" data-page="{{pageNum-1}}" href="#"><i class="fa fa-angle-left"></i></a>{{else}}<a  data-page="1" class="imagePageing"  href="#"><i class="fa fa-angle-left"></i></a>{{/if}}</li>
+            <li> <a class="imagePageing" data-page="{{pageNum-5}}" href="#">{{pageNum-5}}</a> </li>
+            <li> <a class="imagePageing" data-page="{{pageNum-4}}" href="#">{{pageNum-4}}</a> </li>
+            <li> <a class="imagePageing" data-page="{{pageNum-3}}" href="#">{{pageNum-3}}</a> </li>
+            <li> <a class="imagePageing" data-page="{{pageNum-2}}" href="#">{{pageNum-2}}</a> </li>
+            <li> <a class="imagePageing" data-page="{{pageNum-1}}" href="#">{{pageNum-1}}</a> </li>
+            <li class="active"> <a class="imagePageing" data-page="{{pageNum}}" href="#">{{pageNum}}</a> </li>
+            <li> <a class="imagePageing" data-page="{{pageNum+1}}" href="#">{{pageNum+1}}</a> </li>
+            <li> <a class="imagePageing" data-page="{{pageNum+2}}" href="#">{{pageNum+2}}</a> </li>
+            <li> <a class="imagePageing" data-page="{{pageNum+3}}" href="#">{{pageNum+3}}</a> </li>
+            <li> <a class="imagePageing" data-page="{{pageNum+4}}" href="#">{{pageNum+4}}</a> </li>
+            <li> <a class="imagePageing" data-page="{{pageNum+5}}" href="#">{{pageNum+5}}</a> </li>
+            <li > {{if pageNum<=(pageEnd-1)}}<a class="imagePageing" data-page="{{pageNum+1}}" href="#"><i class="fa fa-angle-right"></i></a>{{else}}<a  data-page="{{pageEnd}}" class="imagePageing"  href="#"><i class="fa fa-angle-right"></i></a>{{/if}}</li>
+            <li> <a class="imagePageing" data-page="1" data-page="{{pageEnd}}" href="#">尾页</a> </li>
+            <li style="margin-left: 10px;margin-right: 10px"><input type="number" id="pageTV" style="height: 45px;width: 50px"   value=""><button type="button" id="pagejb" class="btn btn-info">跳转</button></li>
+            {{else if pageNum>=(pageEnd-5)}}
+            <li> <a class="imagePageing" data-page="1" href="#">首页</a> </li>
+            <li> {{if pageNum>1}}<a class="imagePageing" data-page="{{pageNum-1}}" href="#"><i class="fa fa-angle-left"></i></a>{{else}}<a  data-page="1" class="imagePageing"  href="#"><i class="fa fa-angle-left"></i></a>{{/if}}</li>
+            <li {{if pageNum==pageEnd-9}}class="active"{{/if}}> <a class="imagePageing" data-page="{{pageEnd-9}}" href="#">{{pageEnd-9}}</a> </li>
+            <li {{if pageNum==pageEnd-8}}class="active"{{/if}}> <a class="imagePageing" data-page="{{pageEnd-8}}" href="#">{{pageEnd-8}}</a> </li>
+            <li {{if pageNum==pageEnd-7}}class="active"{{/if}}> <a class="imagePageing" data-page="{{pageEnd-7}}" href="#">{{pageEnd-7}}</a> </li>
+            <li {{if pageNum==pageEnd-6}}class="active"{{/if}}> <a class="imagePageing" data-page="{{pageEnd-6}}" href="#">{{pageEnd-6}}</a> </li>
+            <li {{if pageNum==pageEnd-5}}class="active"{{/if}}> <a class="imagePageing" data-page="{{pageEnd-5}}" href="#">{{pageEnd-5}}</a> </li>
+            <li {{if pageNum==pageEnd-4}}class="active"{{/if}}> <a class="imagePageing" data-page="{{pageEnd-4}}" href="#">{{pageEnd-4}}</a> </li>
+            <li {{if pageNum==pageEnd-3}}class="active"{{/if}}> <a class="imagePageing" data-page="{{pageEnd-3}}" href="#">{{pageEnd-3}}</a> </li>
+            <li {{if pageNum==pageEnd-2}}class="active"{{/if}}> <a class="imagePageing" data-page="{{pageEnd-2}}" href="#">{{pageEnd-2}}</a> </li>
+            <li {{if pageNum==pageEnd-1}}class="active"{{/if}}> <a class="imagePageing" data-page="{{pageEnd-1}}" href="#">{{pageEnd-1}}</a> </li>
+            <li {{if pageNum==pageEnd}}class="active"{{/if}}> <a class="imagePageing" data-page="{{pageEnd}}" href="#">{{pageEnd}}</a> </li>
+            <li > {{if pageNum<=(pageEnd-1)}}<a class="imagePageing" data-page="{{pageNum+1}}" href="#"><i class="fa fa-angle-right"></i></a>{{else}}<a  data-page="{{pageEnd}}" class="imagePageing"  href="#"><i class="fa fa-angle-right"></i></a>{{/if}}</li>
+            <li> <a class="imagePageing" data-page="{{pageEnd}}" href="#">尾页</a> </li>
+            <li style="margin-left: 10px;margin-right: 10px"><input type="number" id="pageTV" style="height: 45px;width: 50px"  value=""><button type="button" id="pagejb" class="btn btn-info">跳转</button></li>
+            {{else}}
+            <li> <a class="imagePageing" data-page="1" href="#">首页</a> </li>
+            <li> {{if pageNum>1}}<a class="imagePageing" data-page="{{pageNum-1}}" href="#"><i class="fa fa-angle-left"></i></a>{{else}}<a  data-page="1" class="imagePageing"  href="#"><i class="fa fa-angle-left"></i></a>{{/if}}</li>
+            <li {{if pageNum==1}}class="active"{{/if}}> <a class="imagePageing" data-page="1"  href="#">1</a> </li>
+            <li {{if pageNum==2}}class="active"{{/if}} > <a class="imagePageing" data-page="2" href="#">2</a> </li>
+            <li {{if pageNum==3}}class="active"{{/if}}> <a class="imagePageing" data-page="3" href="#">3</a> </li>
+            <li {{if pageNum==4}}class="active"{{/if}}> <a class="imagePageing" data-page="4" href="#">4</a> </li>
+            <li {{if pageNum==5}}class="active"{{/if}}> <a class="imagePageing" data-page="5" href="#">5</a> </li>
+            <li {{if pageNum==6}}class="active"{{/if}}> <a class="imagePageing" data-page="6" href="#">6</a> </li>
+            <li {{if pageNum==7}}class="active"{{/if}}> <a class="imagePageing" data-page="7" href="#">7</a> </li>
+            <li {{if pageNum==8}}class="active"{{/if}}> <a class="imagePageing" data-page="8" href="#">8</a> </li>
+            <li {{if pageNum==9}}class="active"{{/if}}> <a class="imagePageing" data-page="9" href="#">9</a> </li>
+            <li {{if pageNum==10}}class="active"{{/if}}> <a class="imagePageing" data-page="10" href="#">10</a> </li>
+            <li > {{if pageNum<=(pageEnd-1)}}<a class="imagePageing" data-page="{{pageNum+1}}" href="#"><i class="fa fa-angle-right"></i></a>{{else}}<a  data-page="{{pageEnd}}" class="imagePageing"  href="#"><i class="fa fa-angle-right"></i></a>{{/if}}</li>
+            <li> <a class="imagePageing" data-page="{{pageEnd}}" href="#">尾页</a> </li>
+            <li style="margin-left: 10px;margin-right: 10px"><input type="number" id="pageTV" style="height: 45px;width: 50px" value=""><button type="button" id="pagejb" class="btn btn-info">跳转</button></li>
+            {{/if}}
+        </ul>
+        </div>
+    </div>
+</script>
+
+<!-- Magnific popup JavaScript -->
+<script src="/static/plugins/bower_components/Magnific-Popup-master/dist/jquery.magnific-popup.min.js"></script>
+<script src="/static/plugins/bower_components/Magnific-Popup-master/dist/jquery.magnific-popup-init.js"></script>
+<script src="/static/plugins/bower_components/sweetalert/sweetalert.min.js"></script>
+<script src="/static/plugins/bower_components/fileinput/fileinput.min.js"></script>
+<script src="/static/plugins/bower_components/fileinput/locales/zh.js"></script>
+<script src="/static/js/jquery.validate.min.js"></script>
+<script src="/static/js/additional-methods.min.js"></script>
+<script src="/static/js/messages_zh.min.js"></script>
+<script src="/static/js/toutiao/validator-setDefaults.js"></script>
+<script src="https://cdn.bootcss.com/jquery.serializeJSON/2.8.1/jquery.serializejson.min.js"></script>
+<script src="/static/js/toutiao.table.js"></script>
+<script src="/static/js/toutiao/common.js"></script>
+<script src="/api/newHouse/newHouseApi.js"></script>
+<script src="/api/project/projectApi.js"></script>
+
+<!--<script src="/static/js/bootstrap-table-zh-CN.js"></script>-->
+<script type="text/javascript">
+    var _imgPrefix = "http://s1.qn.toutiaofangchan.com/";
+    var pagenow;
+    var formparam ;
+    $('#search-list-pro').click(function(){
+        formparam = $('#pro_list_form').serializeJSON();
+        loadAllOtherImages($('#pic-all').find('div[data-table="otherImageTable"]'), 4, 1);
+    });
+
+    //$('input[name="newcode"]').val(_newCode);
+    loadAllOtherImages($('#pic-all').find('div[data-table="otherImageTable"]'), 4, 1);
+
+    $("#other-file-select").fileinput({
+        'language': 'zh',
+        'showUpload' : false,
+        'showCancel' : false,
+//      allowedPreviewTypes : [ 'image' ],
+        'allowedFileExtensions' : ['jpg', 'png','gif']
+    });
+
+    /**
+     * 初始化显示所有图片渲染
+     */
+    function  loadAllOtherImages(obj, imgType, pageNum) {
+        var searchParameter={"imgType":imgType,"pageNum":pageNum};
+        if(formparam!=null){
+            searchParameter['projname']=formparam['projname'];
+            searchParameter['cityId']=formparam['cityId'];
+         }
+        com.toutiao.officedict.pic.esfPhotos.do(searchParameter,function(res, pageNum, pageSize, total){
+
+          /*  obj.ttTable().showloading();
+            obj.ttTable().load(res, total, pageNum);*/
+
+            var pageEnd = Math.ceil(total/10);
+
+            var otherRess={ress:res,pageNum:pageNum,total:total,pageEnd:pageEnd};
+            console.log(otherRess);
+
+            var upHtml = template('esfotherPhotoShow',otherRess);
+           // if(res.length!=0 && res!=""){
+                $('#otherAllPhoto').html(upHtml);
+            //}
+            imagePopup();
+            //分页
+            $('.imagePageing').each(function () {
+                $(this).on('click', function () {
+                    var pagenum= $(this).data('page');
+                    pagenow = pagenum;
+                    console.log(pagenum)
+                    loadAllOtherImages($('#pic-all').find('div[data-table="otherImageTable"]'), 4, pagenum);
+                })
+            });
+
+            $('#pagejb').on('click',function () {
+              var pageti =$('#pageTV').val();
+                if(pageti!=null && pageti!=''){
+                    if(pageti<=pageEnd){
+                        pagenow=pageti;
+                        loadAllOtherImages($('#pic-all').find('div[data-table="otherImageTable"]'), 4, pagenow);
+                    }
+                }
+            });
+
+            //将该图作为标题图
+            $('.other-image-title').each(function () {
+                $(this).on('click', function () {
+                    var _id = $(this).data('id');
+                    com.toutiao.officedict.pic.titleHousingProjectOtherImage.do({"id":_id}, function (res) {
+                        if (res && res>0) {
+                            swal({
+                                title: "已标记为标题图",
+                                type: "success",
+                                confirmButtonText: "确定",
+                                closeOnConfirm: false
+                            }, function () {
+                                loadAllOtherImages(obj, 4, 1);
+                                swal.close();
+                            });
+                        }
+                    })
+                });
+            });
+
+            $('.other-image-cancleTitle').each(function () {
+                $(this).on('click', function () {
+                    var _id = $(this).data('id');
+                    com.toutiao.officedict.pic.cancelTitleHousingProjectOtherImage.do({"id":_id}, function (res) {
+                        if (res && res>0) {
+                            swal({
+                                title: "已取消该标题图",
+                                type: "success",
+                                confirmButtonText: "确定",
+                                closeOnConfirm: false
+                            }, function () {
+                                loadAllOtherImages(obj, 4, 1);
+                                swal.close();
+                            });
+                        }
+                    })
+                });
+            });
+            //删除除户型图外的其他图
+            $('.other-image-del').each(function () {
+                $(this).on('click', function () {
+                    var _id = $(this).data('id');
+                    com.toutiao.officedict.pic.deleteHousingProjectOtherImage.do({"id":_id}, function (res) {
+                        if (res && res>0) {
+                            var dateTime ={newcode:_newCode};
+                            com.toutiao.officedict.project.updateHousingProject.do(dateTime,function (res){
+                                if (res && res>0) {
+                                    swal({
+                                        title: "删除成功!",
+                                        type: "success",
+                                        confirmButtonText: "确定",
+                                        closeOnConfirm: false
+                                    }, function () {
+                                        loadAllOtherImages(obj, imgType);
+                                        swal.close();
+                                    });
+                                };
+                            })
+                        }
+                    })
+                });
+            });
+
+            //设置合格
+            $('.other-image-qualified').each(function () {
+                $(this).on('click', function () {
+                    var _id = $(this).data('id');
+                    com.toutiao.officedict.pic.setQualified.do({"id":_id,"isQualified":1}, function (res) {
+                        if (res && res>0) {
+                            loadAllOtherImages(obj, 4, pagenow);
+                        /*    swal({
+                                title: "设置完成！",
+                                type: "success",
+                                confirmButtonText: "确定",
+                                closeOnConfirm: false
+                            }, function () {
+                                loadAllOtherImages(obj, 4, 1);
+                                swal.close();
+                            });*/
+                        }
+                    })
+                });
+            });
+
+            //设为不合格
+            $('.other-image-unqualified').each(function () {
+                $(this).on('click', function () {
+                    var _id = $(this).data('id');
+                    com.toutiao.officedict.pic.setQualified.do({"id":_id,"isDel":1}, function (res) {
+                        if (res && res>0) {
+                            loadAllOtherImages(obj, 4, pagenow);
+                        /*    swal({
+                                title: "设置完成！",
+                                type: "success",
+                                confirmButtonText: "确定",
+                                closeOnConfirm: false
+                            }, function () {
+                                loadAllOtherImages(obj, 4, 1);
+                                swal.close();
+                            });*/
+                        }
+                    })
+                });
+            });
+
+        });
+    };
+
+
+    $('button[name="image-unqualified"]').on('click',function () {
+
+        var imgchecks=document.getElementsByName('imgCheck');
+        var s=[];
+        for(var i=0; i<imgchecks.length; i++){
+            if(imgchecks[i].checked){
+                s.push(imgchecks[i].value)
+            }//如果选中，将value添加到变量s中
+        }
+
+
+        function setQualifieds(it,s) {
+            if(it<s.length){
+                console.log(it,s[it],s.length);
+                com.toutiao.officedict.pic.setQualified.do({"id":s[it],"isQualified":2}, function (res) {
+                    if (res && res>0) {
+                        setQualifieds(it+1,s);
+                    }else{
+                        it=s.length+1;
+                    }
+                })
+            }
+        }
+        var it=0;
+        setQualifieds(it,s);
+        swal({
+            title: "设置完成！",
+            type: "success",
+            confirmButtonText: "确定",
+            closeOnConfirm: false
+        }, function () {
+            loadAllOtherImages($('#pic-all').find('div[data-table="otherImageTable"]'), 4, 1);
+            swal.close();
+        });
+    });
+
+    $('button[name="image-qualified"]').on('click',function () {
+        console.log('dian')
+        var imgchecks=document.getElementsByName('imgCheck');
+        var s=[];
+        for(var i=0; i<imgchecks.length; i++){
+            if(imgchecks[i].checked){
+                s.push(imgchecks[i].value)
+            }; //如果选中，将value添加到变量s中
+        }
+
+        function setQualifieds(it,s) {
+            if(it<s.length){
+                console.log(it,s[it],s.length);
+                com.toutiao.officedict.pic.setQualified.do({"id":s[it],"isQualified":1}, function (res) {
+                    if (res && res>0) {
+                        setQualifieds(it+1,s);
+                    }else{
+                        it=s.length+1;
+                    }
+                })
+            }
+        }
+
+        var it=0;
+        setQualifieds(it,s);
+
+        swal({
+            title: "设置完成！",
+            type: "success",
+            confirmButtonText: "确定",
+            closeOnConfirm: false
+        }, function () {
+            loadAllOtherImages($('#pic-all').find('div[data-table="otherImageTable"]'), 4, 1);
+            swal.close();
+        });
+    });
+
+    $('#other-upload-modal').on('hide.bs.modal', function () {
+        $(this).removeData('bs.modal');
+        $('#other-image-upload-form').trigger('reset');
+    });
+
+
+    /**
+     * 除户型图外其他图弹出模式窗
+     */
+    $('button[name="other-image-upload-btn"]').each(function () {
+        $(this).on('click', function () {
+            var _imageType = $(this).data('type');
+            var _tableObj = $(this).parent('div[role="tabpanel"]').children('div[data-table="otherImageTable"]');
+            $('#other-image-upload-form').find('input[name="imgType"]').val(_imageType);
+            $('#other-upload-modal').modal();
+
+        });
+    });
+
+    //Tab页切换
+    $('#album-tabs li:gt(0) a').on('click', function (e) {
+        var _imgType = $(this).data('type');
+        var _href = $(this).attr('href');
+        var _obj = $('' + _href + '').find('div[data-table="otherImageTable"]');
+        loadOtherImages(_obj, _newCode, _imgType);
+        e.preventDefault();
+        $(this).tab('show');
+    });
+
+    //图片弹出层
+    function imagePopup() {
+        $('.image-popup-vertical-fit').magnificPopup({
+            type: 'image',
+            closeOnContentClick: true,
+//            mainClass: 'mfp-img-mobile',
+            image: {
+                verticalFit: true
+            }
+        });
+    };
+
+    //获取当前时间
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds();
+        return currentdate;
+    }
+
+</script>

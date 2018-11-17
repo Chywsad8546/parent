@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.toutiao.officedict.dao.mapper.officedict.AreaMapper" >
+  <resultMap id="BaseResultMap" type="com.toutiao.officedict.dao.entity.officedict.Area" >
+    <id column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="coord_x" property="coordX" jdbcType="NUMERIC" />
+    <result column="coord_y" property="coordY" jdbcType="NUMERIC" />
+    <result column="area_pinyin" property="areaPinyin" jdbcType="VARCHAR" />
+    <result column="area_pinyin_initials" property="areaPinyinInitials" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="AreaWithDistrictID" type="com.toutiao.officedict.domain.districtArea.AreaWithDistrictID" >
+    <id column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="area_name" property="areaName" jdbcType="VARCHAR" />
+    <result column="district_id" property="districtID" jdbcType="INTEGER" />
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+    area_id, area_name, city_id, coord_x, coord_y, area_pinyin, area_pinyin_initials
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from area
+    where area_id = #{areaId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from area
+    where area_id = #{areaId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.toutiao.officedict.dao.entity.officedict.Area" >
+    insert into area (area_id, area_name, city_id,
+      coord_x, coord_y,
+      area_pinyin, area_pinyin_initials)
+    values (#{areaId,jdbcType=INTEGER}, #{areaName,jdbcType=VARCHAR}, #{cityId,jdbcType=INTEGER},
+      #{coordX,jdbcType=NUMERIC}, #{coordY,jdbcType=NUMERIC},
+      #{areaPinyin,jdbcType=VARCHAR}, #{areaPinyinInitials,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.toutiao.officedict.dao.entity.officedict.Area" >
+    <selectKey keyColumn="area_id" keyProperty="areaId" order="AFTER" resultType="java.lang.Integer" >
+      SELECT currval('area_area_id_seq'::regclass)
+    </selectKey>
+    insert into area
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="areaName != null" >
+        area_name,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="coordX != null" >
+        coord_x,
+      </if>
+      <if test="coordY != null" >
+        coord_y,
+      </if>
+      <if test="areaPinyin != null" >
+        area_pinyin,
+      </if>
+      <if test="areaPinyinInitials != null" >
+        area_pinyin_initials,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="areaId != null" >
+        #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="areaName != null" >
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="coordX != null" >
+        #{coordX,jdbcType=NUMERIC},
+      </if>
+      <if test="coordY != null" >
+        #{coordY,jdbcType=NUMERIC},
+      </if>
+      <if test="areaPinyin != null" >
+        #{areaPinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="areaPinyinInitials != null" >
+        #{areaPinyinInitials,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.toutiao.officedict.dao.entity.officedict.Area" >
+    update area
+    <set >
+      <if test="areaName != null" >
+        area_name = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="coordX != null" >
+        coord_x = #{coordX,jdbcType=NUMERIC},
+      </if>
+      <if test="coordY != null" >
+        coord_y = #{coordY,jdbcType=NUMERIC},
+      </if>
+      <if test="areaPinyin != null" >
+        area_pinyin = #{areaPinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="areaPinyinInitials != null" >
+        area_pinyin_initials = #{areaPinyinInitials,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where area_id = #{areaId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.toutiao.officedict.dao.entity.officedict.Area" >
+    update area
+    set area_name = #{areaName,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=INTEGER},
+      coord_x = #{coordX,jdbcType=NUMERIC},
+      coord_y = #{coordY,jdbcType=NUMERIC},
+      area_pinyin = #{areaPinyin,jdbcType=VARCHAR},
+      area_pinyin_initials = #{areaPinyinInitials,jdbcType=VARCHAR}
+    where area_id = #{areaId,jdbcType=INTEGER}
+  </update>
+
+  <!-- Area list-->
+  <select id="selectAreaList" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.domain.query.AreaQuery">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM area
+    WHERE 1=1
+    <if test="areaId != null">
+      AND area_id = #{areaId}
+    </if>
+    <if test="areaName != null">
+      AND  area_name LIKE CONCAT('%', #{areaName}, '%')
+    </if>
+    <if test="areaPinyinInitials != null">
+      AND area_pinyin_initials = #{areaPinyinInitials}
+    </if>
+    <if test="currentCityId != null">
+      AND city_id = #{currentCityId}
+    </if>
+  </select>
+
+  <select id="selectByAreaName" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.domain.query.AreaQuery">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM area
+    WHERE area_name = #{areaName}
+
+  </select>
+
+  <select id="selectByDistrictID" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.domain.query.AreaQuery">
+    SELECT
+    area.*
+    FROM area
+    join district_area_config on district_area_config.area_id=area.area_id
+    WHERE district_area_config.district_id = #{districtId}
+    and district_area_config.house_type=#{houseType}
+
+  </select>
+
+  <select id="selectByCityIdAndHouseType" resultMap="AreaWithDistrictID" parameterType="com.toutiao.officedict.domain.query.AreaQuery">
+    SELECT
+    area.area_id,area.area_name,district.district_id
+    FROM area
+    join district_area_config on district_area_config.area_id=area.area_id
+    JOIN district on district.district_id=district_area_config.district_id
+    WHERE district.city_id = #{cityid} and district_area_config.house_type=#{housetype}
+
+  </select>
+
+  <select id="selectUnboundAreaByPurposesAndId" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.domain.query.DistrictAreaConfigQuery">
+    SELECT
+      A .*
+        FROM
+      area A
+        WHERE
+      A .area_id NOT IN (
+          SELECT
+            dac.area_id
+          FROM
+            district_area_config dac
+          WHERE
+            <if test="houseType != null">
+               dac.house_type = #{houseType}
+            </if>
+      )
+    <if test="areaPinyinInitials != null and areaPinyinInitials != ''">
+      AND area_pinyin_initials = #{areaPinyinInitials}
+    </if>
+    <if test="cityId != null and cityId != ''">
+      AND city_id = #{cityId}
+    </if>
+  </select>
+
+</mapper>

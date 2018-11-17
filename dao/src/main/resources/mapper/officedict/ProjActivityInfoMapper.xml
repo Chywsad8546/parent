@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.toutiao.officedict.dao.mapper.officedict.ProjActivityInfoMapper" >
+    <resultMap id="BaseResultMap" type="com.toutiao.officedict.dao.entity.officedict.ActivityInfo" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="activity_type" property="activityType" jdbcType="INTEGER" />
+        <result column="activity_desc" property="activityDesc" jdbcType="VARCHAR" />
+        <result column="activity_title" property="activityTitle" jdbcType="VARCHAR" />
+        <result column="activity_subtitle" property="activitySubtitle" jdbcType="VARCHAR" />
+        <result column="creator_id" property="creatorId" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="updater_id" property="updaterId" jdbcType="INTEGER" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="is_del" property="isDel" jdbcType="INTEGER" />
+        <result column="newcode" property="newcode" jdbcType="INTEGER" />
+        <result column="is_activity" property="isActivity" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        id,activity_type,activity_desc, activity_title, activity_subtitle, proj_activity_info.creator_id, proj_activity_info.create_time, proj_activity_info.updater_id, proj_activity_info.update_time, proj_activity_info.is_del,proj_activity_info.newcode
+    </sql>
+
+    <select id="activityInfoList" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.domain.query.ActivityInfoQuery" >
+        select
+        <include refid="Base_Column_List" />,is_activity
+        from proj_activity_info
+        LEFT JOIN proj_info
+        on proj_activity_info.newcode = proj_info.newcode
+        where proj_activity_info.newcode = #{newcode,jdbcType=INTEGER}
+        ORDER BY is_del
+    </select>
+
+    <select id="oneActivityInfo" resultMap="BaseResultMap" parameterType="Integer">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM proj_activity_info
+        WHERE id = #{id}
+    </select>
+
+    <update id="updateById" parameterType="com.toutiao.officedict.domain.query.ActivityInfoQuery">
+        update proj_activity_info
+        set activity_type = #{activityType,jdbcType=INTEGER},
+        activity_desc = #{activityDesc,jdbcType=VARCHAR},
+        activity_title=#{activityTitle,jdbcType=VARCHAR},
+        is_del=#{isDel,jdbcType=INTEGER},
+         update_time=#{updateTime,jdbcType=TIMESTAMP},
+         activity_subtitle=#{activitySubtitle,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <insert id="addActivity" parameterType="com.toutiao.officedict.domain.query.ActivityInfoQuery">
+    insert into proj_activity_info (activity_type,
+        <if test="activityDesc != null" >
+            activity_desc,
+        </if>
+        activity_title,
+        <if test="creatorId != null" >
+            creator_id,
+        </if>
+        <if test="createTime != null" >
+            create_time,
+        </if>
+      activity_subtitle,
+      is_del,newcode)
+    values (#{activityType,jdbcType=INTEGER},
+        <if test="activityDesc != null" >
+            #{activityDesc,jdbcType=VARCHAR},
+        </if>
+        #{activityTitle,jdbcType=VARCHAR},
+        <if test="creatorId != null" >
+            #{creatorId,jdbcType=INTEGER},
+        </if>
+        <if test="createTime != null" >
+            #{createTime,jdbcType=TIMESTAMP},
+        </if>
+      #{activitySubtitle,jdbcType=VARCHAR},
+     #{isDel,jdbcType=INTEGER} ,#{newcode,jdbcType=INTEGER})
+    </insert>
+
+    <update id="removeActivityInfo" parameterType="INTEGER">
+           update proj_activity_info
+        set is_del = 1
+        WHERE id = #{id}
+    </update>
+
+</mapper>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.toutiao.officedict.dao.mapper.officedict.DistrictMapper" >
+  <resultMap id="BaseResultMap" type="com.toutiao.officedict.dao.entity.officedict.District" >
+    <id column="district_id" property="districtId" jdbcType="INTEGER" />
+    <result column="district_name" property="districtName" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="coord_x" property="coordX" jdbcType="NUMERIC" />
+    <result column="coord_y" property="coordY" jdbcType="NUMERIC" />
+    <result column="sorting" property="sorting" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap id="DistrictListResultMap" type="com.toutiao.officedict.domain.district.DistrictDomain" >
+    <id column="district_id" property="districtId" jdbcType="INTEGER" />
+    <result column="district_name" property="districtName" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="coord_x" property="coordX" jdbcType="NUMERIC" />
+    <result column="coord_y" property="coordY" jdbcType="NUMERIC" />
+    <result column="sorting" property="sorting" jdbcType="INTEGER" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    district_id, district_name, city_id, coord_x, coord_y, sorting
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from district
+    where district_id = #{districtId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from district
+    where district_id = #{districtId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.toutiao.officedict.dao.entity.officedict.District" >
+    insert into district (district_id, district_name, city_id, 
+      coord_x, coord_y, sorting
+      )
+    values (#{districtId,jdbcType=INTEGER}, #{districtName,jdbcType=VARCHAR}, #{cityId,jdbcType=BIGINT}, 
+      #{coordX,jdbcType=NUMERIC}, #{coordY,jdbcType=NUMERIC}, #{sorting,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.toutiao.officedict.dao.entity.officedict.District" >
+    insert into district
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="districtId != null" >
+        district_id,
+      </if>
+      <if test="districtName != null" >
+        district_name,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="coordX != null" >
+        coord_x,
+      </if>
+      <if test="coordY != null" >
+        coord_y,
+      </if>
+      <if test="sorting != null" >
+        sorting,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="districtId != null" >
+        #{districtId,jdbcType=INTEGER},
+      </if>
+      <if test="districtName != null" >
+        #{districtName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="coordX != null" >
+        #{coordX,jdbcType=NUMERIC},
+      </if>
+      <if test="coordY != null" >
+        #{coordY,jdbcType=NUMERIC},
+      </if>
+      <if test="sorting != null" >
+        #{sorting,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.toutiao.officedict.dao.entity.officedict.District" >
+    update district
+    <set >
+      <if test="districtName != null" >
+        district_name = #{districtName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="coordX != null" >
+        coord_x = #{coordX,jdbcType=NUMERIC},
+      </if>
+      <if test="coordY != null" >
+        coord_y = #{coordY,jdbcType=NUMERIC},
+      </if>
+      <if test="sorting != null" >
+        sorting = #{sorting,jdbcType=INTEGER},
+      </if>
+    </set>
+    where district_id = #{districtId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.toutiao.officedict.dao.entity.officedict.District" >
+    update district
+    set district_name = #{districtName,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=BIGINT},
+      coord_x = #{coordX,jdbcType=NUMERIC},
+      coord_y = #{coordY,jdbcType=NUMERIC},
+      sorting = #{sorting,jdbcType=INTEGER}
+    where district_id = #{districtId,jdbcType=INTEGER}
+  </update>
+
+  <!-- district list -->
+  <select id="selectDistrictList" resultMap="DistrictListResultMap" parameterType="com.toutiao.officedict.domain.query.DistrictQuery">
+    SELECT
+    d.district_id, d.district_name, d.city_id, d.coord_x, d.coord_y, d.sorting,c.city_name
+    FROM district d,cities c
+    WHERE 1=1
+    <if test="districtId != null">
+      AND district_id = #{districtId}
+    </if>
+    <if test="cityName != null">
+       AND c.city_name  LIKE CONCAT('%', #{cityName}, '%')
+    </if>
+    <if test="cityId != null">
+      AND d.city_id = #{cityId}
+    </if>
+    <if test="districtName != null and districtName != ''">
+      AND district_name  LIKE CONCAT('%', #{districtName}, '%')
+    </if >
+    <if test="currCityId != null">
+      AND d.city_id = #{currCityId}
+    </if>
+      AND d.city_id = c.city_id
+  </select>
+
+  <select id="selectDistrictListByCityId" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.domain.query.DistrictQuery">
+    SELECT
+    d.district_id, d.district_name, d.city_id, d.coord_x, d.coord_y, d.sorting
+    FROM district d
+    WHERE 1=1
+    <if test="cityId != null">
+      AND d.city_id = #{cityId}
+    </if>
+  </select>
+
+  <select id="selectByDistrictName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+    d.district_id, d.district_name, d.city_id, d.coord_x, d.coord_y, d.sorting
+    FROM district d
+    WHERE d.district_name = #{districtName}
+  </select>
+
+
+  <select id="selectDistricts" resultMap="DistrictListResultMap">
+    SELECT
+    d.district_id, d.district_name, d.city_id, d.coord_x, d.coord_y, d.sorting,c.city_name
+    FROM district d,cities c
+  </select>
+
+  <select id="selectDistrictListByCityIdAndHouseTye" resultMap="DistrictListResultMap">
+    SELECT
+    d.district_id, d.district_name, d.city_id, d.coord_x, d.coord_y, d.sorting
+    FROM district d
+    join district_area_config on district_area_config.district_id=d.district_id
+    where district_area_config.house_type=#{housetype} and d.city_id=#{cityid}
+    group by d.district_id, d.district_name, d.city_id, d.coord_x, d.coord_y, d.sorting
+  </select>
+
+
+</mapper>

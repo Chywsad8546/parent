@@ -1,0 +1,82 @@
+<div class="container-fluid">
+
+    <!-- ============================================================== -->
+    <!-- Demo table -->
+    <!-- ============================================================== -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-wrapper collapse in" aria-expanded="true">
+                    <div class="panel-body">
+                        <div id="treeDemo" class="ztree"></div>
+                        <button onclick="ddd()">aa</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <div class="table-responsive">
+                    <table id="restable" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th data-field="name" >Task</th>
+                            <th >Progress</th>
+                            <th>Deadline</th>
+                            <th class="text-nowrap">Action
+
+                            </th>
+                        </tr>
+                        </thead>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+</div>
+
+<link href="/static/plugins/zTree_v3/css/metroStyle/metroStyle.css" rel="stylesheet">
+<!--<link href="/static/plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">-->
+<script src="/static/plugins/zTree_v3/js/jquery.ztree.all.min.js"></script>
+<script src="/api/admin/menu.js"></script>
+<script type="text/javascript">
+    function ddd() {
+
+    }
+    $(function() {
+        var setting = {
+            view: {
+                addHoverDom: false,
+                removeHoverDom: false,
+                selectedMulti: false
+            },
+            check: {
+                enable: true
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            }
+            ,
+            edit: {
+                enable: false
+
+            }
+        };
+        com.toutiao.officedict.admin.menu.menuSelectByStatus.do({},function (res,total,pageindex) {
+            var zNodes=[]
+            for(var i=0;i<res.length;i++){
+                var row = res[i];
+                zNodes.push({"id":row["id"],"pId":row["parentID"],"name":row["name"],"sdata":row})
+            }
+            zTreeObj = $.fn.zTree.init($("#treeDemo"), setting,zNodes);
+        },function (jqXHR, textStatus, errorThrown) {})
+    });
+</script>

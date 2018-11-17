@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.toutiao.officedict.dao.mapper.officedict.CitiesMapper" >
+  <resultMap id="BaseResultMap" type="com.toutiao.officedict.dao.entity.officedict.Cities" >
+    <id column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+    <result column="belong" property="belong" jdbcType="VARCHAR" />
+    <result column="sorting" property="sorting" jdbcType="INTEGER" />
+    <result column="city_pinyin" property="cityPinyin" jdbcType="VARCHAR" />
+    <result column="city_pinyin_initials" property="cityPinyinInitials" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    city_id, city_name, belong, sorting, city_pinyin, city_pinyin_initials
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cities
+    where city_id = #{cityId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cities
+    where city_id = #{cityId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.toutiao.officedict.dao.entity.officedict.Cities" >
+    insert into cities (city_id, city_name, belong, 
+      sorting, city_pinyin, city_pinyin_initials
+      )
+    values (#{cityId,jdbcType=INTEGER}, #{cityName,jdbcType=VARCHAR}, #{belong,jdbcType=VARCHAR}, 
+      #{sorting,jdbcType=INTEGER}, #{cityPinyin,jdbcType=VARCHAR}, #{cityPinyinInitials,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.toutiao.officedict.dao.entity.officedict.Cities" >
+    insert into cities
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="cityName != null" >
+        city_name,
+      </if>
+      <if test="belong != null" >
+        belong,
+      </if>
+      <if test="sorting != null" >
+        sorting,
+      </if>
+      <if test="cityPinyin != null" >
+        city_pinyin,
+      </if>
+      <if test="cityPinyinInitials != null" >
+        city_pinyin_initials,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cityId != null" >
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="belong != null" >
+        #{belong,jdbcType=VARCHAR},
+      </if>
+      <if test="sorting != null" >
+        #{sorting,jdbcType=INTEGER},
+      </if>
+      <if test="cityPinyin != null" >
+        #{cityPinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="cityPinyinInitials != null" >
+        #{cityPinyinInitials,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.toutiao.officedict.dao.entity.officedict.Cities" >
+    update cities
+    <set >
+      <if test="cityName != null" >
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+      <if test="belong != null" >
+        belong = #{belong,jdbcType=VARCHAR},
+      </if>
+      <if test="sorting != null" >
+        sorting = #{sorting,jdbcType=INTEGER},
+      </if>
+      <if test="cityPinyin != null" >
+        city_pinyin = #{cityPinyin,jdbcType=VARCHAR},
+      </if>
+      <if test="cityPinyinInitials != null" >
+        city_pinyin_initials = #{cityPinyinInitials,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where city_id = #{cityId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.toutiao.officedict.dao.entity.officedict.Cities" >
+    update cities
+    set city_name = #{cityName,jdbcType=VARCHAR},
+      belong = #{belong,jdbcType=VARCHAR},
+      sorting = #{sorting,jdbcType=INTEGER},
+      city_pinyin = #{cityPinyin,jdbcType=VARCHAR},
+      city_pinyin_initials = #{cityPinyinInitials,jdbcType=VARCHAR}
+    where city_id = #{cityId,jdbcType=INTEGER}
+  </update>
+
+  <!-- city list -->
+  <select id="selectCityList" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.domain.query.CityQuery">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM cities
+    WHERE 1=1
+    <if test="cityId != null">
+      AND city_id = #{cityId}
+    </if>
+    <if test="cityPinyin != null">
+      AND city_pinyin = #{cityPinyin}
+    </if>
+  </select>
+
+  <select id="selectByCityName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM cities
+    WHERE city_name = #{cityName}
+  </select>
+
+  <select id="selectCities" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM cities
+  </select>
+
+  <select id="selectListCities" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM cities
+  </select>
+</mapper>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.toutiao.officedict.dao.mapper.officedict.ResidenceBuildCategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.toutiao.officedict.dao.entity.officedict.ResidenceBuildCategory" >
+    <id column="build_category_id" property="buildCategoryId" jdbcType="INTEGER" />
+    <result column="build_category_name" property="buildCategoryName" jdbcType="VARCHAR" />
+    <result column="sorting" property="sorting" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    build_category_id, build_category_name, sorting
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from residence_build_category
+    where build_category_id = #{buildCategoryId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from residence_build_category
+    where build_category_id = #{buildCategoryId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.toutiao.officedict.dao.entity.officedict.ResidenceBuildCategory" >
+    insert into residence_build_category (build_category_id, build_category_name, 
+      sorting)
+    values (#{buildCategoryId,jdbcType=INTEGER}, #{buildCategoryName,jdbcType=VARCHAR}, 
+      #{sorting,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.toutiao.officedict.dao.entity.officedict.ResidenceBuildCategory" >
+    insert into residence_build_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="buildCategoryName != null" >
+        build_category_name,
+      </if>
+      <if test="sorting != null" >
+        sorting,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="buildCategoryName != null" >
+        #{buildCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="sorting != null" >
+        #{sorting,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.toutiao.officedict.dao.entity.officedict.ResidenceBuildCategory" >
+    update residence_build_category
+    <set >
+      <if test="buildCategoryName != null" >
+        build_category_name = #{buildCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="sorting != null" >
+        sorting = #{sorting,jdbcType=INTEGER},
+      </if>
+    </set>
+    where build_category_id = #{buildCategoryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.toutiao.officedict.dao.entity.officedict.ResidenceBuildCategory" >
+    update residence_build_category
+    set build_category_name = #{buildCategoryName,jdbcType=VARCHAR},
+      sorting = #{sorting,jdbcType=INTEGER}
+    where build_category_id = #{buildCategoryId,jdbcType=INTEGER}
+  </update>
+
+  <select id="queryResidenceBuildCategoryList" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM residence_build_category
+    ORDER BY sorting ASC, build_category_id ASC
+  </select>
+</mapper>

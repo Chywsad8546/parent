@@ -1,0 +1,227 @@
+<!-- 楼盘详情页 -->
+<link rel="stylesheet" href="/static/css/toutiao/css/user-defined.css">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">基本信息
+                    <div class="pull-right">
+                        <a style="cursor: pointer;" id="project-edit">编辑</a>
+                    </div>
+                </div>
+                <div class="panel-wrapper">
+                    <div class="panel-body">
+                        <table class="table table-bordered table-vertical-striped">
+                            <tbody id="basic-infomation-content">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">销售信息</div>
+                <div class="panel-wrapper">
+                    <div class="panel-body">
+                        <table class="table table-bordered table-vertical-striped">
+                            <tbody id="sale-infomation-content">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">小区规划</div>
+                <div class="panel-wrapper">
+
+                    <div class="panel-body">
+                        <table class="table table-bordered table-vertical-striped">
+                            <tbody id="housing-estate-content">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- 基本信息 -->
+    <!-- ============================================================== -->
+    <script id="basic-infomation-template" type="text/html">
+        <tr>
+            <td class="col-md-2">楼盘名称</td>
+            <td class="col-md-4">{{projname}}</td>
+            <td class="col-md-2">楼盘别名</td>
+            <td class="col-md-4">{{nickname}}</td>
+        </tr>
+        <tr>
+            <td class="col-md-2">建筑类别</td>
+            <td class="col-md-4">{{buildCategoryDesc}}</td>
+            <td class="col-md-2">建筑形式</td>
+            <td class="col-md-4">{{buildFormDesc}}</td>
+        </tr>
+        <tr>
+            <td class="col-md-2">住宅类别</td>
+            <td class="col-md-4">{{residentialCategoryDesc}}</td>
+            <td class="col-md-2">楼栋数</td>
+            <td class="col-md-4">{{buildCount}}</td>
+        </tr>
+        <tr>
+            <td class="col-md-2">项目描述</td>
+            <td class="col-md-10" colspan="3">{{projdesc}}</td>
+        </tr>
+        <tr>
+            <td class="col-md-2">产权年限</td>
+            <td class="col-md-4">{{rigtYear}}</td>
+            <td class="col-md-2">环线</td>
+            <td class="col-md-4">{{ringRoadDesc}}</td>
+        </tr>
+        <tr>
+            <td class="col-md-2">开发商</td>
+            <td class="col-md-10" colspan="3">{{developer}}</td>
+        </tr>
+        <tr>
+            <td class="col-md-2">楼盘地址</td>
+            <td class="col-md-10" colspan="3">{{address}}</td>
+        </tr>
+        <tr>
+            <td class="col-md-2">项目描述</td>
+            <td class="col-md-10" colspan="3" id="projdesc"></td>
+        </tr>
+
+    </script>
+    <!-- ============================================================== -->
+    <!-- 基本信息 end -->
+    <!-- ============================================================== -->
+
+    <!-- ============================================================== -->
+    <!-- 销售信息 -->
+    <!-- ============================================================== -->
+    <script id="sale-infomation-template" type="text/html">
+        <tr>
+            <td class="col-md-2">销售状态</td>
+            <td class="col-md-4">{{salingDesc}}</td>
+            <td class="col-md-2">销售阶段</td>
+            <td class="col-md-4">{{sailSchedule}}</td>
+        </tr>
+        <tr>
+            <td class="col-md-2">开盘时间</td>
+            <td class="col-md-4">{{saledate}}</td>
+            <td class="col-md-2">竣工时间</td>
+            <td class="col-md-4">{{finishdate}}</td>
+        </tr>
+        <tr>
+            <td class="col-md-2">售楼地址</td>
+            <td class="col-md-4">{{saleaddress}}</td>
+            <td class="col-md-2">售楼热线</td>
+            <td class="col-md-4">{{saletelphone}}</td>
+        </tr>
+        <tr>
+            <td class="col-md-2">网站地址</td>
+            <td class="col-md-4">{{webaddress}}</td>
+            <td class="col-md-2">网上售楼中心地址</td>
+            <td class="col-md-4">{{websaleaddress}}</td>
+        </tr>
+    </script>
+    <!-- ============================================================== -->
+    <!-- 销售信息 end -->
+    <!-- ============================================================== -->
+
+    <!-- ============================================================== -->
+    <!-- 小区规划 -->
+    <!-- ============================================================== -->
+    <script id="housing-estate-template" type="text/html">
+        <tr>
+            <td class="col-md-2">占地面积</td>
+            <td class="col-md-4">
+                {{if groundarea}}
+                    {{groundarea}}&nbsp;&nbsp;㎡
+                {{/if}}
+            </td>
+            <td class="col-md-2">建筑面积</td>
+            <td class="col-md-4">
+                {{if purposearea}}
+                    {{purposearea}}&nbsp;&nbsp;㎡
+                {{/if}}
+            </td>
+        </tr>
+        <tr>
+            <td class="col-md-2">容积率</td>
+            <td class="col-md-4">{{dimension}}</td>
+            <td class="col-md-2">绿化率</td>
+            <td class="col-md-4">{{virescencerate}}</td>
+        </tr>
+        <tr>
+            <td class="col-md-2">停车位数量</td>
+            <td class="col-md-4">{{parkspace}}</td>
+            <td class="col-md-2">车位配比</td>
+            <td class="col-md-4">{{parkRadio}}</td>
+        </tr>
+        <tr>
+            <td class="col-md-2">停车位售价</td>
+            <td class="col-md-4">{{carSellPrice}}</td>
+            <td class="col-md-2">停车位租价</td>
+            <td class="col-md-4">{{carRentPrice}}</td>
+        </tr>
+        <tr>
+            <td class="col-md-2">总户数</td>
+            <td class="col-md-4">{{totaldoor}}</td>
+            <td class="col-md-2">物业管理费</td>
+            <td class="col-md-4">{{propertyfee}}</td>
+        </tr>
+        <tr>
+            <td class="col-md-2">物业管理费附加信息</td>
+            <td class="col-md-4">{{propertyaddition}}</td>
+            <td class="col-md-2">物业管理公司</td>
+            <td class="col-md-4">{{propertymanage}}</td>
+        </tr>
+    </script>
+    <!-- ============================================================== -->
+    <!-- 小区规划 end -->
+    <!-- ============================================================== -->
+</div>
+
+    <script src="/static/js/template-web.js"></script>
+<script src="/static/js/toutiao/common.js"></script>
+<script src="/api/project/projectApi.js"></script>
+<script>
+
+    var _newCode = getQueryString('newcode');
+
+    $('#project-edit').on('click', function () {
+        window.location = '/index#mvc/newHouse/project-edit.html' + '?newcode=' + _newCode;
+    });
+
+    com.toutiao.officedict.project.newHousingProjectDetail.do({"newcode": _newCode},function (res) {
+        if (res['finishdate'] != null) {
+            res['finishdate'] = res['finishdate'].substr(0,10);
+        }
+        if (res['saledate'] != null) {
+            res['saledate'] = res['saledate'].substr(0,10);
+        }
+        var basicInfomationHtml = template('basic-infomation-template',res);
+        $('#basic-infomation-content').html(basicInfomationHtml);
+        $('#projdesc').html(res['projdesc']);
+
+        var saleInfomationHtml = template('sale-infomation-template',res);
+        $('#sale-infomation-content').html(saleInfomationHtml);
+
+        var housingEstateHtml = template('housing-estate-template',res);
+        $('#housing-estate-content').html(housingEstateHtml);
+
+    },function (jqXHR, textStatus, errorThrown) {
+        console.log('error',jqXHR, textStatus, errorThrown)
+    });
+</script>

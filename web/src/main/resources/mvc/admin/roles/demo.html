@@ -1,0 +1,106 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-wrapper collapse in" aria-expanded="true">
+                    <div class="panel-body">
+                        <form id="loupan_form" action="/test/test1" class="form-inline form-search" pageSize="15">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label">First Name</label>
+                                            <input type="text" name="firstName" class="form-control"
+                                                   placeholder="John doe" value="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">First Name</label>
+                                            <input type="text" name="firstName" class="form-control"
+                                                   placeholder="John doe">
+                                            <input type="checkbox" name="zjl">
+                                            <input type="checkbox" name="zjl">
+                                            <input type="checkbox" name="zjl">
+                                            <input type="checkbox" name="zjl">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Gender</label>
+                                            <select class="form-control">
+                                                <option value="">Male</option>
+                                                <option value="">Female</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" id="ld" class="btn btn-success"><i class="fa fa-check"></i> 查询
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="restable" class="panel panel-success block5" style="position: static; zoom: 1;">
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+</div>
+<script src="/static/js/toutiao.table.js"></script>
+<!--<script src="/static/plugins/bower_components/bootstrap-table/dist/bootstrap-table.js"></script>-->
+<!--<script src="/static/js/bootstrap-table-zh-CN.js"></script>-->
+<script type="text/javascript">
+    /*$('#ld').click(function () {
+        var p=$('#loupan_form').serializeJson();//.serializeArray()
+        console.log(p)
+        $.ajax({
+            cache:false,
+            url:'/',
+            data:p,
+            dataType:'json',
+            type:'GET',
+            timeout:5,
+            traditional:true
+        }).done(function( data, textStatus, jqXHR ) {
+            console.log(data)
+        }).fail(function( jqXHR, textStatus, errorThrown ) {
+            console.error(jqXHR, textStatus, errorThrown)
+
+        });
+    })*/
+
+
+    $('#restable').ttTable({
+        paging:true,
+        columns:[
+        {
+            field:"name",
+            "title":"姓名"
+        },
+        {
+            render:function (d) {
+              return "<a href='/aa' router>"+d["createTime"]+"</a>";
+            },
+            "title":"时间"
+        }
+
+        ],
+        onPage:function (pageindex,pagesize) {
+            console.log(pageindex,pagesize);
+        }});
+
+    $('#restable').ttTable().showloading();
+    setTimeout(function () {
+        $('#restable').ttTable().load([
+            {"name":"张晶磊","createTime":"2001-9-1"}
+        ],115,15);
+    },2000);
+
+</script>

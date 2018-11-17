@@ -1,0 +1,367 @@
+<link href="/static/plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/static/css/toutiao/css/user-defined.css">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">楼盘对应关系</div>
+                    <div id="maiTianList" class="panel block5" style="position: static; zoom: 1;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-info">
+        <div id="allOrChoose">
+            <div class="col-sm-12">
+                <div class="panel panel-info">
+                    <div class="panel-heading">楼盘检索</div>
+                    <div class="panel-wrapper collapse in" aria-expanded="true">
+                        <div class="panel-body">
+                            <form id="pro_list_form" class="form-inline form-search">
+                                <div class="form-group">
+                                    <label class="control-label"><div id="checkNameH"style="float: left"></div>-楼盘名称</label>
+                                    <input type="text" id="projName" name="projName" class="form-control" value="">
+                                </div>
+                                <div class="form-actions pull-right">
+                                    <button type="button" id="search-list-area" class="btn btn-info"><i class="fa fa-check"></i>查询</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-wrapper">
+            <div class="panel-body">
+                <div class="clearfix"></div>
+                <div id="maiTianHouseList" class="panel panel-success block5" style="position: static; zoom: 1;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="/static/js/toutiao/common.js"></script>
+<script src="/static/js/template-web.js"></script>
+<script src="/static/js/jquery.serializejson.min.js"></script>
+<script src="/api/relation/no-match-mapping.js"></script>
+<script src="/static/js/toutiao.table.js"></script>
+<script src="/api/relation/relationOfZhongYuan.js"></script>
+<script src="/api/relation/relationOfMaiTian.js"></script>
+<script src="/api/relation/relationOfWoAi.js"></script>
+<script src="/api/project/projectApi.js"></script>
+<script src="/static/js/jquery.validate.min.js"></script>
+<script src="/static/js/toutiao/validator-setDefaults.js"></script>
+<script src="/static/plugins/bower_components/sweetalert/sweetalert.min.js"></script>
+<script src="/static/js/template-web.js"></script>
+<script>
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+    }
+    $(function(){
+        var ofCompanyMap={"中原地产":"centanet","合租趣":"hezuqu","巧房网":"qiaofang","蘑菇租房":"mgzf","会找房":"huizhaofang","相寓":"1zu","我爱我家":"5i5j","麦田房产":"maitian","合富置业":"ihk"};
+        var ofCompany = getQueryStringZhongwen('ofCompany');
+        var company;
+
+        company=ofCompanyMap[ofCompany];
+        console.log(company);
+        var companyUpstatus ;
+        var id = getQueryString('id');
+        var cityId = getQueryString('cityId');
+        var communityName;
+        var communityId;
+        var isExist;
+        var upid;
+
+        $('#maiTianList').ttTable({
+            paging:false,
+            columns:[
+                {
+                    field:"newcode",
+                    "title":"懂房帝楼盘ID"
+                },
+                {
+                    field:"projname",
+                    "title":"懂房帝楼盘名称"
+                },
+                {
+                    field:"",
+                    render:function (d) {
+                        return d['communityId']
+                    },
+                    "title":"导入方楼盘ID"
+                },
+                {
+                    field:"communityName",
+                    "title":"导入方楼盘名称"
+                },
+                {
+                    field:"company",
+                    "title":"导入方公司"
+                },
+                {
+                    render:function (d) {
+                        if(d['company']=="maitian"){
+                            return "<div class='button-box'>"
+                                + "<button class='btn btn-info importHouseMaiTian' data-cid='"+d['communityId']+"'>导入房源</button>"
+                                + "<button class='btn btn-info aibuildHouse' data-cid='" + d['communityId']+ "'>新建楼盘</button>"
+                                + "</div>";
+                        }else if (d['company']=="5i5j"){
+                            return "<div class='button-box'>"
+                                + "<button class='btn btn-info importHouseWoai' data-cid='"+d['communityId']+"'>导入房源</button>"
+                                + "<button class='btn btn-info aibuildHouse' data-cid='" + d['communityId']+ "'>新建楼盘</button>"
+                                + "</div>";
+                        }
+
+                    },
+                    "title":"管理操作"
+                }
+            ]}
+        );
+        $('#maiTianHouseList').ttTable({
+            paging:false,
+            columns:[
+                {
+                    field:"newcode",
+                    "title":"楼盘ID"
+                },
+                {
+                    field:"projname",
+                    "title":"楼盘名称"
+                },
+                {
+                    field:"nickname",
+                    "title":"别名"
+                },
+                {
+                    field:"districtName",
+                    "title":"区域"
+                },
+                {
+                    field:"areaName",
+                    "title":"商圈"
+                }, {
+                    field:"address",
+                    "title":"地址"
+                },
+                {
+                    render:function (d) {
+                        return "<div class='button-box'>"
+                            + "<button class='btn btn-info upmaitian' data-id='" + d['newcode']+ "' data-name='" + d['projname']+ "'>调整</button>"
+                            + "<button class='btn btn-info detailmaitian' data-id='" + d['newcode']+ "' data-nore='" + d['nOrE']+ "'>详情</button>"
+                            + "</div>";
+                    },
+                    "title":"管理操作"
+                }
+            ]}
+        );
+
+        var formparam = $('#pro_list_form').serializeJSON();
+        formparam.cityId=cityId;
+        formparam.isApprove=1;
+        formparam.isDel=0;
+        $('#search-list-area').click(function(){
+            formparam = $('#pro_list_form').serializeJSON();
+            formparam.cityId=cityId;
+            formparam.isApprove=1;
+            formparam.isDel=0;0
+            console.log(formparam)
+                loadMaiTian(formparam);
+        });
+
+       loadPage();
+
+        function  loadPage() {
+            com.toutiao.officedict.mapping.selectNotMatch.do({"id": id},function(res){
+                communityName = res['communityName'];
+                communityId = res['communityId'];
+                $("#projName").val(communityName);
+                $("#checkNameH").html(communityName);
+                companyUpstatus = res['ofCompany'];
+               /*  var company;
+                if(res['ofCompany']=="麦田房产"){
+                    company = "maitian"
+                }else if (res['ofCompany']=="中原地产"){
+                    company = ""
+                }else if (res['ofCompany']=="蘑菇租房"){
+                    company = "mgzf"
+                } else if (res['ofCompany']=="我爱我家"){
+                    company = "5i5j"
+                }*/
+                com.toutiao.officedict.relation.maiList.do({"communityName": res['communityName'],"company": company,"cityId": res['cityId']},function(tres, pageNum, pageSize, total){
+                        if(tres.length>0){
+                            $('#maiTianList').ttTable().showloading();
+                            $('#maiTianList').ttTable().load(tres,total);
+
+                            $('.aibuildHouse').each(function () {
+                                $(this).click(function () {
+                                    window.location = '/index#mvc/add-project.html'
+                                })
+                            });
+
+                            $('.importHouseMaiTian').each(function () {
+                                var _id = $(this).data('cid');
+                                $(this).click(function () {
+                                    $(this).html("正在导入");
+                                    $(this).attr("disabled","disabled");
+                                    com.toutiao.officedict.relation.importMaiTian.do({id:_id},function (res) {
+                                        console.log(res)
+                                        if(res==1){
+                                            swal({
+                                                title: "提示：房源导入失败，请检查服务器配置",
+                                                type: "error",
+                                                confirmButtonText: "确定",
+                                                closeOnConfirm: false
+                                            }, function () {
+                                                loadPage();
+                                                swal.close();
+                                            });
+                                        }else {
+                                            swal({
+                                                title: "导入成功! 共导入"+res.total+"个",
+                                                type: "success",
+                                                confirmButtonText: "确定",
+                                                closeOnConfirm: false
+                                            }, function () {
+                                                loadPage();
+                                                swal.close();
+                                            });
+                                        }
+
+                                    });
+                                })});
+
+                            $('.importHouseWoai').each(function () {
+                                var _id = $(this).data('cid');
+                                $(this).click(function () {
+                                    $(this).html("正在导入");
+                                    $(this).attr("disabled","disabled");
+                                    com.toutiao.officedict.relation.importWoai.do({id:_id},function (res) {
+                                        console.log(res)
+                                        if(res==1){
+                                            swal({
+                                                title: "提示：房源导入失败，请检查服务器配置",
+                                                type: "error",
+                                                confirmButtonText: "确定",
+                                                closeOnConfirm: false
+                                            }, function () {
+                                                loadPage();
+                                                swal.close();
+                                            });
+                                        }else {
+                                            swal({
+                                                title: "导入成功! 共导入"+res.total+"个",
+                                                type: "success",
+                                                confirmButtonText: "确定",
+                                                closeOnConfirm: false
+                                            }, function () {
+                                                loadPage();
+                                                swal.close();
+                                            });
+                                        }
+
+                                    });
+                                })});
+
+                            isExist=1;
+                            upid=tres[0]['id'];
+                        }else{
+                            console.log("meiyoy");
+                            isExist=0;
+                        }
+                        formparam = $('#pro_list_form').serializeJSON();
+                        formparam.cityId=cityId;
+                        loadMaiTian(formparam);
+                    })
+            },function (jqXHR, textStatus, errorThrown) {
+                console.log('error',jqXHR, textStatus, errorThrown)
+            });
+        }
+
+     function loadMaiTian(param) {
+            com.toutiao.officedict.project.listEsfHousingProject.do(param,function (res, pageNum, pageSize, total) {
+
+                $('#maiTianHouseList').ttTable().showloading();
+                $('#maiTianHouseList').ttTable().load(res);
+
+
+                $('.detailmaitian').each(function () {
+                    $(this).click(function () {
+                        var _id = $(this).data('id');
+                        var nOrE = $(this).data('nore');
+                        if(nOrE==0){
+                            window.location = '/index#mvc/newHouse/project-edit.html?newcode=' + _id;
+                        }else if (nOrE==1){
+                            window.location = '/index#mvc/esf/project-edit.html?newcode=' + _id;
+                        }
+                    })
+                });
+
+
+                $('.upmaitian').each(function () {
+                    var _id = $(this).data('id');
+                    var _name = $(this).data('name');
+                    $(this).click(function () {
+                        console.log(company)
+                        var result={id:upid,communityName:communityName,communityId:communityId,newcode:_id,cityId:cityId,projname:_name,company:company};
+                        if(isExist==1) {
+                            console.log(result);
+                            result.updateTime=getNowFormatDate();
+                            com.toutiao.officedict.relation.updateMaiTian.do(result,function (res,sucess) {
+                                if (res && res>0) {
+                                    com.toutiao.officedict.mapping.updateStutas.do({company:companyUpstatus,cityId:cityId,communityName:communityName,status:1},function () {
+                                    });
+                                    swal({
+                                        title: "保存成功!",
+                                        type: "success",
+                                        confirmButtonText: "确定",
+                                        closeOnConfirm: false
+                                    }, function () {
+                                        loadPage();
+                                        swal.close();
+                                    });
+                                }
+                            },function (jqXHR, textStatus, errorThrown) {
+                                console.log('error',jqXHR, textStatus, errorThrown)
+                            });
+                        }else if(isExist==0){
+                            result.createTime=getNowFormatDate();
+                            com.toutiao.officedict.relation.addMaiTian.do(result, function (res,success) {
+                                if (res && res>0) {
+                                    com.toutiao.officedict.mapping.updateStutas.do({company:companyUpstatus,cityId:cityId,communityName:communityName,status:1},function () {
+                                    });
+                                    swal({
+                                        title: "保存成功!",
+                                        type: "success",
+                                        confirmButtonText: "确定",
+                                        closeOnConfirm: false
+                                    }, function () {
+                                        loadPage();
+                                        swal.close();
+                                    })
+                                }
+                            },function () {
+                            });
+                        }
+                    })})
+            })
+        }
+
+    })
+</script>

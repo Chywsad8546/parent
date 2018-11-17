@@ -1,0 +1,144 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">区县列表</div>
+                <div class="panel-wrapper collapse in" aria-expanded="true">
+                    <div class="panel-body">
+                        <form id="list_form" class="form-inline form-search">
+                            <div class="form-group">
+                                <label class="control-label">城市ID</label>
+                                <input type="number" name="cityId" class="form-control" value="" style="width:100px;">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">城市名称</label>
+                                <input type="text" name="cityName" class="form-control" value="">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">区域ID</label>
+                                <input type="number" name="districtId" class="form-control" value="" style="width:100px;">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">区域名称</label>
+                                <input type="text" name="districtName" class="form-control" value="">
+                            </div>
+                            <div class="form-actions pull-right">
+                                <button type="button" id="search-list" class="btn btn-info"><i class="fa fa-check"></i>查询</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="listFang" class="panel block5" style="position: static; zoom: 1;">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/api/infrastruecture/districtApi.js"></script>
+<script src="/static/plugins/bower_components/sweetalert/sweetalert.min.js"></script>
+<script src="/static/js/template-web.js"></script>
+<script src="/api/project/projectApi.js"></script>
+<script src="/api/project/selectApi.js"></script>
+<script src="/static/js/toutiao.table.js"></script>
+<script src="/static/js/jquery.serializejson.min.js"></script>
+<script src="/static/js/toutiao/common.js"></script>
+
+<script>
+    /**
+     * 去空格
+     */
+    function myTrim(x) {
+        return x.replace(/^\s+|\s+$/gm,'');
+    }
+
+    /**
+     * 根据条件查询楼盘
+     */
+    var formparam = $('#list_form').serializeJSON();
+    $('#search-list').click(function(){
+        formparam = $('#list_form').serializeJSON();
+        formparam.districtName=myTrim(formparam.districtName);
+        formparam.cityName=myTrim(formparam.cityName);
+        console.log(formparam)
+        loadProjectList(1);
+    });
+
+    function loadProjectList(pageNum) {
+        var param = $.extend({"pageNum":pageNum},formparam)
+        com.toutiao.officedict.infrastruecture.district.searchdistrict.do(param,function (res, pageNum, pageSize, total) {
+            console.log(res);
+            $('#listFang').ttTable().showloading();
+
+            $('#listFang').ttTable().load(res, total, pageNum);
+
+            esfRenderButton(pageNum);
+
+        },function (jqXHR, textStatus, errorThrown) {
+            console.log('error',jqXHR, textStatus, errorThrown)
+        });
+    };
+
+
+    $(function () {
+
+
+        loadProjectList(1);
+        $('#listFang').ttTable({
+            paging:true,
+            columns:[
+                {
+                    field:"cityId",
+                    "title":"城市ID"
+                },
+                {
+                    field:"cityName",
+                    "title":"城市名称"
+                },
+                {
+                    field:"districtId",
+                    "title":"区域ID"
+                },
+                {
+                    field:"districtName",
+                    "title":"区域名称"
+                },
+                {
+                    render:function (d) {
+                        if( d['isApprove'] == 1){
+                            return "<div class='button-box'>"
+                                + "<button class='btn btn-info area' data-id='" + d['districtId']+ "' data-type='0'>查看新房商圈</button>"
+                                + "<button class='btn btn-info area' data-id='" + d['districtId']+ "' data-type='1'>查看二手房商圈</button>"
+                                + "</div>";
+                        }
+                        return "<div class='button-box'>"
+                            + "<button class='btn btn-info area' data-id='" + d['districtId']+ "' data-type='0'>查看新房商圈</button>"
+                            + "<button class='btn btn-info area' data-id='" + d['districtId']+ "' data-type='1'>查看二手房商圈</button>"
+                            + "</div>";
+                    },
+                    "title":"管理操作"
+                }
+
+            ],
+            onPage:function (pageIndex, pageSize) {
+                loadProjectList(pageIndex);
+            }}
+        );
+    })
+    function esfRenderButton(pageNum) {
+        $('.area').each(function () {
+            var _id = $(this).data('id');
+            var type = $(this).data('type');
+            $(this).on('click', function () {
+                window.location = '/index#mvc/infrastructure/area.html' + '?districtId=' + _id+'&&type='+type;
+            });
+        });
+    }
+</script>

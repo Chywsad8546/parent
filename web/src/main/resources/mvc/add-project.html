@@ -1,0 +1,250 @@
+<!-- 录入新楼盘 -->
+<!--<link rel="stylesheet" href="/static/plugins/bower_components/bootstrap-select/bootstrap-select.min.css">-->
+<link href="/static/plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="/static/css/toutiao/css/user-defined.css">
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">录入新楼盘</div>
+                <div class="panel-wrapper">
+                    <div class="panel-body">
+                        <div class="form-group validator-error-box">
+                            <label class="radio-inline">
+                                <div class="radio radio-info">
+                                    <input class="radioItem" type="radio"  name="housingType" id="radio-new-house" value="0">
+                                    <label for="radio-new-house">新房</label>
+                                </div>
+                            </label>
+                            <label class="radio-inline">
+                                <div class="radio radio-info">
+                                    <input class="radioItem" type="radio" name="housingType" id="radio-esf" value="1">
+                                    <label for="radio-esf">二手房</label>
+                                </div>
+                            </label>
+                        </div>
+
+                        <form class="form-horizontal user-defined-form" id="add-office-form" method="post">
+
+                            <input type="hidden" name="cityId" value="12"><!--默认城市北京-->
+
+                            <div class="form-group">
+                                <label for="projname" class="control-label col-md-2 required">楼盘名称</label>
+                                <div class="col-md-10">
+                                    <input type="text" id="projname" name="projname" class="form-control" placeholder="" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="pinyinName" class="control-label col-md-2 required">拼音</label>
+                                <div class="col-md-10">
+                                    <input type="text" id="pinyinName" name="pinyinName" class="form-control" placeholder="" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="control-label col-md-2">楼盘别名</label>
+                                <div class="col-md-10">
+                                    <input type="text" name="nickname" class="form-control" placeholder="" value="">
+                                    <button class="btn btn-info" type="button" onclick="addNickName()" id="addbicknameid">增加别名</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="address" class="control-label col-md-2 required">地址</label>
+                                <div class="col-md-10">
+                                    <input type="text" id="address" name="address" class="form-control" placeholder="" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="buildCount" class="control-label col-md-2 required">楼栋数</label>
+                                <div class="col-md-10">
+                                    <input type="text" id="buildCount" name="buildCount" class="form-control" placeholder="" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2 required">业态/物业类型</label>
+                                <div class="col-md-10">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="propertyType" value="1" checked> 住宅
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="propertyType" value="2"> 别墅
+                                    </label>
+                                    <!--<label class="radio-inline">
+                                        <input type="radio" name="propertyType" value="3"> 写字楼
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="propertyType" value="4"> 商铺
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="propertyType" value="5"> 底商
+                                    </label>-->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="list-residential-category-content" class="control-label col-md-2 required">住宅类别</label>
+                          <!--      <div class="col-md-5" >
+                                    <select class="form-control" id="residentialCategory"  onchange="bresidental()">
+                                            <option value="住宅">住宅</option>
+                                            <option value="商业">商业</option>
+                                            <option value="其他">其他</option>
+                                    </select>
+                                </div>-->
+                                <div class="col-md-10" id="list-residential-category-content">
+                                <!--    <select class='form-control' name='residentialCategory[]' id='residentialCategoryDeatil'>
+                                        <optgroup label="公寓">
+                                            <option value="5">商住楼</option>
+                                            <option value="3">酒店式公寓</option>
+                                        </optgroup>
+                                        <optgroup label="公寓">
+                                            <option value="2">住宅底商</option>
+                                            <option value="23">写字楼商铺</option>
+                                            <option value="2">临街商铺</option>
+                                            <option value="24">市场类商铺</option>
+                                            <option value="2">购物中心商铺</option>
+                                        </optgroup>
+                                        <optgroup label="写字楼">
+                                            <option value="16">写字楼</option>
+                                        </optgroup>
+                                    </select>-->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="list-residential-build-form-content" class="control-label col-md-2 required">建筑形式</label>
+                                <div class="col-md-10" id="list-residential-build-form-content">
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="list-residential-build-category-content" class="control-label col-md-2 required">建筑类别</label>
+                                <div class="col-md-10" id="list-residential-build-category-content">
+                                    <!--<select class="form-control" name="buildCategory" id="list-residential-build-category-content">
+
+                                    </select>-->
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="areaId" class="control-label col-md-2 required">区域商圈</label>
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <select class="form-control" name="districtId" id="districtId">
+                                                <option value=''>--请选择区域--</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select class="form-control" name="areaId" id="areaId">
+                                                <option value=''>--请选择商圈--</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-2">项目描述</label>
+                                <div class="col-md-10">
+                                    <textarea name="projdesc" class="form-control" rows="5"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-actions" align="right">
+                                <button type="submit" class="btn btn-info" id="sava-success-btn"><i class="fa fa-check m-r-5"></i>保存</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<script id="list-residential-sy" type="text/html">
+        <optgroup label="公寓">
+            <option value="5">商住楼</option>
+            <option value="3">酒店式公寓</option>
+        </optgroup>
+        <optgroup label="商铺">
+            <option value="2">住宅底商</option>
+            <option value="23">写字楼商铺</option>
+            <option value="2">临街商铺</option>
+            <option value="24">市场类商铺</option>
+            <option value="2">购物中心商铺</option>
+        </optgroup>
+        <optgroup label="写字楼">
+            <option value="16">写字楼</option>
+        </optgroup>
+</script>
+<script id="list-residential-zz" type="text/html">
+        <optgroup label="住宅">
+        <option value="1">普通住宅</option>
+        <option value="4">花园洋房</option>
+        <option value="8">经济适用房</option>
+        <option value="10">公租房</option>
+        <option value="9">廉租房</option>
+        <option value="12">限价房</option>
+        <option value="1">共产房</option>
+        <option value="2">限竞房</option>
+        <option value="13">自住型商品房</option>
+        <option value="3">安居型商品房</option>
+        </optgroup>
+        <optgroup label="公寓">
+        <option value="2">公寓</option>
+        </optgroup>
+</script>-->
+<!-- 住宅类别 -->
+<script id="list-residential-category-template" type="text/html">
+    {{each res value i}}
+        <label class="checkbox-inline">
+            <input type="checkbox" name="residentialCategory[]" value="{{value.categoryId}}"> {{value.categoryName}}
+        </label>
+    {{/each}}
+</script>
+<!-- 建筑类别 -->
+<script id="list-residential-build-category-template" type="text/html">
+    {{each res value i}}
+        <label class="checkbox-inline">
+            <input type="checkbox" name="buildCategory[]" value="{{value.buildCategoryId}}"> {{value.buildCategoryName}}
+        </label>
+    {{/each}}
+</script>
+<!-- 建筑形式 -->
+<script id="list-residential-build-form-template" type="text/html">
+    {{each res value i}}
+        <label class="checkbox-inline">
+            <input type="checkbox" name="buildForm[]" value="{{value.formId}}"> {{value.buildFormName}}
+        </label>
+    {{/each}}
+</script>
+
+<script src="/static/plugins/bower_components/sweetalert/sweetalert.min.js"></script>
+<script src="/static/js/jquery.validate.min.js"></script>
+<script src="/static/js/additional-methods.min.js"></script>
+<script src="/static/js/messages_zh.min.js"></script>
+<script src="/static/js/toutiao/validator-setDefaults.js"></script>
+
+<!--<script src="/static/plugins/bower_components/bootstrap-select/bootstrap-select.min.js"></script>-->
+<script src="/static/js/template-web.js"></script>
+<script src="/api/project/projectApi.js"></script>
+<script src="/api/project/selectApi.js"></script>
+<script src="/static/js/jquery.serializejson.min.js"></script>
+<script src="/static/js/toutiao/add-project.js"></script>
+<script>
+    function addNickName() {
+        $('#addbicknameid').before("<input type='text' id='nickname' name='nickname' class='form-control' placeholder='' value=''>")
+    }
+
+/*    function bresidental() {
+
+        var residentalVal = $('#residentialCategory').val();
+        console.log(residentalVal);
+        if(residentalVal == "住宅"){
+            var residentzz = template('list-residential-zz',{"res":"a"});
+            $('#residentialCategoryDeatil').html(residentzz);
+        }else if (residentalVal == "商业"){
+            var residentsy = template('list-residential-sy',{"res":"a"});
+            $('#residentialCategoryDeatil').html(residentsy);
+        }else if (residentalVal == "其他"){
+            $('#residentialCategoryDeatil').html("<option value='14'>其他</option>");
+        }
+
+    }*/
+</script>

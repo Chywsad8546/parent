@@ -1,0 +1,239 @@
+<link href="/static/plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
+<link href="/static/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="/static/plugins/bower_components/Magnific-Popup-master/dist/magnific-popup.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/toutiao/css/user-defined.css">
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">预售证信息
+                    <duv class="pull-right">
+                        <a style="cursor: pointer;" id="add-sales-license">添加预售证</a>
+                    </duv>
+                </div>
+
+                <div class="panel-wrapper">
+                    <div class="panel-body">
+                        <div class="clearfix"></div>
+                        <div>
+                            删除操作后，需要点击“保存”按钮才可保存信息
+                            <div id="sales-license-table" class="panel block5" style="position: static; zoom: 1;">
+                                <form id="sales-license-form" class="form-horizontal" method="post" enctype="">
+
+                                </form>
+                                <button class='btn btn-info p-r-20 p-l-20' id="save-sales-license-btn">保存</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="/static/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="/static/plugins/bower_components/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="/static/plugins/bower_components/Magnific-Popup-master/dist/jquery.magnific-popup.min.js"></script>
+<script src="/static/plugins/bower_components/Magnific-Popup-master/dist/jquery.magnific-popup-init.js"></script>
+<script src="/static/plugins/bower_components/sweetalert/sweetalert.min.js"></script>
+<script src="/static/js/jquery.validate.min.js"></script>
+<script src="/static/js/additional-methods.min.js"></script>
+<script src="/static/js/messages_zh.min.js"></script>
+<script src="/static/js/toutiao/validator-setDefaults.js"></script>
+<script src="https://cdn.bootcss.com/jquery.serializeJSON/2.8.1/jquery.serializejson.min.js"></script>
+<script src="/static/js/toutiao.table.js"></script>
+<script src="/static/js/toutiao/common.js"></script>
+<script src="/api/newHouse/newHouseApi.js"></script>
+<script type="text/javascript">
+    var _newCode = getQueryString('newcode');
+    $('input[name="newcode"]').val(_newCode);
+
+    loadData(_newCode);
+
+    $('#sales-license-form').ttTable({
+        paging:false,
+        columns:[
+            {
+                render:function (d) {
+                    var _name = '';
+                    if (d && d['licenseName']) {
+                        _name = d['licenseName'];
+                    }
+
+                    return '<input type="hidden" name="newcode" value="' + _newCode + '" >'
+                        + '<label name="licenseName">' + _name + '</label>';
+                },
+                "title":"预售许可证"
+            },
+            {
+                render:function (d) {
+                    var _time = '';
+
+                    if (d && d['time']) {
+                        _time = d['time'];
+                    }
+                    return '<label name="time">' + _time + '</label>';
+                },
+                "title":"发证时间"
+            },
+            {
+                render:function (d) {
+                    var _buildInfo = '';
+                    if (d && d['buildInfo'] && 'undefined' != d['buildInfo']) {
+                        _buildInfo =  d['buildInfo'];
+                    }
+
+                    return '<label name="buildInfo">' + _buildInfo + '</label>';
+                },
+                "title":"绑定楼栋"
+            },
+            {
+                render:function (d) {
+                    return '<button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" ' +
+                        'data-toggle="tooltip" data-original-title="Delete" aria-describedby="tooltip214503"><i class="ti-close" aria-hidden="true"></i>' +
+                        '</button>' +
+//                        '<div class="tooltip fade top in" role="tooltip" id="tooltip214503" style="top: 185px; left: 1629.5px; display: block;">' +
+//                        '<div class="tooltip-arrow" style="left: 50%;"></div>' +
+//                        '<div class="tooltip-inner">删除</div>' +
+                        '</div>';
+                },
+                "title":"删除"
+            }
+
+        ],
+        onPage:function (pageIndex,pageSize) {
+            loadData(_newCode);
+        }
+    });
+
+    //加载列表数据
+    function loadData(newcode, pageNum) {
+        com.toutiao.officedict.newHouse.listSalesLicenseInfo.do({"newcode":newcode},function(res, pageNum, pageSize, total){
+
+            $('#sales-license-form').ttTable().showloading();
+            $('#sales-license-form').ttTable().load(res);
+
+            //删除
+            $('.delete-row-btn').on('click', function () {
+                $(this).parents('tr').remove();
+            });
+
+        },function (jqXHR, textStatus, errorThrown) {
+            console.log('error',jqXHR, textStatus, errorThrown)
+        });
+
+    };
+
+    //新增
+    $('#add-sales-license').on('click', function(){
+        $('#sales-license-form').find('table tbody').append(rowHtml);
+//                $('#save-sales-license-btn').show();
+        datePicker();
+
+        //删除
+        $('.delete-row-btn').on('click', function () {
+            $(this).parents('tr').remove();
+        });
+    });
+
+    var rowHtml = "<tr>" +
+        "<input type='hidden' name='newcode' value='" + _newCode + "' >" +
+        "<td class='vm'><input type='text' class='form-control' name='licenseName'></td>" +
+        "<td class='vm'>" +
+        "<div class='input-group col-sm-9'>" +
+        "<input type='text' class='form-control datepicker-add' placeholder='yyyy-MM-dd' name='time'>" +
+        "<span class='input-group-addon'><i class='icon-calender'></i></span>" +
+        "</div>" +
+        "</td>" +
+        "<td class='vm'><input type='text' class='form-control' id='build-info' name='buildInfo'></td>" +
+        "<td class='vm'>" +
+        "<button type='button' class='btn btn-sm btn-icon btn-pure btn-outline delete-row-btn' data-toggle='tooltip' data-original-title='Delete'>" +
+        "<i class='ti-close' aria-hidden='true'></i>" +
+        "</button>" +
+        "</td>" +
+        "</tr>";
+
+    //新增表单验证
+    $('#sales-license-form').validate({
+        rules: {
+            licenseName: 'required',
+            time: {
+                required: true
+            },
+            buildInfo: {
+                required: true
+            }
+        },
+        messages: {
+            licenseName: '请输入预售许可证名称',
+            time: {
+                required:'请选择发证日期'
+            },
+            buildInfo: {
+                required:'请输入许可证绑定楼栋信息'
+            }
+        },
+        submitHandler: function(){
+            var result = $('#sales-license-form').serializeArray();
+            console.log("result:###" + result);
+
+
+            var columnArray = new Array();
+            $('#sales-license-form').find('tr:gt(0)').each(function () {
+                var columnObject = new Object();
+                $(this).find("input, label").each(function () {
+                    if ($(this).attr('name')) {
+
+                        if ($(this).val()) {
+                            columnObject[$(this).attr('name')] = $(this).val();
+                        } else {
+                            columnObject[$(this).attr('name')] = $(this).text();
+                        }
+                    }
+                });
+                columnArray.push(columnObject);
+            });
+
+            if (0 == columnArray.length) {
+                var tempObject = new Object();
+                tempObject['newcode'] = _newCode;
+                columnArray.push(tempObject);
+            }
+
+            com.toutiao.officedict.newHouse.saveSalesLicense.do(JSON.stringify(columnArray), function (res, success, error) {
+                if (res && res>0) {
+                    swal({
+                        title: "保存成功!",
+                        type: "success",
+                        confirmButtonText: "确定",
+                        closeOnConfirm: false
+                    }, function () {
+                        loadData(_newCode);
+                        swal.close();
+                    });
+
+                }
+            },function (jqXHR, textStatus, errorThrown) {
+                console.log('error',jqXHR, textStatus, errorThrown)
+            });
+
+        }
+    });
+
+
+    function datePicker() {
+        jQuery('.datepicker-add').datepicker({
+            language:'zh-CN',
+            autoclose: true,
+            todayHighlight: true,
+            format:"yyyy-mm-dd",
+            pickerPosition: 'bottom-left'
+        });
+    };
+
+    $('#save-sales-license-btn').on('click', function(){
+        $('#sales-license-form').submit();
+    });
+</script>

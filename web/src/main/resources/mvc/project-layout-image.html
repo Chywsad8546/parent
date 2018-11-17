@@ -1,0 +1,257 @@
+<link href="/static/plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
+<link href="/static/plugins/bower_components/fileinput/fileinput.min.css" rel="stylesheet" type="text/css">
+<link href="/static/plugins/bower_components/Magnific-Popup-master/dist/magnific-popup.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/toutiao/css/user-defined.css">
+<script src="/api/project/projectApi.js"></script>
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">户型图管理
+                    <duv class="pull-right">
+                        <a style="cursor: pointer;" data-toggle="modal" data-target="#layout-upload-modal">上传户型图</a>
+                    </duv>
+                </div>
+
+                <div class="panel-wrapper">
+                    <div class="panel-body">
+                        <div class="clearfix"></div>
+                        <div>
+                            <div id="layout-image-table" class="panel block5" style="position: static; zoom: 1;">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+
+        <!--户型图上传start-->
+        <div id="layout-upload-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">上传图片</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" id="layout-image-upload-form" enctype="multipart/form-data" method="post">
+                            <!--隐藏域信息-->
+                            <input type="hidden" name="layoutId">
+
+                            <div class="form-group">
+                                <label for="layout-file-select" class="col-sm-2 control-label">选择文件:</label>
+                                <div class="col-sm-9">
+                                    <input id="layout-file-select" type="file" name="file">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="layout-img-title" class="col-sm-2 control-label">标题:</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="layout-img-title" name="imgTitle">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="layout-img-desc" class="col-sm-2 control-label">图片描述:</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" id="layout-img-desc" name="imgDesc"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="layout-image-save" type="button" class="btn btn-danger waves-effect waves-light">保存</button>
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--户型图上传end-->
+    </div>
+
+    <!-- ============================================================== -->
+</div>
+<!-- Magnific popup JavaScript -->
+<script src="/static/plugins/bower_components/Magnific-Popup-master/dist/jquery.magnific-popup.min.js"></script>
+<script src="/static/plugins/bower_components/Magnific-Popup-master/dist/jquery.magnific-popup-init.js"></script>
+<script src="/static/plugins/bower_components/sweetalert/sweetalert.min.js"></script>
+<script src="/static/plugins/bower_components/fileinput/fileinput.min.js"></script>
+<script src="/static/plugins/bower_components/fileinput/locales/zh.js"></script>
+<script src="/static/js/jquery.validate.min.js"></script>
+<script src="/static/js/additional-methods.min.js"></script>
+<script src="/static/js/messages_zh.min.js"></script>
+<script src="/static/js/toutiao/validator-setDefaults.js"></script>
+<script src="https://cdn.bootcss.com/jquery.serializeJSON/2.8.1/jquery.serializejson.min.js"></script>
+<script src="/static/js/toutiao.table.js"></script>
+<script src="/static/js/toutiao/common.js"></script>
+<script src="/api/newHouse/newHouseApi.js"></script>
+
+<!--<script src="/static/js/bootstrap-table-zh-CN.js"></script>-->
+<script type="text/javascript">
+    var _layoutId = getQueryString('layout'),
+        _newCode = getQueryString('newcode');
+    $('input[name="layoutId"]').val(_layoutId);
+    $('input[name="newcode"]').val(_newCode);
+
+    var _imgPrefix = "http://s1.qn.toutiaofangchan.com/";
+    $("#layout-file-select").fileinput({
+        language : 'zh',
+        showUpload : false,
+//      allowedPreviewTypes : [ 'image' ],
+        allowedFileExtensions : ['jpg', 'png','gif']
+    });
+
+    loadLayoutImages(_newCode, _layoutId);
+
+    $('#layout-image-table').ttTable({
+        paging:true,
+        columns:[
+            {
+                field:"layoutImgId",
+                "title":"图片ID"
+            },
+            {
+                field:"imgTitle",
+                "title":"标题"
+            },
+            {
+                render:function (d) {
+                    return "<a class='image-popup-vertical-fit' href='" + _imgPrefix + d['imgPath'] + "-original" + "' title=''>"
+                        + "<img src='" + _imgPrefix + d['imgPath'] + "-tt400x300" + "' width='100'>"
+                        + "</a>";
+                },
+                "title":"图片（鼠标点击查看大图）"
+            },
+            {
+                field:"creatorId",
+                "title":"上传人"
+            },
+            {
+                field:"createTime",
+                "title":"上传时间"
+            },
+            {
+                field:"imgResolution",
+                "title":"图片尺寸"
+            },
+            {
+                render:function (d) {
+                    if (d['imgSize'] > 0) {
+                        return d['imgSize'] + "KB";
+                    }
+
+                    return "";
+                },
+                "title":"图片大小"
+            },
+            {
+                render:function (d) {
+                    return "<div class='button-box'>"
+                        + "<button class='btn btn-info layout-image-del' data-id='" + d['layoutImgId']+ "'>删除</button>"
+                        + "</div>";
+                },
+                "title":"管理"
+            }
+        ],
+        onPage:function (pageIndex,pagesize) {
+            loadLayoutImages(_newCode, _layoutId, pageIndex);
+        }
+    });
+
+    /**
+     * 户型图列表渲染
+     * @param newcode
+     */
+    function  loadLayoutImages(newcode, layoutId, pageNum) {
+        com.toutiao.officedict.pic.listHousingProjectLayoutImages.do({"id": layoutId, "pageNum":pageNum},function(res, pageNum, pageSize, total){
+            $('#layout-image-table').ttTable().showloading();
+            $('#layout-image-table').ttTable().load(res, total, pageNum);
+            imagePopup();
+
+            //户型图删除
+            $('.layout-image-del').each(function () {
+                $(this).on('click', function () {
+                    var _id = $(this).data('id');
+                    com.toutiao.officedict.pic.deleteHousingProjectLayoutImage.do({"id":_id}, function (res) {
+                        if (res && res>0) {
+                            var dateTime ={newcode:_newCode};
+                            com.toutiao.officedict.project.updateHousingProject.do(dateTime,function (res){
+                                if (res && res>0) {
+                                    swal({
+                                        title: "删除成功!",
+                                        type: "success",
+                                        confirmButtonText: "确定",
+                                        closeOnConfirm: false
+                                    }, function () {
+                                        loadLayoutImages(newcode, layoutId);
+                                        swal.close();
+                                    });
+                                };
+                            })
+                        }
+                    })
+                });
+            });
+        });
+    };
+
+
+    //上传图片表单验证
+    $('#layout-image-upload-form').validate({
+        rules: {
+            file: 'required'
+        },
+        messages: {
+            file: '请选择图片'
+        },
+        submitHandler: function(){
+            var layoutUploadFormData = new FormData($('#layout-image-upload-form')[0]);
+
+            com.toutiao.officedict.pic.saveHousingProjectLayoutImage.do(layoutUploadFormData, function (res, success, error) {
+                if (res && res>0) {
+                    var dateTime ={newcode:_newCode};
+                    com.toutiao.officedict.project.updateHousingProject.do(dateTime,function (res){
+                        if (res && res>0) {
+                            swal({
+                                title: "保存成功!",
+                                type: "success",
+                                confirmButonText: "确定",
+                                closeOnConfirm: false
+                            }, function () {
+                                $('#layout-upload-modal').modal('hide');
+                                loadLayoutImages(_newCode, _layoutId);
+                                swal.close();
+                            });
+                        };
+                    })
+                }
+            },function (jqXHR, textStatus, errorThrown) {
+                console.log('error',jqXHR, textStatus, errorThrown)
+            });
+
+        }
+    });
+
+    //上传户型图
+    $('#layout-image-save').on('click', function () {
+        $('#layout-image-upload-form').submit();
+    });
+
+    //图片弹出层
+    function imagePopup() {
+        $('.image-popup-vertical-fit').magnificPopup({
+            type: 'image',
+            closeOnContentClick: true,
+//            mainClass: 'mfp-img-mobile',
+            image: {
+                verticalFit: true
+            }
+        });
+    };
+</script>

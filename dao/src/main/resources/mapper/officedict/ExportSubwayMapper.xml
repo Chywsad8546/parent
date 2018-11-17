@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.toutiao.officedict.dao.mapper.officedict.ExportSubwayMapper" >
+    <resultMap id="BaseResultMap" type="com.toutiao.officedict.dao.entity.officedict.ExportSubway" >
+        <result column="line_id" jdbcType="INTEGER" property="lineId" />
+        <result column="subway_name" jdbcType="VARCHAR" property="subwayName" />
+        <result column="station_id" jdbcType="INTEGER" property="stationId" />
+        <result column="station_name" jdbcType="VARCHAR" property="stationName" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+      subway_line.line_id,subway_line.subway_name,subway_station.station_id,subway_station.station_name
+    </sql>
+    <select id="selectSubway" resultMap="BaseResultMap" parameterType="Integer">
+      select
+        <include refid="Base_Column_List" />
+      from subway_line
+      LEFT JOIN subway_station on subway_line.line_id = subway_station.line_id
+      where city_id = #{cityId,jdbcType=INTEGER}  ORDER BY subway_station.line_id
+    </select>
+</mapper>

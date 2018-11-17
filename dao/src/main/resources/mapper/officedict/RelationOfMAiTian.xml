@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.toutiao.officedict.dao.mapper.officedict.RelationOfMaiTianMapper" >
+    <resultMap id="BaseResultMap" type="com.toutiao.officedict.dao.entity.officedict.RelationOfMaiTian" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="community_id" property="communityId" jdbcType="VARCHAR" />
+        <result column="community_name" property="communityName" jdbcType="VARCHAR" />
+        <result column="community_district" property="communityDistrict" jdbcType="VARCHAR" />
+        <result column="community_bizcircle" property="communityBizcircle" jdbcType="VARCHAR" />
+        <result column="community_address" property="communityAddress" jdbcType="VARCHAR" />
+        <result column="company" property="company" jdbcType="VARCHAR" />
+        <result column="newcode" property="newcode" jdbcType="INTEGER" />
+        <result column="projname" property="projname" jdbcType="VARCHAR" />
+        <result column="city_id" property="cityId" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        api_project_mapping.id, api_project_mapping.newcode, api_project_mapping.community_id, community_name, community_district, community_bizcircle,community_address,company,api_project_mapping.city_id,api_project_mapping.create_time,api_project_mapping.update_time
+    </sql>
+
+    <select id="selectRelationOfMaiTian" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.domain.query.RelationOfMaiTianQuery">
+        SELECT
+        <include refid="Base_Column_List" />,proj_info.projname
+        FROM api_project_mapping
+        LEFT JOIN proj_info ON api_project_mapping.newcode = proj_info.newcode
+        WHERE 1=1
+        <if test="id != null">
+            AND api_project_mapping.id = #{id}
+        </if>
+        <if test="cityId != null and cityId !=''">
+            AND api_project_mapping.city_id = #{cityId}
+        </if>
+        <if test="newcode != null and newcode !=''">
+            AND api_project_mapping.newcode = #{newcode}
+        </if>
+        <if test="company != null and company !=''">
+            AND company = #{company}
+        </if>
+        <if test="projname != null and projname !=''">
+            AND proj_info.projname LIKE '%${projname}%'
+        </if>
+        <if test="communityName != null and communityName !=''">
+            AND api_project_mapping.community_name LIKE '%${communityName}%'
+        </if>
+    </select>
+
+    <select id="selectOne" resultMap="BaseResultMap" parameterType="Integer">
+        SELECT
+        <include refid="Base_Column_List" />,proj_info.projname
+        FROM api_project_mapping
+        LEFT JOIN proj_info ON api_project_mapping.newcode = proj_info.newcode
+        WHERE  api_project_mapping.id = #{id}
+    </select>
+
+    <select id="selectCount" resultType="Integer" parameterType="com.toutiao.officedict.domain.query.RelationOfMaiTianQuery">
+        SELECT
+        COUNT(*)
+        FROM api_project_mapping
+        WHERE  api_project_mapping.community_name = #{communityName,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateById" parameterType="com.toutiao.officedict.domain.query.RelationOfMaiTianQuery" >
+       update api_project_mapping
+        <set >
+        <if test="communityId != null and communityId !=''" >
+            community_id = #{communityId,jdbcType=VARCHAR},
+        </if>
+        <if test="communityDistrict != null and communityDistrict !=''" >
+            community_district = #{communityDistrict,jdbcType=VARCHAR},
+        </if>
+        <if test="communityBizcircle != null and communityBizcircle !=''" >
+            community_bizcircle = #{communityBizcircle,jdbcType=VARCHAR},
+        </if>
+        <if test="communityAddress != null and communityAddress !=''" >
+            community_address = #{communityAddress,jdbcType=VARCHAR},
+        </if>
+        <if test="company != null and company !=''" >
+            company = #{company,jdbcType=VARCHAR},
+        </if>
+         newcode = #{newcode,jdbcType=INTEGER},
+         community_name = #{communityName,jdbcType=VARCHAR},
+         update_time = #{updateTime,jdbcType=TIMESTAMP},
+        </set>
+       where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <insert id="insert" parameterType="com.toutiao.officedict.domain.query.RelationOfMaiTianQuery">
+        insert into api_project_mapping (community_name, create_time,city_id,newcode,company
+        <if test="communityId != null" >
+            ,community_id
+        </if>
+        <if test="communityDistrict != null" >
+            ,community_district
+        </if>
+        <if test="communityBizcircle != null" >
+            ,community_bizcircle
+        </if>
+        <if test="communityAddress != null" >
+            ,community_address
+        </if>
+        )
+        values (#{communityName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{cityId}, #{newcode}, #{company}
+        <if test="communityId != null" >
+            ,#{communityId,jdbcType=VARCHAR}
+        </if>
+        <if test="communityDistrict != null" >
+            ,#{communityDistrict,jdbcType=VARCHAR}
+        </if>
+        <if test="communityBizcircle != null" >
+            ,#{communityBizcircle,jdbcType=VARCHAR}
+        </if>
+        <if test="communityAddress != null" >
+            ,#{communityAddress,jdbcType=VARCHAR}
+        </if>
+        )
+    </insert>
+
+    <select id="selectByTouName" resultType="Integer" parameterType="String">
+        SELECT
+        COUNT(*)
+        FROM proj_info
+        WHERE
+        is_del=0 and n_or_e=1 and is_approve=1
+        AND projname = #{projname}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from api_project_mapping
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+</mapper>

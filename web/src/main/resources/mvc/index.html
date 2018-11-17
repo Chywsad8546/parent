@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Bootstrap Core CSS -->
+    <link href="/static/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Menu CSS -->
+    <link href="/static/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css" rel="stylesheet">
+    <link href="/static/plugins/bower_components/toast-master/css/jquery.toast.css" rel="stylesheet">
+    <!-- animation CSS -->
+    <link href="/static/css/animate.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/static/css/style.css" rel="stylesheet">
+    <!-- color CSS -->
+    <link href="/static/css/colors/megna-dark.css" id="theme" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/toutiao/css/loading.css">
+    <link href="/static/plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    
+    <![endif]-->
+    
+    <style>
+        .form-search .form-group {
+            margin-bottom: 10px;
+        }
+        .vm {
+            vertical-align: middle !important;
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+        }
+        input[type="number"]{
+            -moz-appearance: textfield;
+        }
+    </style>
+</head>
+
+<body class="fix-header">
+
+<!-- ============================================================== -->
+<!-- Preloader -->
+<!-- ============================================================== -->
+<div class="preloader">
+    <svg class="circular" viewBox="25 25 50 50">
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+    </svg>
+</div>
+<!-- ============================================================== -->
+<!-- Wrapper -->
+<!-- ============================================================== -->
+<div id="wrapper">
+    <!-- ============================================================== -->
+    <!-- Topbar header - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <nav class="navbar navbar-default navbar-static-top m-b-0">
+        <div class="navbar-header">
+            <div class="top-left-part">
+                <!-- Logo -->
+                <a class="logo" href="/index">
+                    <!-- Logo icon image, you can use font-icon also --><b>
+                    <!--This is dark logo icon--><img src="/static/plugins/images/admin-logo.png" alt="home" class="dark-logo" /><!--This is light logo icon--><img src="/static/plugins/images/admin-logo-dark.png" alt="home" class="light-logo" />
+                </b>
+                    <!-- Logo text image you can use text also --><span class="hidden-xs">
+                        <!--This is dark logo text--><img src="/static/plugins/images/admin-text.png" alt="home" class="dark-logo" /><!--This is light logo text--><img src="/static/plugins/images/admin-text-dark.png" alt="home" class="light-logo" />
+                     </span> </a>
+            </div>
+            <!-- /Logo -->
+            <!-- Search input and Toggle icon -->
+            <ul class="nav navbar-top-links navbar-left">
+                <li><a href="javascript:void(0)" class="open-close waves-effect waves-light"><i class="ti-menu"></i></a></li>
+                <!-- /.Megamenu -->
+            </ul>
+            <ul class="nav navbar-top-links navbar-right pull-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="javascript:void(0)">
+
+                        <b class="hidden-xs" id="cityCurrentName">切換城市</b>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user animated flipInY">
+                        <li><a onclick="chnageCity(12)"  href="javascript:void(0)">北京</a></li>
+                        <li><a  onclick="chnageCity(13)" href="javascript:void(0)">上海</a></li>
+                        <li><a  onclick="chnageCity(14)" href="javascript:void(0)">天津</a></li>
+                        <li><a  onclick="chnageCity(45)" href="javascript:void(0)">成都</a></li>
+                        <li><a  onclick="chnageCity(204)" href="javascript:void(0)">长沙</a></li>
+                        <li><a  onclick="chnageCity(26)" href="javascript:void(0)">杭州</a></li>
+                        <li><a  onclick="chnageCity(65)" href="javascript:void(0)">南京</a></li>
+                        <li><a  onclick="chnageCity(142)" href="javascript:void(0)">南宁</a></li>
+                        <li><a  onclick="chnageCity(67)" href="javascript:void(0)">苏州</a></li>
+                        <li><a  onclick="chnageCity(155)" href="javascript:void(0)">太原</a></li>
+                        <li><a  onclick="chnageCity(194)" href="javascript:void(0)">武汉</a></li>
+                        <li><a  onclick="chnageCity(66)" href="javascript:void(0)">无锡</a></li>
+                        <li><a  onclick="chnageCity(103)" href="javascript:void(0)">郑州</a></li>
+                        <li><a  onclick="chnageCity(16)" href="javascript:void(0)">广州</a></li>
+                        <li><a  onclick="chnageCity(17)" href="javascript:void(0)">深圳</a></li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="javascript:void(0)">
+
+                        <b class="hidden-xs" id="_index_loginname"></b>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user animated flipInY">
+
+                        <li role="separator" class="divider"></li>
+                        <li><a id="logout"><i class="fa fa-power-off"></i> 退出</a></li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+        </div>
+        <!-- /.navbar-header -->
+        <!-- /.navbar-top-links -->
+        <!-- /.navbar-static-side -->
+    </nav>
+    <!-- End Top Navigation -->
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <div class="navbar-default sidebar" role="navigation">
+        <div class="sidebar-nav slimscrollsidebar">
+            <div class="sidebar-head">
+                <h3><span class="fa-fw open-close"><i class="ti-close ti-menu"></i></span> <span class="hide-menu">菜单</span></h3> </div>
+            <ul class="nav" id="side-menu">
+                <li> <a href="index.html" class="waves-effect">
+                    <i class="mdi mdi-av-timer fa-fw" data-icon="v"></i>
+                    <span class="hide-menu"> 全局配置项 <span class="fa arrow"></span>
+                    </span></a>
+                    <ul class="nav nav-second-level">
+                        <li> <a href="/mvc/infrastructure/city.html"><i class=" fa-fw">1</i><span class="hide-menu">城市</span></a> </li>
+                        <li> <a href="/mvc/infrastructure/residence-category.html" ><i class=" fa-fw">2</i><span class="hide-menu">住宅类别</span></a> </li>
+                        <li> <a href="/mvc/infrastructure/residence-build-category.html" ><i class=" fa-fw">3</i><span class="hide-menu">住宅建筑类别</span></a> </li>
+                        <li> <a href="/mvc/infrastructure/residence-build-form.html" ><i class=" fa-fw">4</i><span class="hide-menu">住宅建筑形式</span></a> </li>
+                        <li> <a href="/mvc/infrastructure/countyManagement.html" ><i class=" fa-fw">5</i><span class="hide-menu">区县管理</span></a> </li>
+                        <li> <a href="/mvc/infrastructure/area.html" ><i class=" fa-fw">6</i><span class="hide-menu">商圈管理</span></a> </li>
+                    </ul>
+                </li>
+                <li> <a href="javascript:void(0);" class="waves-effect">
+                    <i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i>
+                    <span class="hide-menu"> 住宅 <span class="fa arrow"></span> </span></a>
+                    <ul class="nav nav-second-level">
+                        <li> <a href="/mvc/add-project.html"><!--<i class="fa-fw">P</i>--><span class="hide-menu">录入新楼盘</span></a> </li>
+                        <li> <a href="/mvc/newHouse/project-list.html"><!--<i class="fa-fw">PO</i>--><span class="hide-menu">楼盘管理-新房</span></a> </li>
+                        <li> <a href="/mvc/esf/project-list.html"><!--<i class="fa-fw">PD</i>--><span class="hide-menu">楼盘管理-二手房</span></a> </li>
+                        <li> <a href="/mvc/esf-photo-management.html"><!--<i class="fa-fw">PD</i>--><span class="hide-menu">二手房-相册管理</span></a> </li>
+                    </ul>
+                </li>
+                <li> <a href="javascript:void(0);" class="waves-effect">
+                    <i class="mdi mdi-cart-outline fa-fw" data-icon="v"></i>
+                    <span class="hide-menu"> 对应关系 <span class="fa arrow"></span> </span></a>
+                    <ul class="nav nav-second-level">
+                        <li> <a href="/mvc/relation/relationOfMaiTian.html"><!--<i class="fa-fw">P</i>--><span class="hide-menu">对应关系</span></a> </li>
+                        <li> <a href="/mvc/relation/notMatch.html"><!--<i class="fa-fw">PD</i>--><span class="hide-menu">楼盘未匹配</span></a> </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Page Content -->
+    <!-- ============================================================== -->
+    <div id="page-wrapper">
+        <div class="container-fluid p-b-0" >
+            <div class="row bg-title">
+                <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                    <button class="btn btn-info p-r-20 p-l-20" onclick="javascript :history.back(-1);">返回</button>
+                </div>
+                <!--<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">-->
+                    <!--<ol class="breadcrumb">-->
+                        <!--<li><a href="#">Dashboard</a></li>-->
+                        <!--<li><a href="#">Table</a></li>-->
+                        <!--<li class="active">Basic Table</li>-->
+                    <!--</ol>-->
+                <!--</div>-->
+                <!-- /.col-lg-12 -->
+            </div>
+        </div>
+        <div id="main-container">
+
+        </div>
+        <footer class="footer text-center"> 2017 &copy; 头条房产 </footer>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Page Content -->
+    <!-- ============================================================== -->
+</div>
+<!-- /#wrapper -->
+<!-- jQuery -->
+<script src="/static/plugins/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/static/plugins/bower_components/sweetalert/sweetalert.min.js"></script>
+<script src="/static/js/api.factory.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="/static/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/static/js/template-web.js"></script>
+<!-- Menu Plugin JavaScript -->
+<script src="/static/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
+<script src="/static/js/uri.js"></script>
+<script type="text/javascript">window.History = { options: { html4Mode: true} };</script>
+<script src="/static/js/jquery.history.js"></script>
+<script src="/static/js/toutiao-router.js"></script>
+<!--slimscroll JavaScript -->
+<script src="/static/js/jquery.slimscroll.js"></script>
+<!--Wave Effects -->
+<script src="/static/js/waves.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="/static/js/custom.js"></script>
+
+<script src="/static/plugins/bower_components/toast-master/js/jquery.toast.js"></script>
+<script src="/static/plugins/bower_components/blockUI/jquery.blockUI.js"></script>
+
+<script src="/static/js/officedict.js"></script>
+<script src="/api/admin/login.js"></script>
+<!--<script src="/static/js/param-util.js"></script>-->
+<script src="/api/auth/auth.js"></script>
+<script type="text/javascript">
+    function chnageCity(cityId) {
+        com.toutiao.officedict.project.changeCity.do({"cityId":cityId}, function(res){
+            location.reload();
+        },function (jqXHR, textStatus, errorThrown) {
+            console.log('error',jqXHR, textStatus, errorThrown)
+        });
+        if(cityId==12){
+            $('#cityCurrentName').html("北京");
+        }else if(cityId==13){
+            $('#cityCurrentName').html("上海");
+        }else if(cityId==14){
+            $('#cityCurrentName').html("天津");
+        }else if(cityId==45){
+            $('#cityCurrentName').html("成都");
+        }else if(cityId==204){
+            $('#cityCurrentName').html("长沙");
+        }else if(cityId==26){
+            $('#cityCurrentName').html("杭州");
+        }else if(cityId==65){
+            $('#cityCurrentName').html("南京");
+        }else if(cityId==142){
+            $('#cityCurrentName').html("南宁");
+        }else if(cityId==67){
+            $('#cityCurrentName').html("苏州");
+        }else if(cityId==155){
+            $('#cityCurrentName').html("太原");
+        }else if(cityId==194){
+            $('#cityCurrentName').html("武汉");
+        }else if(cityId==66){
+            $('#cityCurrentName').html("无锡");
+        }else if(cityId==103){
+            $('#cityCurrentName').html("郑州");
+        }else if(cityId==16){
+            $('#cityCurrentName').html("广州");
+        }else if(cityId==17){
+            $('#cityCurrentName').html("深圳");
+        }
+    }
+
+
+
+    $(function () {
+
+
+
+        /**
+         * 加载菜单数据
+         */
+        $('#side-menu').metisMenu();
+
+        /**
+         * 激活菜单样式
+         * @param url
+         */
+        function activeMenu(url) {
+            url = url || History.getFullUrl(History.getHash());
+            url = new URI(url);
+            var path = url.pathname().replace(/(^\/)|(\/$)/g, '');
+            $('#side-menu li ul li a').each(function (index, ele) {
+                if($(this).attr('href').indexOf(path)>-1){
+                    $('.active').removeClass('active')
+                    $(this).addClass('active');
+                    $(this).parent().parent().parent().addClass('active');
+                    $(this).parent().parent().addClass('in').attr("aria-expanded","true");
+                    $(this).parent().parent().parent().children('a').addClass('active').attr("aria-expanded","true")
+                    return false;
+                }
+
+            })
+        }
+
+
+        $(".preloader").fadeOut();
+        com.toutiao.officedict.auth.getuser.do({},function (res) {
+            $('#_index_loginname').text(res["user_name"]);
+            if(res.city_id==12){
+                $('#cityCurrentName').html("北京");
+            }else if(res.city_id==13){
+                $('#cityCurrentName').html("上海");
+            }else if(res.city_id==14){
+                $('#cityCurrentName').html("天津");
+            }else if(res.city_id==45){
+                $('#cityCurrentName').html("成都");
+            }else if(res.city_id==204){
+                $('#cityCurrentName').html("长沙");
+            }else if(res.city_id==26){
+                $('#cityCurrentName').html("杭州");
+            }else if(res.city_id==65){
+                $('#cityCurrentName').html("南京");
+            }else if(res.city_id==142){
+                $('#cityCurrentName').html("南宁");
+            }else if(res.city_id==67){
+                $('#cityCurrentName').html("苏州");
+            }else if(res.city_id==155){
+                $('#cityCurrentName').html("太原");
+            }else if(res.city_id==194){
+                $('#cityCurrentName').html("武汉");
+            }else if(res.city_id==66){
+                $('#cityCurrentName').html("无锡");
+            }else if(res.city_id==103){
+                $('#cityCurrentName').html("郑州");
+            }else if(res.city_id==16){
+                $('#cityCurrentName').html("广州");
+            }else if(res.city_id==17){
+                $('#cityCurrentName').html("深圳");
+            }
+        })
+        $(document).bindRouter('a', '#main-container');
+        $(document).on('route:change',function () {
+            $('#main-container').html('<div class="loading-main"><span></span> <span></span> <span></span> <span></span> <span></span></div>');
+        });
+        $(document).on('router:send', function() {
+        });
+        $(document).on('router:complete', function(event,xhr, textStatus, errorThrown) {
+//            console.log(textStatus);
+        });
+        $(document).on('route:change',function (event,url) {
+            activeMenu(url);
+        });
+        $(document).on('router:no-login', function() {
+            window.location = '/mvc/login.html';
+        });
+        $(document).on('router:send', function() {
+        })
+        $(document).on('router:complete', function(event,xhr, textStatus, errorThrown) {
+//            console.log(textStatus);
+        });
+        $(document).on('router:error', function(event,xhr, textStatus, errorThrown) {
+            $.toutiao.tips.error(textStatus,errorThrown);
+        });
+        $(document).on('router:presuccess', function(event,data, status, xhr) {
+            try{
+                if(data.indexOf('"code":')>-1){
+                    data = $.parseJSON(data);
+                    if(data["code"] && data["code"]!='success') {
+                        $.toutiao.tips.error(data["code"], data["msg"]);
+                        return false;
+                    }
+                }
+            }catch (e){}
+            return true;
+        });
+        $(document).on('router:content-empty', function(event,data, status, xhr) {
+            //todo 搞一个小提示
+            $.toutiao.tips.error('提示', '服务器返回空白哦');
+        });
+
+
+        $("#logout").click(function() {
+            com.toutiao.officedict.project.logout.do({}, function (res) {
+                window.location = '/mvc/login.html';
+            }, function (jqXHR, textStatus, errorThrown) {
+            })
+        });
+
+
+    });
+</script>
+</body>
+</html>

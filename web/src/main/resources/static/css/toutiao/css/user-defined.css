@@ -1,0 +1,60 @@
+@charset "UTF-8";
+/*
+* table
+* 纵向隔行变色
+*/
+table.table-vertical-striped td:nth-child(odd) {
+    background-color: #f1f2f7;
+}
+table.table-vertical-striped label {
+    margin: 0;
+    font-weight: normal;
+}
+table.table-vertical-striped input,
+table.table-vertical-striped button,
+table.table-vertical-striped textarea,
+table.table-vertical-striped select {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    transform: none;
+}
+table.table-vertical-striped .form-control[disabled],
+table.table-vertical-striped .form-control[readonly],
+table.table-vertical-striped fieldset[disabled],
+table.table-vertical-striped .form-control {
+    background-color: #FFF;
+}
+table.table-vertical-striped .form-control {
+    padding: 15px 8px;
+    height: auto;
+    border: none;
+    transition: inherit;
+}
+table.table-vertical-striped select.form-control {
+    height: 49px;
+}
+
+/*
+* form 表单
+* label 文字右对其
+*/
+.user-defined-form .control-label {
+    text-align: left;
+    font-weight: normal;
+}
+.user-defined-form label.required:after {
+    content: ' * ';
+    color: #ff7676;
+}
+.help-error {
+    padding-top: 3px;
+    color: #ff7676;
+}
+div.help-error {
+    position: absolute;
+}
+input.help-error,
+select.help-error {
+    border-color: #ff7676;
+}

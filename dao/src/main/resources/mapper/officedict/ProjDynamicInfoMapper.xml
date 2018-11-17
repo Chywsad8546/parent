@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.toutiao.officedict.dao.mapper.officedict.ProjDynamicInfoMapper" >
+    <resultMap id="BaseResultMap" type="com.toutiao.officedict.dao.entity.officedict.DynamicInfo" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="time" property="time" jdbcType="TIMESTAMP" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="detail" property="detail" jdbcType="VARCHAR" />
+        <result column="creator_id" property="creatorId" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="updater_id" property="updaterId" jdbcType="INTEGER" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="is_del" property="isDel" jdbcType="INTEGER" />
+        <result column="link_url" property="linkUrl" jdbcType="VARCHAR" />
+        <result column="newcode" property="newcode" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+      id,type,time, title, detail, creator_id, create_time, updater_id, update_time, is_del, link_url,newcode
+    </sql>
+
+    <select id="dynamicInfoList" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.domain.query.ProjDynamicInfoQuery" >
+        select
+        <include refid="Base_Column_List" />
+        from proj_dynamic_info
+        where newcode = #{newcode,jdbcType=INTEGER}
+        AND  is_del =0
+    </select>
+
+    <insert id="addDynamicInfo" parameterType="com.toutiao.officedict.domain.query.ProjDynamicInfoQuery">
+            insert into proj_dynamic_info (type, time, title,
+      detail, create_time,update_time,
+      link_url, newcode,is_del)
+    values (#{type,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR},
+      #{detail,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{linkUrl,jdbcType=VARCHAR}, #{newcode,jdbcType=INTEGER}, #{isDel,jdbcType=INTEGER})
+    </insert>
+
+    <select id="selectOne" resultMap="BaseResultMap" parameterType="Integer">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM proj_dynamic_info
+        WHERE
+        is_del=0
+        AND id = #{id}
+    </select>
+
+    <update id="updateById" parameterType="com.toutiao.officedict.domain.query.ProjDynamicInfoQuery" >
+        update proj_dynamic_info
+        set type = #{type,jdbcType=INTEGER},
+        title = #{title,jdbcType=VARCHAR},
+        detail=#{detail,jdbcType=VARCHAR},
+         update_time=#{updateTime,jdbcType=TIMESTAMP},
+         link_url=#{linkUrl,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="removueDynamicInfo"  parameterType="Integer">
+            delete from proj_dynamic_info
+         where id = #{id,jdbcType=INTEGER}
+    </delete>
+</mapper>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.toutiao.officedict.dao.mapper.officedict.DistrictAreaConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.toutiao.officedict.dao.entity.officedict.DistrictAreaConfig" >
+    <result column="district_id" property="districtId" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="INTEGER" />
+    <result column="house_type" property="houseType" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    district_id, area_id, house_type
+  </sql>
+  <insert id="insert" parameterType="com.toutiao.officedict.dao.entity.officedict.DistrictAreaConfig" >
+    insert into district_area_config (district_id, area_id, house_type)
+    values (#{districtId,jdbcType=INTEGER}, #{areaId,jdbcType=INTEGER}, #{houseType,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.toutiao.officedict.dao.entity.officedict.DistrictAreaConfig" >
+    insert into district_area_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="districtId != null" >
+        district_id,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="houseType != null" >
+        house_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="districtId != null" >
+        #{districtId,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=INTEGER},
+      </if>
+      <if test="houseType != null" >
+        #{houseType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <!-- bining list-->
+  <select id="selectConfigListByDisIdHouType" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.domain.query.DistrictAreaConfigQuery">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM district_area_config
+    WHERE 1=1
+    <if test="districtId != null">
+      AND district_id = #{districtId}
+    </if>
+    <if test="houseType != null">
+      AND house_type = #{houseType}
+    </if>
+  </select>
+
+  <select id="selectCheckConfig" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.domain.query.DistrictAreaConfigQuery">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM district_area_config
+    WHERE 1=1
+    <if test="districtId != null">
+      AND district_id = #{districtId}
+    </if>
+    <if test="houseType != null">
+      AND house_type = #{houseType}
+    </if>
+    <if test="areaId != null">
+      AND area_id = #{areaId}
+    </if>
+  </select>
+
+  <delete id="delDistrictAreaConfig" parameterType="com.toutiao.officedict.dao.entity.officedict.DistrictAreaConfig" >
+    DELETE FROM  district_area_config
+    WHERE 1=1
+    <if test="districtId != null">
+      AND district_id = #{districtId}
+    </if>
+    <if test="houseType != null">
+      AND house_type = #{houseType}
+    </if>
+    <if test="areaId != null">
+      AND area_id = #{areaId}
+    </if>
+  </delete>
+
+  <select id="selectByDistrictId" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.dao.entity.officedict.DistrictAreaConfig">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM district_area_config
+    WHERE 1=1
+    <if test="districtId != null">
+      AND district_id = #{districtId}
+    </if>
+    <if test="areaId != null">
+      AND area_id = #{areaId}
+    </if>
+  </select>
+
+  <select id="selectByAreaId" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.dao.entity.officedict.DistrictAreaConfig">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM district_area_config
+    WHERE area_id = #{areaId}
+  </select>
+
+  <select id="selectAreaByTypeAndIds" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.dao.entity.officedict.DistrictAreaConfig">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM district_area_config
+    WHERE 1=1
+    <if test="districtId != null">
+      AND district_id = #{districtId}
+    </if>
+    <if test="houseType != null">
+      AND house_type = #{houseType}
+    </if>
+  </select>
+</mapper>

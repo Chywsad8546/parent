@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.toutiao.officedict.dao.mapper.officedict.ProjectLayoutImageMapper" >
+  <resultMap id="BaseResultMap" type="com.toutiao.officedict.dao.entity.officedict.ProjectLayoutImage" >
+    <id column="layout_img_id" property="layoutImgId" jdbcType="INTEGER" />
+    <result column="layout_id" property="layoutId" jdbcType="INTEGER" />
+    <result column="img_title" property="imgTitle" jdbcType="VARCHAR" />
+    <result column="img_path" property="imgPath" jdbcType="VARCHAR" />
+    <result column="img_desc" property="imgDesc" jdbcType="VARCHAR" />
+    <result column="img_size" property="imgSize" jdbcType="INTEGER" />
+    <result column="img_resolution" property="imgResolution" jdbcType="VARCHAR" />
+    <result column="creator_id" property="creatorId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    layout_img_id, layout_id, img_title, img_path, img_desc, img_size, img_resolution, 
+    creator_id, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from proj_layout_image
+    where layout_img_id = #{layoutImgId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from proj_layout_image
+    where layout_img_id = #{layoutImgId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.toutiao.officedict.dao.entity.officedict.ProjectLayoutImage" >
+    insert into proj_layout_image (layout_id, img_title,
+      img_path, img_desc, img_size, 
+      img_resolution, creator_id, create_time
+      )
+    values (#{layoutId,jdbcType=INTEGER}, #{imgTitle,jdbcType=VARCHAR},
+      #{imgPath,jdbcType=VARCHAR}, #{imgDesc,jdbcType=VARCHAR}, #{imgSize,jdbcType=INTEGER}, 
+      #{imgResolution,jdbcType=VARCHAR}, #{creatorId,jdbcType=INTEGER}, now()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.toutiao.officedict.dao.entity.officedict.ProjectLayoutImage" >
+    insert into proj_layout_image
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="layoutId != null" >
+        layout_id,
+      </if>
+      <if test="imgTitle != null" >
+        img_title,
+      </if>
+      <if test="imgPath != null" >
+        img_path,
+      </if>
+      <if test="imgDesc != null" >
+        img_desc,
+      </if>
+      <if test="imgSize != null" >
+        img_size,
+      </if>
+      <if test="imgResolution != null" >
+        img_resolution,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+        create_time,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="layoutImgId != null" >
+        #{layoutImgId,jdbcType=INTEGER},
+      </if>
+      <if test="layoutId != null" >
+        #{layoutId,jdbcType=INTEGER},
+      </if>
+      <if test="imgTitle != null" >
+        #{imgTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="imgPath != null" >
+        #{imgPath,jdbcType=VARCHAR},
+      </if>
+      <if test="imgDesc != null" >
+        #{imgDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="imgSize != null" >
+        #{imgSize,jdbcType=INTEGER},
+      </if>
+      <if test="imgResolution != null" >
+        #{imgResolution,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+        now(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.toutiao.officedict.dao.entity.officedict.ProjectLayoutImage" >
+    update proj_layout_image
+    <set >
+      <if test="layoutId != null" >
+        layout_id = #{layoutId,jdbcType=INTEGER},
+      </if>
+      <if test="imgTitle != null" >
+        img_title = #{imgTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="imgPath != null" >
+        img_path = #{imgPath,jdbcType=VARCHAR},
+      </if>
+      <if test="imgDesc != null" >
+        img_desc = #{imgDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="imgSize != null" >
+        img_size = #{imgSize,jdbcType=INTEGER},
+      </if>
+      <if test="imgResolution != null" >
+        img_resolution = #{imgResolution,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where layout_img_id = #{layoutImgId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.toutiao.officedict.dao.entity.officedict.ProjectLayoutImage" >
+    update proj_layout_image
+    set layout_id = #{layoutId,jdbcType=INTEGER},
+      img_title = #{imgTitle,jdbcType=VARCHAR},
+      img_path = #{imgPath,jdbcType=VARCHAR},
+      img_desc = #{imgDesc,jdbcType=VARCHAR},
+      img_size = #{imgSize,jdbcType=INTEGER},
+      img_resolution = #{imgResolution,jdbcType=VARCHAR},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where layout_img_id = #{layoutImgId,jdbcType=INTEGER}
+  </update>
+
+  <select id="listLayoutImages" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM proj_layout_image
+    WHERE layout_id = #{layoutId,jdbcType=INTEGER}
+  </select>
+</mapper>

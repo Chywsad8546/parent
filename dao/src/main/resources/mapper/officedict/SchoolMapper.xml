@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toutiao.officedict.dao.mapper.officedict.SchoolMapper">
+  <resultMap id="BaseResultMap" type="com.toutiao.officedict.dao.entity.officedict.School">
+    <id column="school_id" jdbcType="INTEGER" property="schoolId" />
+    <result column="school_type" jdbcType="VARCHAR" property="schoolType" />
+    <result column="school_name" jdbcType="VARCHAR" property="schoolName" />
+    <result column="city_id" jdbcType="INTEGER" property="cityId" />
+    <result column="coord_x" jdbcType="NUMERIC" property="coordX" />
+    <result column="coord_y" jdbcType="NUMERIC" property="coordY" />
+    <result column="district_id" jdbcType="INTEGER" property="districtId" />
+    <result column="comarea_id" jdbcType="INTEGER" property="comareaId" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+    <result column="code" jdbcType="INTEGER" property="code" />
+    <result column="tele" jdbcType="VARCHAR" property="tele" />
+    <result column="nature" jdbcType="VARCHAR" property="nature" />
+    <result column="rank" jdbcType="VARCHAR" property="rank" />
+    <result column="home_page" jdbcType="VARCHAR" property="homePage" />
+    <result column="feature" jdbcType="VARCHAR" property="feature" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="is_show" jdbcType="SMALLINT" property="isShow" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updater_id" jdbcType="INTEGER" property="updaterId" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    school_id, school_type, school_name, city_id, coord_x, coord_y, district_id, comarea_id, 
+    address, introduction, code, tele, nature, rank, home_page, feature, img_url, is_show, 
+    creator_id, create_time, updater_id, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from school
+    where school_id = #{schoolId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from school
+    where school_id = #{schoolId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.toutiao.officedict.dao.entity.officedict.School">
+    insert into school (school_id, school_type, school_name, 
+      city_id, coord_x, coord_y, 
+      district_id, comarea_id, address, 
+      introduction, code, tele, 
+      nature, rank, home_page, 
+      feature, img_url, is_show, 
+      creator_id, create_time, updater_id, 
+      update_time)
+    values (#{schoolId,jdbcType=INTEGER}, #{schoolType,jdbcType=VARCHAR}, #{schoolName,jdbcType=VARCHAR}, 
+      #{cityId,jdbcType=INTEGER}, #{coordX,jdbcType=NUMERIC}, #{coordY,jdbcType=NUMERIC}, 
+      #{districtId,jdbcType=INTEGER}, #{comareaId,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, 
+      #{introduction,jdbcType=VARCHAR}, #{code,jdbcType=INTEGER}, #{tele,jdbcType=VARCHAR}, 
+      #{nature,jdbcType=VARCHAR}, #{rank,jdbcType=VARCHAR}, #{homePage,jdbcType=VARCHAR}, 
+      #{feature,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, #{isShow,jdbcType=SMALLINT}, 
+      #{creatorId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updaterId,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.toutiao.officedict.dao.entity.officedict.School">
+    insert into school
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="schoolId != null">
+        school_id,
+      </if>
+      <if test="schoolType != null">
+        school_type,
+      </if>
+      <if test="schoolName != null">
+        school_name,
+      </if>
+      <if test="cityId != null">
+        city_id,
+      </if>
+      <if test="coordX != null">
+        coord_x,
+      </if>
+      <if test="coordY != null">
+        coord_y,
+      </if>
+      <if test="districtId != null">
+        district_id,
+      </if>
+      <if test="comareaId != null">
+        comarea_id,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="introduction != null">
+        introduction,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="tele != null">
+        tele,
+      </if>
+      <if test="nature != null">
+        nature,
+      </if>
+      <if test="rank != null">
+        rank,
+      </if>
+      <if test="homePage != null">
+        home_page,
+      </if>
+      <if test="feature != null">
+        feature,
+      </if>
+      <if test="imgUrl != null">
+        img_url,
+      </if>
+      <if test="isShow != null">
+        is_show,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updaterId != null">
+        updater_id,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="schoolId != null">
+        #{schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="schoolType != null">
+        #{schoolType,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolName != null">
+        #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null">
+        #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="coordX != null">
+        #{coordX,jdbcType=NUMERIC},
+      </if>
+      <if test="coordY != null">
+        #{coordY,jdbcType=NUMERIC},
+      </if>
+      <if test="districtId != null">
+        #{districtId,jdbcType=INTEGER},
+      </if>
+      <if test="comareaId != null">
+        #{comareaId,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null">
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=INTEGER},
+      </if>
+      <if test="tele != null">
+        #{tele,jdbcType=VARCHAR},
+      </if>
+      <if test="nature != null">
+        #{nature,jdbcType=VARCHAR},
+      </if>
+      <if test="rank != null">
+        #{rank,jdbcType=VARCHAR},
+      </if>
+      <if test="homePage != null">
+        #{homePage,jdbcType=VARCHAR},
+      </if>
+      <if test="feature != null">
+        #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null">
+        #{isShow,jdbcType=SMALLINT},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updaterId != null">
+        #{updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.toutiao.officedict.dao.entity.officedict.School">
+    update school
+    <set>
+      <if test="schoolType != null">
+        school_type = #{schoolType,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolName != null">
+        school_name = #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null">
+        city_id = #{cityId,jdbcType=INTEGER},
+      </if>
+      <if test="coordX != null">
+        coord_x = #{coordX,jdbcType=NUMERIC},
+      </if>
+      <if test="coordY != null">
+        coord_y = #{coordY,jdbcType=NUMERIC},
+      </if>
+      <if test="districtId != null">
+        district_id = #{districtId,jdbcType=INTEGER},
+      </if>
+      <if test="comareaId != null">
+        comarea_id = #{comareaId,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null">
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=INTEGER},
+      </if>
+      <if test="tele != null">
+        tele = #{tele,jdbcType=VARCHAR},
+      </if>
+      <if test="nature != null">
+        nature = #{nature,jdbcType=VARCHAR},
+      </if>
+      <if test="rank != null">
+        rank = #{rank,jdbcType=VARCHAR},
+      </if>
+      <if test="homePage != null">
+        home_page = #{homePage,jdbcType=VARCHAR},
+      </if>
+      <if test="feature != null">
+        feature = #{feature,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrl != null">
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null">
+        is_show = #{isShow,jdbcType=SMALLINT},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updaterId != null">
+        updater_id = #{updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where school_id = #{schoolId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.toutiao.officedict.dao.entity.officedict.School">
+    update school
+    set school_type = #{schoolType,jdbcType=VARCHAR},
+      school_name = #{schoolName,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=INTEGER},
+      coord_x = #{coordX,jdbcType=NUMERIC},
+      coord_y = #{coordY,jdbcType=NUMERIC},
+      district_id = #{districtId,jdbcType=INTEGER},
+      comarea_id = #{comareaId,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      introduction = #{introduction,jdbcType=VARCHAR},
+      code = #{code,jdbcType=INTEGER},
+      tele = #{tele,jdbcType=VARCHAR},
+      nature = #{nature,jdbcType=VARCHAR},
+      rank = #{rank,jdbcType=VARCHAR},
+      home_page = #{homePage,jdbcType=VARCHAR},
+      feature = #{feature,jdbcType=VARCHAR},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      is_show = #{isShow,jdbcType=SMALLINT},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      updater_id = #{updaterId,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where school_id = #{schoolId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectSchoolList" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.domain.query.SchoolQuery">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM school
+    WHERE 1=1
+    <if test="schoolType != null">
+      AND school_type = #{schoolType}
+    </if>
+    <if test="schoolName != null">
+      AND school_name = #{schoolName}
+    </if>
+    <if test="cityId != null">
+      AND city_id = #{cityId}
+    </if>
+    <if test="districtId != null">
+      AND district_id = #{districtId}
+    </if>
+    <if test="comareaId != null">
+      AND comarea_id = #{comareaId}
+    </if>
+    <if test="rank != null">
+      AND rank = #{rank}
+    </if>
+  </select>
+</mapper>

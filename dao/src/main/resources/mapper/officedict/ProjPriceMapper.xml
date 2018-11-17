@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.toutiao.officedict.dao.mapper.officedict.ProjPriceMapper" >
+  <resultMap id="BaseResultMap" type="com.toutiao.officedict.dao.entity.officedict.ProjPrice" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="newcode" property="newcode" jdbcType="INTEGER" />
+    <result column="sale_type" property="saleType" jdbcType="VARCHAR" />
+    <result column="price_max" property="priceMax" jdbcType="NUMERIC" />
+    <result column="price_max_type" property="priceMaxType" jdbcType="VARCHAR" />
+    <result column="price_average" property="priceAverage" jdbcType="NUMERIC" />
+    <result column="price_average_type" property="priceAverageType" jdbcType="VARCHAR" />
+    <result column="price_min" property="priceMin" jdbcType="NUMERIC" />
+    <result column="price_min_type" property="priceMinType" jdbcType="VARCHAR" />
+    <result column="pay_description" property="payDescription" jdbcType="VARCHAR" />
+    <result column="sale_rate" property="saleRate" jdbcType="NUMERIC" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="price_date" property="priceDate" jdbcType="TIMESTAMP" />
+    <result column="sale_info" property="saleInfo" jdbcType="VARCHAR" />
+    <result column="creator_id" property="creatorId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updater_id" property="updaterId" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, newcode, sale_type, price_max, price_max_type, price_average, price_average_type,
+    price_min, price_min_type, pay_description, sale_rate, status, price_date, sale_info,
+    creator_id, create_time, updater_id, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from proj_price
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from proj_price
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.toutiao.officedict.dao.entity.officedict.ProjPrice" >
+    insert into proj_price (id, newcode, sale_type,
+      price_max, price_max_type, price_average, 
+      price_average_type, price_min, price_min_type, 
+      pay_description, sale_rate, status, 
+      price_date, sale_info, creator_id,
+      create_time, updater_id, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{newcode,jdbcType=INTEGER}, #{saleType,jdbcType=VARCHAR},
+      #{priceMax,jdbcType=NUMERIC}, #{priceMaxType,jdbcType=VARCHAR}, #{priceAverage,jdbcType=NUMERIC}, 
+      #{priceAverageType,jdbcType=VARCHAR}, #{priceMin,jdbcType=NUMERIC}, #{priceMinType,jdbcType=VARCHAR}, 
+      #{payDescription,jdbcType=VARCHAR}, #{saleRate,jdbcType=NUMERIC}, #{status,jdbcType=VARCHAR}, 
+      #{priceDate,jdbcType=TIMESTAMP}, #{saleInfo,jdbcType=VARCHAR}, #{creatorId,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updaterId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.toutiao.officedict.dao.entity.officedict.ProjPrice" >
+    insert into proj_price
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="newcode != null" >
+        newcode,
+      </if>
+      <if test="saleType != null" >
+        sale_type,
+      </if>
+      <if test="priceMax != null" >
+        price_max,
+      </if>
+      <if test="priceMaxType != null" >
+        price_max_type,
+      </if>
+      <if test="priceAverage != null" >
+        price_average,
+      </if>
+      <if test="priceAverageType != null" >
+        price_average_type,
+      </if>
+      <if test="priceMin != null" >
+        price_min,
+      </if>
+      <if test="priceMinType != null" >
+        price_min_type,
+      </if>
+      <if test="payDescription != null" >
+        pay_description,
+      </if>
+      <if test="saleRate != null" >
+        sale_rate,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="priceDate != null" >
+        price_date,
+      </if>
+      <if test="saleInfo != null" >
+        sale_info,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+
+        create_time,
+
+      <if test="updaterId != null" >
+        updater_id,
+      </if>
+        update_time,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="newcode != null" >
+        #{newcode,jdbcType=INTEGER},
+      </if>
+      <if test="saleType != null" >
+        #{saleType,jdbcType=VARCHAR},
+      </if>
+      <if test="priceMax != null" >
+        #{priceMax,jdbcType=NUMERIC},
+      </if>
+      <if test="priceMaxType != null" >
+        #{priceMaxType,jdbcType=VARCHAR},
+      </if>
+      <if test="priceAverage != null" >
+        #{priceAverage,jdbcType=NUMERIC},
+      </if>
+      <if test="priceAverageType != null" >
+        #{priceAverageType,jdbcType=VARCHAR},
+      </if>
+      <if test="priceMin != null" >
+        #{priceMin,jdbcType=NUMERIC},
+      </if>
+      <if test="priceMinType != null" >
+        #{priceMinType,jdbcType=VARCHAR},
+      </if>
+      <if test="payDescription != null" >
+        #{payDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="saleRate != null" >
+        #{saleRate,jdbcType=NUMERIC},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="priceDate != null" >
+        #{priceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saleInfo != null" >
+        #{saleInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+
+        now(),
+
+      <if test="updaterId != null" >
+        #{updaterId,jdbcType=INTEGER},
+      </if>
+
+        now(),
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.toutiao.officedict.dao.entity.officedict.ProjPrice" >
+    update proj_price
+    <set >
+      <if test="saleType != null" >
+        sale_type = #{saleType,jdbcType=VARCHAR},
+      </if>
+      <if test="priceMax != null" >
+        price_max = #{priceMax,jdbcType=NUMERIC},
+      </if>
+      <if test="priceMaxType != null" >
+        price_max_type = #{priceMaxType,jdbcType=VARCHAR},
+      </if>
+      <if test="priceAverage != null" >
+        price_average = #{priceAverage,jdbcType=NUMERIC},
+      </if>
+      <if test="priceAverageType != null" >
+        price_average_type = #{priceAverageType,jdbcType=VARCHAR},
+      </if>
+      <if test="priceMin != null" >
+        price_min = #{priceMin,jdbcType=NUMERIC},
+      </if>
+      <if test="priceMinType != null" >
+        price_min_type = #{priceMinType,jdbcType=VARCHAR},
+      </if>
+      <if test="payDescription != null" >
+        pay_description = #{payDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="saleRate != null" >
+        sale_rate = #{saleRate,jdbcType=NUMERIC},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="priceDate != null" >
+        price_date = #{priceDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="saleInfo != null" >
+        sale_info = #{saleInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updaterId != null" >
+        updater_id = #{updaterId,jdbcType=INTEGER},
+      </if>
+        update_time = now()
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.toutiao.officedict.dao.entity.officedict.ProjPrice" >
+    update proj_price
+    set sale_type = #{saleType,jdbcType=VARCHAR},
+      price_max = #{priceMax,jdbcType=NUMERIC},
+      price_max_type = #{priceMaxType,jdbcType=VARCHAR},
+      price_average = #{priceAverage,jdbcType=NUMERIC},
+      price_average_type = #{priceAverageType,jdbcType=VARCHAR},
+      price_min = #{priceMin,jdbcType=NUMERIC},
+      price_min_type = #{priceMinType,jdbcType=VARCHAR},
+      pay_description = #{payDescription,jdbcType=VARCHAR},
+      sale_rate = #{saleRate,jdbcType=NUMERIC},
+      status = #{status,jdbcType=VARCHAR},
+      price_date = #{priceDate,jdbcType=TIMESTAMP},
+      sale_info = #{saleInfo,jdbcType=VARCHAR},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      updater_id = #{updaterId,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="listProjectPrice" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM proj_price
+    WHERE newcode = #{newcode,jdbcType=INTEGER}
+    ORDER BY update_time DESC
+  </select>
+</mapper>

@@ -1,0 +1,360 @@
+<link href="/static/plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
+<link href="/static/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css" rel="stylesheet" type="text/css" />
+<link href="/static/plugins/bower_components/Magnific-Popup-master/dist/magnific-popup.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/toutiao/css/user-defined.css">
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 col-xs-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">楼盘动态
+                    <duv class="pull-right">
+                        <a style="cursor: pointer;" id="addbutton" data-toggle="modal" data-target="#addlou">添加楼盘动态</a>
+                    </duv>
+                </div>
+
+                <div class="panel-wrapper">
+                    <div class="panel-body">
+                        <div class="clearfix"></div>
+                        <div>
+                            <div id="dynamic-info-table" class="panel block5" style="position: static; zoom: 1;">
+                                <div id="dynamic-info-form" class="panel block5">
+
+                                </div>
+                                <!--<button class='btn btn-info p-r-20 p-l-20' id="save-dynamic-info-btn">保存</button>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="addlou" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">添加楼盘动态</h4> </div>
+                <div class="modal-body">
+                    <form id="adresult" method="post">
+                        <!--   <div class="form-group">
+                            <label for="districtId" class="control-label">所属区域:</label>
+                           <select class="form-control" name="districtId" id="districtId">
+                               <option value=''>&#45;&#45;请选择区域&#45;&#45;</option>
+                           </select>
+                           </div>
+                           -->
+                           <div class="form-group">
+                               <label for="type" class="control-label">信息分类:</label>
+                               <select class="form-control" name="type" id="type">
+                                   <option value=''>&#45;&#45;请选择分类&#45;&#45;</option>
+                                   <option value='0'>楼盘动态</option>
+                                   <option value='1'>开盘信息</option>
+                                   <option value='2'>交房信息</option>
+                               </select>
+                           </div>
+                        <div class="form-group">
+                            <label for="time" class="control-label">日期:</label>
+                            <input type="text" class="form-control" required name="time" id="time">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="title" class="control-label">动态标题:</label>
+                            <input type="text" class="form-control" required name="title" id="title">
+                        </div>
+                        <div class="form-group">
+                            <label for="detail" class="control-label">动态详情:</label>
+                            <textarea rows="5" cols="78" name="detail" class="detail"  id="detail">
+                            </textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="linkUrl" class="control-label">动态信息链接:</label>
+                            <input type="text" class="form-control" required name="linkUrl" id="linkUrl">
+                        </div>
+
+                  <!--      <input type="hidden" name="areaPinyinInitials" class="form-control"  id="aareaPinyinInitials">
+                        <input type="hidden" name="cityId" class="form-control"  id="acityId" value="12">-->
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">关闭</button>
+                    <button type="button" id="subsave" class="btn btn-danger waves-effect waves-light">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="uphouse" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">修改对应关系</h4> </div>
+                <div class="modal-body" id="upform">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="subup" class="btn btn-danger waves-effect waves-light">提交修改</button>
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/html" id="edit-price-form-template">
+        <form id="upresult" method="post">
+            <input type="hidden" name="id" class="form-control" value="{{id}}" id="id">
+            <div class="form-group">
+                <label for="type" class="control-label">信息分类:</label>
+                <select class="form-control" name="type" id="uptype">
+                    <option value=''>&#45;&#45;请选择分类&#45;&#45;</option>
+                    {{if type=='0'}}
+                    <option value='0' selected>楼盘动态</option>
+                    <option value='1'>开盘信息</option>
+                    <option value='2'>交房信息</option>
+                    {{else if type=='1'}}
+                    <option value='0' >楼盘动态</option>
+                    <option value='1' selected>开盘信息</option>
+                    <option value='2'>交房信息</option>
+                    {{else if type=='2'}}
+                    <option value='0' >楼盘动态</option>
+                    <option value='1'>开盘信息</option>
+                    <option value='2' selected>交房信息</option>
+                    {{/if}}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="title" class="control-label">动态标题:</label>
+                <input type="text" name="title" class="form-control" value="{{title}}" id="utitle">
+            </div>
+            <div class="form-group">
+                <label for="detail" class="control-label">动态详情:</label>
+                <input type="text" name="detail" class="form-control" value="{{detail}}" id="udetail">
+            </div>
+            <div class="form-group">
+                <label for="linkUrl" class="control-label">动态信息链接:</label>
+                <input type="text" class="form-control" value="{{linkUrl}}"  name="linkUrl" id="ulinkUrl">
+            </div>
+        </form>
+    </script>
+
+
+</div>
+
+<script src="/static/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="/static/plugins/bower_components/bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.js"></script>
+<script src="/static/plugins/bower_components/Magnific-Popup-master/dist/jquery.magnific-popup.min.js"></script>
+<script src="/static/plugins/bower_components/Magnific-Popup-master/dist/jquery.magnific-popup-init.js"></script>
+<script src="/static/plugins/bower_components/sweetalert/sweetalert.min.js"></script>
+<script src="/static/js/jquery.validate.min.js"></script>
+<script src="/static/js/additional-methods.min.js"></script>
+<script src="/static/js/messages_zh.min.js"></script>
+<script src="/static/js/toutiao/validator-setDefaults.js"></script>
+<script src="https://cdn.bootcss.com/jquery.serializeJSON/2.8.1/jquery.serializejson.min.js"></script>
+<script src="/static/js/toutiao.table.js"></script>
+<script src="/static/js/toutiao/common.js"></script>
+<script src="/api/newHouse/dynamicInfo.js"></script>
+<script type="text/javascript">
+
+    function myTrim(x) {
+        return x.replace(/^\s+|\s+$/gm,'');
+    }
+
+    var _newCode = getQueryString('newcode');
+    $('input[name="newcode"]').val(_newCode);
+
+
+
+
+    $(function () {
+
+        $('#dynamic-info-form').ttTable({
+            paging:true,
+            columns:[
+                {
+                    field:"id",
+                    "title":"ID"
+                },
+                {
+                    render:function (d) {
+                        if( d['type'] == 0){
+                            return "<div class='button-box'>"
+                                + "楼盘动态"
+                                + "</div>";
+                        }else if ( d['type'] == 1){
+                            return "<div class='button-box'>"
+                                + "开盘信息"
+                                + "</div>";
+                        }else if ( d['type'] == 2){
+                            return "<div class='button-box'>"
+                                + "交房信息"
+                                + "</div>";
+                        }
+                    },
+                    "title":"信息分类"
+                },
+                {
+                    field:"showTime",
+                    "title":"时间"
+                },
+                {
+                    field:"title",
+                    "title":"动态标题"
+                },
+                {
+                    field:"detail",
+                    "title":"动态详细信息"
+                },
+                {
+                    render:function (d) {
+                        if( d['isApprove'] == 1){
+                            return "<div class='button-box'>"
+                                + "<button class='btn btn-info removeDynamic' data-id='" + d['id']+ "'>删除</button>"
+                                + "<button class='btn btn-info upRelation' data-id='" + d['id']+ "'>修改</button>"
+                                + "</div>";
+                        }
+                        return "<div class='button-box'>"
+                            + "<button class='btn btn-info removeDynamic' data-id='" + d['id']+ "'>删除</button>"
+                            + "<button class='btn btn-info upRelation' data-id='" + d['id']+ "'>修改</button>"
+                            + "</div>";
+                    },
+                    "title":"管理操作"
+                }
+
+            ],
+            onPage:function (pageIndex,pageSize) {
+                loadData(_newCode,pageIndex);
+            }
+        });
+
+        //加载列表数据
+        function loadData(newcode, pageNum) {
+            var param = $.extend({"pageNum":pageNum},{"newcode":newcode})
+            com.toutiao.officedict.dynamicInfo.dynamicList.do(param,function(res, pageNum, pageSize, total){
+
+                if(res){
+                    $('#dynamic-info-form').ttTable().showloading();
+                    $('#dynamic-info-form').ttTable().load(res, total, pageNum);
+
+                    $('.upRelation').each(function () {
+                        var _id = $(this).data('id');
+                        $(this).click(function () {
+                            com.toutiao.officedict.dynamicInfo.oneDynamicInfo.do({id:_id},function (res) {
+                                // console.log(res);
+                                var upHtml = template('edit-price-form-template',res);
+                                $('#upform').html(upHtml);
+                                $('#uphouse').modal();
+                            })
+                        })});
+
+                    $('.removeDynamic').each(function () {
+                        var _id = $(this).data('id');
+                        $(this).click(function () {
+                            com.toutiao.officedict.dynamicInfo.removeDynamicInfo.do({id:_id},function (res,success, error) {
+                                if (res && res>0) {
+                                    swal({
+                                        title: "删除成功!",
+                                        type: "success",
+                                        confirmButtonText: "确定",
+                                        closeOnConfirm: false
+                                    }, function () {
+                                        loadData(newcode,1);
+                                        swal.close();
+                                    });
+                                }
+                            })
+                        })})
+                }
+
+            },function (jqXHR, textStatus, errorThrown) {
+                console.log('error',jqXHR, textStatus, errorThrown)
+            });
+
+        };
+
+        //录入
+        $('#subsave').click(function () {
+            var result = $('#adresult').serializeJSON();
+            result.newcode=_newCode;
+            result.detail=myTrim(result.detail);
+            if(result.type=="" || result.time=="" || result.title=="" || result.detail==""){
+                swal({
+                    title: "不能为空!",
+                    type: "error",
+                    confirmButtonText: "确定",
+                    closeOnConfirm: false
+                }, function () {
+                    swal.close();
+                });
+            }else {
+                com.toutiao.officedict.dynamicInfo.addDynamicInfo.do(result, function (res,success, error) {
+                    if (res && res>0) {
+                        swal({
+                            title: "添加成功!",
+                            type: "success",
+                            confirmButtonText: "确定",
+                            closeOnConfirm: false
+                        }, function () {
+                            $('#addlou').modal('hide');
+                            loadData(_newCode,1);
+                            swal.close();
+                            console.log($('#adresult'))
+                            document.getElementById("adresult").reset();
+                        });
+                    }
+                },function () {
+                })
+            }
+            console.log(result);
+        })
+
+
+        //更新
+        $('#subup').on('click', function () {
+            if (!$('#id').val()) {
+                $('#id').focus();
+                return false;
+            }
+            var result = $('#upresult').serializeJSON();
+            if(result.type=="" ||  result.title=="" || result.detail==""){
+                swal({
+                    title: "不能为空!",
+                    type: "error",
+                    confirmButtonText: "确定",
+                    closeOnConfirm: false
+                }, function () {
+                    swal.close();
+                });
+            }else {
+                com.toutiao.officedict.dynamicInfo.updateById.do(result,function (res,sucess) {
+                    console.log(res)
+                    if (res && res>0) {
+                        swal({
+                            title: "修改成功!",
+                            type: "success",
+                            confirmButtonText: "确定",
+
+                            closeOnConfirm: false
+                        }, function () {
+                            $('#uphouse').modal('hide');
+                            loadData(_newCode,1);
+                            swal.close();
+                        });
+
+                    }
+                },function (jqXHR, textStatus, errorThrown) {
+                    console.log('error',jqXHR, textStatus, errorThrown)
+                });
+            }
+            console.log(result);
+
+        });
+
+        loadData(_newCode,1);
+        $( "#time" ).datepicker();
+    })
+
+
+</script>

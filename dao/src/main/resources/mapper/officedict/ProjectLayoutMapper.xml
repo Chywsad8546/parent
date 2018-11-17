@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toutiao.officedict.dao.mapper.officedict.ProjectLayoutMapper">
+  <resultMap id="BaseResultMap" type="com.toutiao.officedict.dao.entity.officedict.ProjectLayout">
+    <id column="layout_id" jdbcType="INTEGER" property="layoutId" />
+    <result column="newcode" jdbcType="INTEGER" property="newcode" />
+    <result column="room" jdbcType="SMALLINT" property="room" />
+    <result column="hall" jdbcType="SMALLINT" property="hall" />
+    <result column="toilet" jdbcType="SMALLINT" property="toilet" />
+    <result column="kitchen" jdbcType="SMALLINT" property="kitchen" />
+    <result column="building_area" jdbcType="NUMERIC" property="buildingArea" />
+    <result column="layout_desc" jdbcType="VARCHAR" property="layoutDesc" />
+    <result column="living_area" jdbcType="NUMERIC" property="livingArea" />
+    <result column="sale_area" jdbcType="NUMERIC" property="saleArea" />
+    <result column="layout_title" jdbcType="VARCHAR" property="layoutTitle" />
+    <result column="tag" jdbcType="ARRAY" property="tag" typeHandler="com.toutiao.officedict.common.extension.mybatis.typehandler.ArrayTypeHandler"/>
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="updater_id" jdbcType="INTEGER" property="updaterId" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="reference_price" jdbcType="NUMERIC" property="referencePrice" />
+    <result column="reference_total_price" jdbcType="NUMERIC" property="referenceTotalPrice" />
+    <result column="is_del" jdbcType="SMALLINT" property="isDel" />
+    <result column="delete_reason" jdbcType="VARCHAR" property="deleteReason" />
+    <result column="is_recommend" jdbcType="SMALLINT" property="isRecommend" />
+    <result column="sales_status" jdbcType="SMALLINT" property="salesStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    layout_id, newcode, room, hall, toilet, kitchen, building_area, layout_desc, living_area, 
+    sale_area, layout_title, tag, creator_id, create_time, updater_id, update_time, reference_price, 
+    reference_total_price, is_del, delete_reason, is_recommend,sales_status
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from proj_layout
+    where layout_id = #{layoutId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from proj_layout
+    where layout_id = #{layoutId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.toutiao.officedict.dao.entity.officedict.ProjectLayout">
+    insert into proj_layout (layout_id, newcode, room, 
+      hall, toilet, kitchen, 
+      building_area, layout_desc, living_area, 
+      sale_area, layout_title, tag, 
+      creator_id, create_time, updater_id, 
+      update_time, reference_price, reference_total_price, 
+      is_del, delete_reason, is_recommend
+      )
+    values (#{layoutId,jdbcType=INTEGER}, #{newcode,jdbcType=INTEGER}, #{room,jdbcType=SMALLINT}, 
+      #{hall,jdbcType=SMALLINT}, #{toilet,jdbcType=SMALLINT}, #{kitchen,jdbcType=SMALLINT}, 
+      #{buildingArea,jdbcType=NUMERIC}, #{layoutDesc,jdbcType=VARCHAR}, #{livingArea,jdbcType=NUMERIC}, 
+      #{saleArea,jdbcType=NUMERIC}, #{layoutTitle,jdbcType=VARCHAR}, #{tag,jdbcType=ARRAY}, 
+      #{creatorId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updaterId,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{referencePrice,jdbcType=NUMERIC}, #{referenceTotalPrice,jdbcType=NUMERIC}, 
+      #{isDel,jdbcType=SMALLINT}, #{deleteReason,jdbcType=VARCHAR}, #{isRecommend,jdbcType=SMALLINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.toutiao.officedict.dao.entity.officedict.ProjectLayout">
+    insert into proj_layout
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="newcode != null">
+        newcode,
+      </if>
+      <if test="room != null">
+        room,
+      </if>
+      <if test="hall != null">
+        hall,
+      </if>
+      <if test="toilet != null">
+        toilet,
+      </if>
+      <if test="kitchen != null">
+        kitchen,
+      </if>
+      <if test="buildingArea != null">
+        building_area,
+      </if>
+      <if test="layoutDesc != null">
+        layout_desc,
+      </if>
+      <if test="livingArea != null">
+        living_area,
+      </if>
+      <if test="saleArea != null">
+        sale_area,
+      </if>
+      <if test="layoutTitle != null">
+        layout_title,
+      </if>
+      <if test="tag != null">
+        tag,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+        create_time,
+      <if test="updaterId != null">
+        updater_id,
+      </if>
+        update_time,
+      <if test="referencePrice != null">
+        reference_price,
+      </if>
+      <if test="referenceTotalPrice != null">
+        reference_total_price,
+      </if>
+      <if test="isDel != null">
+        is_del,
+      </if>
+      <if test="deleteReason != null">
+        delete_reason,
+      </if>
+      <if test="isRecommend != null">
+        is_recommend,
+      </if>
+      <if test="salesStatus != null">
+        sales_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="newcode != null">
+        #{newcode,jdbcType=INTEGER},
+      </if>
+      <if test="room != null">
+        #{room,jdbcType=SMALLINT},
+      </if>
+      <if test="hall != null">
+        #{hall,jdbcType=SMALLINT},
+      </if>
+      <if test="toilet != null">
+        #{toilet,jdbcType=SMALLINT},
+      </if>
+      <if test="kitchen != null">
+        #{kitchen,jdbcType=SMALLINT},
+      </if>
+      <if test="buildingArea != null">
+        #{buildingArea,jdbcType=NUMERIC},
+      </if>
+      <if test="layoutDesc != null">
+        #{layoutDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="livingArea != null">
+        #{livingArea,jdbcType=NUMERIC},
+      </if>
+      <if test="saleArea != null">
+        #{saleArea,jdbcType=NUMERIC},
+      </if>
+      <if test="layoutTitle != null">
+        #{layoutTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null">
+        #{tag,jdbcType=ARRAY},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+        now(),
+      <if test="updaterId != null">
+        #{updaterId,jdbcType=INTEGER},
+      </if>
+        now(),
+      <if test="referencePrice != null">
+        #{referencePrice,jdbcType=NUMERIC},
+      </if>
+      <if test="referenceTotalPrice != null">
+        #{referenceTotalPrice,jdbcType=NUMERIC},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=SMALLINT},
+      </if>
+      <if test="deleteReason != null">
+        #{deleteReason,jdbcType=VARCHAR},
+      </if>
+      <if test="isRecommend != null">
+        #{isRecommend,jdbcType=SMALLINT},
+      </if>
+      <if test="salesStatus != null">
+        #{salesStatus,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.toutiao.officedict.dao.entity.officedict.ProjectLayout">
+    update proj_layout
+    <set>
+      <if test="newcode != null">
+        newcode = #{newcode,jdbcType=INTEGER},
+      </if>
+      <if test="room != null">
+        room = #{room,jdbcType=SMALLINT},
+      </if>
+      <if test="hall != null">
+        hall = #{hall,jdbcType=SMALLINT},
+      </if>
+      <if test="toilet != null">
+        toilet = #{toilet,jdbcType=SMALLINT},
+      </if>
+      <if test="kitchen != null">
+        kitchen = #{kitchen,jdbcType=SMALLINT},
+      </if>
+      <if test="buildingArea != null">
+        building_area = #{buildingArea,jdbcType=NUMERIC},
+      </if>
+      <if test="layoutDesc != null">
+        layout_desc = #{layoutDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="livingArea != null">
+        living_area = #{livingArea,jdbcType=NUMERIC},
+      </if>
+      <if test="saleArea != null">
+        sale_area = #{saleArea,jdbcType=NUMERIC},
+      </if>
+      <if test="layoutTitle != null">
+        layout_title = #{layoutTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null">
+        tag = #{tag,jdbcType=ARRAY},
+      </if>
+      <if test="updaterId != null">
+        updater_id = #{updaterId,jdbcType=INTEGER},
+      </if>
+        update_time = now(),
+      <if test="referencePrice != null">
+        reference_price = #{referencePrice,jdbcType=NUMERIC},
+      </if>
+      <if test="referenceTotalPrice != null">
+        reference_total_price = #{referenceTotalPrice,jdbcType=NUMERIC},
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=SMALLINT},
+      </if>
+      <if test="deleteReason != null">
+        delete_reason = #{deleteReason,jdbcType=VARCHAR},
+      </if>
+      <if test="isRecommend != null">
+        is_recommend = #{isRecommend,jdbcType=SMALLINT},
+      </if>
+      <if test="salesStatus != null">
+        sales_status = #{salesStatus,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where layout_id = #{layoutId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.toutiao.officedict.dao.entity.officedict.ProjectLayout">
+    update proj_layout
+    set newcode = #{newcode,jdbcType=INTEGER},
+      room = #{room,jdbcType=SMALLINT},
+      hall = #{hall,jdbcType=SMALLINT},
+      toilet = #{toilet,jdbcType=SMALLINT},
+      kitchen = #{kitchen,jdbcType=SMALLINT},
+      building_area = #{buildingArea,jdbcType=NUMERIC},
+      layout_desc = #{layoutDesc,jdbcType=VARCHAR},
+      living_area = #{livingArea,jdbcType=NUMERIC},
+      sale_area = #{saleArea,jdbcType=NUMERIC},
+      layout_title = #{layoutTitle,jdbcType=VARCHAR},
+      tag = #{tag,jdbcType=ARRAY},
+      updater_id = #{updaterId,jdbcType=INTEGER},
+      update_time = now(),
+      reference_price = #{referencePrice,jdbcType=NUMERIC},
+      reference_total_price = #{referenceTotalPrice,jdbcType=NUMERIC},
+      is_del = #{isDel,jdbcType=SMALLINT},
+      delete_reason = #{deleteReason,jdbcType=VARCHAR},
+      is_recommend = #{isRecommend,jdbcType=SMALLINT}
+    where layout_id = #{layoutId,jdbcType=INTEGER}
+  </update>
+  
+  <select id="listHousingProjectLayout" parameterType="com.toutiao.officedict.domain.query.ProjectLayoutQuery" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM proj_layout
+    <where>
+        is_del = 0
+        AND newcode = #{newcode,jdbcType=INTEGER}
+    </where>
+    ORDER BY update_time DESC
+  </select>
+  
+  <update id="updateLayoutDeleteStatus" parameterType="com.toutiao.officedict.dao.entity.officedict.ProjectLayout">
+    UPDATE proj_layout
+    <set>
+        is_del = 1,
+        <if test="deleteReason != null">
+          delete_reason = #{deleteReason},
+        </if>
+        <if test="updaterId != null">
+          updater_id = #{updaterId,jdbcType=INTEGER},
+        </if>
+    </set>
+    where layout_id = #{layoutId,jdbcType=INTEGER}
+  </update>
+</mapper>

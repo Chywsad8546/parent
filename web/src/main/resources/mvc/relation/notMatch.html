@@ -1,0 +1,190 @@
+<link href="/static/plugins/bower_components/sweetalert/sweetalert.css" rel="stylesheet" type="text/css">
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">对应关系-楼盘未匹配</div>
+                <div class="panel-wrapper collapse in" aria-expanded="true">
+                    <div class="panel-body">
+                        <form id="not-match-form" class="form-inline form-search">
+                            <div class="form-group">
+                                <label class="control-label">经纪公司</label>
+                                <select class="form-control" name="company" id="company" >
+                                    <option value=''>--请选择经纪公司--</option>
+                          <!--          <option value='我爱我家'>我爱我家</option>
+                                    <option value='麦田房产'>麦田房产</option>
+                                 &lt;!&ndash;   <option value='中原地产'>中原地产</option>&ndash;&gt;
+                                    <option value='蘑菇租房'>蘑菇租房</option>-->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">楼盘名称</label>
+                                <input type="text" name="communityName" class="form-control" value="">
+                            </div>
+                       <!--     <div class="form-group">
+                                <label class="control-label">城市</label>
+                                <select class="form-control" name="cityId" id="cityId" >
+                                    <option value=''>&#45;&#45;选择城市&#45;&#45;</option>
+                                    <option value='12'>北京</option>
+                                    <option value='13'>上海</option>
+                                    <option value='14'>天津</option>
+                                </select>
+                            </div>-->
+                            <div class="form-group">
+                                <label class="control-label">状态</label>
+                                <select class="form-control" name="status" id="status" >
+                                    <option value='0'>未处理</option>
+                               <!--     <option value='1'>已处理</option>-->
+                                </select>
+                            </div>
+                            <div class="form-actions pull-right">
+                                <button type="button" id="not-match-search" class="btn btn-info"><i class="fa fa-check"></i>查询</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="no-match-table" class="panel block5" style="position: static; zoom: 1;">
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+</div>
+<script src="/static/plugins/bower_components/sweetalert/sweetalert.min.js"></script>
+<script src="/static/js/template-web.js"></script>
+<script src="/api/relation/no-match-mapping.js"></script>
+<script src="/static/js/toutiao.table.js"></script>
+<script src="/static/js/jquery.serializejson.min.js"></script>
+<script>
+$(function () {
+    com.toutiao.officedict.mapping.getCompanys.do({},function(res){
+        for(var i = 0;i<res.length;i++){
+            console.log(res[i]);
+            $("#company").append("<option value='"+res[i]+"'>"+res[i]+"</option>");
+        }
+    });
+
+    var formparam = $('#not-match-form').serializeJSON();
+    loadNotMatchList(1);
+
+    $('#no-match-table').ttTable({
+        paging:true,
+        columns:[
+            {
+                field:"city",
+                "title":"城市"
+            },
+            {
+                field:"ofCompany",
+                "title":"公司"
+            },
+            {
+                field:"communityId",
+                "title":"小区ID"
+            },
+            {
+                field:"communityName",
+                "title":"小区名称"
+            },
+            {
+                render:function (d) {
+                    if( d['status'] == 0){
+                        return "未处理"
+                    }else if ( d['status'] == 1){
+                        return "已处理"
+                    }
+                },
+                "title":"状态"
+            },
+            {
+                render:function (d) {
+                    if(d['status'] == 1){
+                        return "<div class='button-box'>"
+                            + "<button class='btn btn-info deleteRelat' data-id="+d['id']+">删除</button>"
+                            + "</div>";
+                    }else{
+                        return "<div class='button-box'>"
+                            + "<button class='btn btn-info updateRelat' data-city="+d['cityId']+" data-company="+d['ofCompany']+" data-id="+d['id']+">调整</button>"
+                            + "<button class='btn btn-info deleteRelat' data-id="+d['id']+">删除</button>"
+                            + "</div>";
+                    }
+                    return "<div class='button-box'>"
+                        + "<button class='btn btn-info updateRelat' data-id='0'>调整</button>"
+                        + "<button class='btn btn-info deleteRelat' data-id="+d['id']+">删除</button>"
+                        + "</div>";
+                },
+                "title":"管理操作"
+            }
+
+        ],
+        onPage:function (pageIndex, pageSize) {
+            loadNotMatchList(pageIndex);
+        }}
+    );
+
+    /**
+     * 根据条件查询楼盘
+     */
+
+
+    $('#not-match-search').click(function(){
+        formparam = $('#not-match-form').serializeJSON();
+        loadNotMatchList(1);
+    });
+
+
+
+    function loadNotMatchList(pageNum) {
+        var param = $.extend({"pageNum":pageNum}, formparam);
+        com.toutiao.officedict.mapping.listNotMatchMappings.do(param,function (res, pageNum, pageSize, total) {
+            $('#no-match-table').ttTable().showloading();
+            $('#no-match-table').ttTable().load(res, total, pageNum);
+             renderButton(pageNum);
+        },function (jqXHR, textStatus, errorThrown) {
+            console.log('error',jqXHR, textStatus, errorThrown)
+        });
+    }
+
+    function renderButton(pageNum) {
+        //跳转楼盘详情页
+        $('.updateRelat').each(function () {
+            var _id = $(this).data('id');
+            var company = $(this).data('company');
+            var cityId = $(this).data('city');
+            console.log(cityId);
+            $(this).on('click', function () {
+                var url = '/index#mvc/relation/notMatchUpdate.html' + '?ofCompany=' + company+ '&&id=' + _id+ '&&cityId=' + cityId;
+                url=encodeURI(url);
+                window.location = url;
+            });
+        });
+
+        $('.deleteRelat').each(function () {
+            var _id = $(this).data('id');
+            $(this).on('click', function () {
+                com.toutiao.officedict.mapping.deleteRele.do({id:_id},function (res) {
+                    if (res && res>0) {
+                        swal({
+                            title: "删除成功!",
+                            type: "success",
+                            confirmButtonText: "确定",
+                            closeOnConfirm: false
+                        }, function () {
+                            formparam = $('#not-match-form').serializeJSON();
+                            loadNotMatchList(1);
+                            swal.close();
+                        })
+                    }
+                })
+            });
+        });
+    }
+});
+</script>

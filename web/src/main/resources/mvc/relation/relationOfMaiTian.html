@@ -1,0 +1,462 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">对应关系
+                    <div class="pull-right">
+                        <a style="cursor: pointer;" id="addbutton" data-toggle="modal" data-target="#addlou">添加</a>
+                    </div>
+                </div>
+                <div class="panel-wrapper collapse in" aria-expanded="true">
+                    <div class="panel-body">
+                        <form id="list_form" class="form-inline form-search">
+                            <div class="form-group">
+                                <label class="control-label">id</label>
+                                <input type="number" name="id" class="form-control" value="" style="width:100px;">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">导入方公司</label>
+                                <select class="form-control" name="company" id="company" >
+                                    <option value=''>--选择导入方公司--</option>
+                                    <option value='mgzf'>蘑菇租房</option>
+                                    <option value='5i5j'>我爱我家</option>
+                                    <option value='maitian'>麦田</option>
+                                    <option value='taiwu'>太平洋房屋</option>
+                                    <option value='ruiyang'>瑞阳</option>
+                                </select>
+                            </div>
+                           <div class="form-group">
+                                <label class="control-label">懂房帝房产newcode</label>
+                                <input type="number" name="newcode" class="form-control" value="" style="width:100px;">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">懂房帝楼盘名称</label>
+                                <input type="text" name="projname" class="form-control" value="">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">导入方楼盘名称</label>
+                                <input type="text" name="communityName" class="form-control" value="">
+                            </div>
+                            <div class="form-actions pull-right">
+                                <button type="button" id="search-list" class="btn btn-info"><i class="fa fa-check"></i>查询</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="addlou" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">添加懂房帝房产和导入方对应关系</h4>
+                    <p style="color: red;">导入方对应关系是以导入方的小区ID匹配，必须填写导入方小区ID</p></div>
+                <div class="modal-body">
+                    <form id="adresult" method="post">
+                        <!--   <div class="form-group">
+                            <label for="districtId" class="control-label">所属区域:</label>
+                           <select class="form-control" name="districtId" id="districtId">
+                               <option value=''>&#45;&#45;请选择区域&#45;&#45;</option>
+                           </select>
+                           </div>-->
+                           <div class="form-group">
+                               <label for="company" class="control-label">导入方公司:</label>
+                               <select class="form-control" name="company" id="addcompany">
+                                   <option value=''>--选择导入方公司--</option>
+                                   <option value='mgzf'>蘑菇租房</option>
+                                   <option value='5i5j'>我爱我家</option>
+                                   <option value='maitian'>麦田</option>
+                                   <option value='taiwu'>太平洋房屋</option>
+                                   <option value='ruiyang'>瑞阳</option>
+                               </select>
+                           </div>
+                        <div class="form-group">
+                            <label for="projname" class="control-label">懂房帝楼盘名称:</label>
+                            <input type="text" name="projname" class="form-control" value="" id="aprojname">
+                        </div>
+                        <div class="form-group">
+                            <label for="acommunityId" class="control-label">导入方小区ID:</label>
+                            <input type="text" name="communityId" class="form-control" value="" id="acommunityId">
+                        </div>
+                        <div class="form-group">
+                            <label for="amaitianProjectName" class="control-label">导入方小区名称:</label>
+                            <input type="text" name="communityName" class="form-control" value="" id="amaitianProjectName">
+                        </div>
+                        <div class="form-group">
+                            <label for="acommunityDistrict" class="control-label">导入方小区所在区县:</label>
+                            <input type="text" name="communityDistrict" class="form-control" value="" id="acommunityDistrict">
+                        </div>
+                        <div class="form-group">
+                            <label for="acommunityBizcircle" class="control-label">导入方小区所在商圈:</label>
+                            <input type="text" name="communityBizcircle" class="form-control" value="" id="acommunityBizcircle">
+                        </div>
+                        <div class="form-group">
+                            <label for="acommunityAddress" class="control-label">导入方小区地址:</label>
+                            <input type="text" name="communityAddress" class="form-control" value="" id="acommunityAddress">
+                        </div>
+                        <!--<input type="hidden" name="cityId" class="form-control"  id="acityId" value="12">-->
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">关闭</button>
+                    <button type="button" id="subsave" class="btn btn-danger waves-effect waves-light">提交修改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="uphouse" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">修改导入方对应关系</h4> </div>
+                <div class="modal-body" id="upform">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="subup" class="btn btn-danger waves-effect waves-light">提交修改</button>
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/html" id="edit-price-form-template">
+        <form id="upresult" method="post">
+            <input type="hidden" name="id" class="form-control" value="{{id}}" id="id">
+            <div class="form-group">
+                 <label for="projname" class="control-label">懂房帝楼盘名称:</label>
+                 <input type="text" name="projname" class="form-control" value="{{projname}}" id="projname">
+             </div>
+             <div class="form-group">
+                 <label for="communityId" class="control-label">导入方小区ID:</label>
+                 <input type="text" name="communityId" class="form-control" value="{{communityId}}" id="communityId">
+             </div>
+            <div class="form-group">
+                <label for="maitianProjectName" class="control-label">导入方小区名称:</label>
+                <input type="text" name="communityName" class="form-control" value="{{communityName}}" id="maitianProjectName">
+            </div>
+            <div class="form-group">
+                <label for="communityDistrict" class="control-label">导入方小区所在区县:</label>
+                <input type="text" name="communityDistrict" class="form-control" value="{{communityDistrict}}" id="communityDistrict">
+            </div>
+            <div class="form-group">
+                <label for="communityBizcircle" class="control-label">导入方小区所在商圈:</label>
+                <input type="text" name="communityBizcircle" class="form-control" value="{{communityBizcircle}}" id="communityBizcircle">
+            </div>
+            <div class="form-group">
+                <label for="communityAddress" class="control-label">导入方小区地址:</label>
+                <input type="text" name="communityAddress" class="form-control" value="{{communityAddress}}" id="communityAddress">
+            </div>
+         </form>
+     </script>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="listFang" class="panel block5" style="position: static; zoom: 1;">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/api/relation/relationOfMaiTian.js"></script>
+<script src="/static/plugins/bower_components/sweetalert/sweetalert.min.js"></script>
+<script src="/static/js/template-web.js"></script>
+<script src="/api/project/projectApi.js"></script>
+<script src="/api/project/selectApi.js"></script>
+<script src="/static/js/toutiao.table.js"></script>
+<script src="/static/js/jquery.serializejson.min.js"></script>
+<!-- js验证-->
+<script src="/static/js/jquery.validate.min.js"></script>
+<script src="/static/js/toutiao/validator-setDefaults.js"></script>
+<script>
+
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = year + seperator1 + month + seperator1 + strDate;
+        return currentdate;
+    }
+
+    /**
+     * 去空格
+     */
+    function myTrim(x) {
+        return x.replace(/^\s+|\s+$/gm,'');
+    }
+
+    /**
+     * 根据条件查询楼盘
+     */
+    var formparam = $('#list_form').serializeJSON();
+    $('#search-list').click(function(){
+        formparam = $('#list_form').serializeJSON();
+        formparam.id=myTrim(formparam.id);
+        formparam.newcode=myTrim(formparam.newcode);
+        formparam.communityName=myTrim(formparam.communityName);
+        formparam.projname=myTrim(formparam.projname);
+        //console.log(formparam)
+        loadProjectList(1);
+    });
+
+    function loadProjectList(pageNum) {
+        var param = $.extend({"pageNum":pageNum},formparam);
+        com.toutiao.officedict.relation.maiList.do(param,function (res, pageNum, pageSize, total) {
+              //console.log(res)
+            $('#listFang').ttTable().showloading();
+
+            $('#listFang').ttTable().load(res, total, pageNum);
+
+            $('.upRelation').each(function () {
+                var _id = $(this).data('id');
+                $(this).click(function () {
+                    com.toutiao.officedict.relation.selectOneMaiTian.do({id:_id},function (res) {
+                       // console.log(res);
+                        var upHtml = template('edit-price-form-template',res);
+                        $('#upform').html(upHtml);
+                        $('#uphouse').modal();
+                    })
+                })});
+
+            $('.deleteRelation').each(function () {
+                var _id = $(this).data('id');
+                $(this).click(function () {
+                    swal({
+                        title: "删除？",
+                        text: "确认删除吗！",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "确定",
+                        cancelButtonText: "取消",
+                        closeOnConfirm: false
+                    }, function () {
+                        com.toutiao.officedict.relation.deleteMaiTian.do({id:_id},function (res) {
+                            // console.log(res);
+                            swal("删除！", "删除成功。", "success");
+                            loadProjectList(1);
+                        });
+                    });
+                })})
+
+        },function (jqXHR, textStatus, errorThrown) {
+            console.log('error',jqXHR, textStatus, errorThrown)
+        });
+    };
+
+
+
+    $(function () {
+
+
+        $("#adresult").validate({
+            rules: {
+                projname: 'required',
+                communityName: 'required'
+            },
+            messages: {
+                communityName: '请输入导入公司楼盘名称',
+                projname: '请输入懂房帝房产名称'
+            },
+            submitHandler:function(form){
+                var result = $('#adresult').serializeJSON();
+                result.createTime=getNowFormatDate();
+                com.toutiao.officedict.relation.gettouname.do({projname:result.projname},function (res,success, error) {
+                    if(res  && res>0){
+                        com.toutiao.officedict.relation.addMaiTian.do(result, function (res,success, error) {
+                            if (res && res==1) {
+                                /* result['areaIds']=res;
+                                 console.log(result);*/
+                                /*com.toutiao.officedict.project.districtAreaBinding.do(result,function (resa,success, error) {
+                                 if (resa && resa>0) {
+                                 swal({
+                                 title: "保存成功!",
+                                 type: "success",
+                                 confirmButtonText: "确定",
+                                 closeOnConfirm: false
+                                 }, function () {
+                                 $('#addlou').modal('hide');
+                                 load(1,10);
+                                 swal.close();
+                                 });
+                                 }
+                                 },function () {
+                                 })*/
+                                swal({
+                                    title: "保存成功!",
+                                    type: "success",
+                                    confirmButtonText: "确定",
+                                    closeOnConfirm: false
+                                }, function () {
+                                    $('#addlou').modal('hide');
+                                    loadProjectList(1);
+                                    swal.close();
+                                });
+                            }else if(res && res==3) {
+                                swal({
+                                    title: "已有对应楼盘关系!",
+                                    type: "error",
+                                    confirmButtonText: "确定",
+                                    closeOnConfirm: false
+                                }, function () {
+                                    $('#addlou').modal('hide');
+                                    loadProjectList(1);
+                                    swal.close();
+                                });
+                            }
+                        },function () {
+                        })
+                    }else{
+                        swal({
+                            title: "请先添加懂房帝楼盘!",
+                            type: "error",
+                            confirmButtonText: "确定",
+                            closeOnConfirm: false
+                        }, function () {
+                            $('#addlou').modal('hide');
+                            loadProjectList(1);
+                            swal.close();
+                        });
+                    }
+                })
+
+            }
+        });
+
+        loadProjectList(1);
+
+        $('#listFang').ttTable({
+            paging:true,
+            columns:[
+                {
+                    field:"id",
+                    "title":"ID"
+                },
+               {
+                    field:"newcode",
+                    "title":"懂房帝房产newcode"
+                },
+                {
+                    field:"projname",
+                    "title":"懂房帝楼盘名称"
+                },
+                {
+                    field:"communityName",
+                    "title":"导入方小区名称"
+                },
+                {
+                    field:"communityDistrict",
+                    "title":"区域"
+                },
+                {
+                    field:"communityBizcircle",
+                    "title":"商圈"
+                },
+                {
+                  field:"company",
+                    "title":"导入方公司"
+                },
+                {
+                    render:function (d) {
+                        if( d['isApprove'] == 1){
+                            return "<div class='button-box'>"
+                                + "<button class='btn btn-info upRelation' data-id='" + d['id']+ "'>调整</button>"
+                                + "<button class='btn btn-info deleteRelation' data-id='" + d['id']+ "'>删除</button>"
+                                + "</div>";
+                        }
+                        return "<div class='button-box'>"
+                            + "<button class='btn btn-info upRelation' data-id='" + d['id']+ "'>调整</button>"
+                            + "<button class='btn btn-info deleteRelation' data-id='" + d['id']+ "'>删除</button>"
+                            + "</div>";
+                    },
+                    "title":"管理操作"
+                }
+
+            ],
+            onPage:function (pageIndex, pageSize) {
+                loadProjectList(pageIndex);
+            }}
+        );
+    })
+
+    //更新
+    $('#subup').on('click', function () {
+        if (!$('#id').val()) {
+            $('#id').focus();
+            return false;
+        }
+
+        var result = $('#upresult').serializeJSON();
+        result.updateTime=getNowFormatDate();
+        console.log(result);
+        if(result.communityName==""){
+            swal({
+                title: "不能为空!",
+                type: "error",
+                confirmButtonText: "确定",
+                closeOnConfirm: false
+            }, function () {
+                swal.close();
+            });
+        }else {
+            com.toutiao.officedict.relation.gettouname.do({projname:result.projname},function (res,success, error) {
+                if(res  && res>0){
+                    com.toutiao.officedict.relation.updateMaiTian.do(result,function (res,sucess) {
+                        console.log(res);
+                        if (res && res>0) {
+                            swal({
+                                title: "保存成功!",
+                                type: "success",
+                                confirmButtonText: "确定",
+
+                                closeOnConfirm: false
+                            }, function () {
+                                $('#uphouse').modal('hide');
+                                loadProjectList(1);
+                                swal.close();
+                            });
+
+                        }
+                    },function (jqXHR, textStatus, errorThrown) {
+                        console.log('error',jqXHR, textStatus, errorThrown)
+                    });
+                }else {
+                    swal({
+                        title: "请确认懂房帝楼盘名称是否存在!",
+                        type: "error",
+                        confirmButtonText: "确定",
+                        closeOnConfirm: false
+                    }, function () {
+                        $('#addlou').modal('hide');
+                        loadProjectList(1);
+                        swal.close();
+                    });
+                }
+            })
+        }
+
+    });
+
+    //录入
+    $('#subsave').click(function () {
+        $("#adresult").submit();
+        /*if (!$('#actiyName').val()) {
+         $('#acityName').focus();
+         return false;
+         }*/
+    });
+</script>

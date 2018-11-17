@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.toutiao.officedict.dao.mapper.officedict.ProjImageMapper">
+  <resultMap id="BaseResultMap" type="com.toutiao.officedict.dao.entity.officedict.ProjImage">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="newcode" jdbcType="INTEGER" property="newcode" />
+    <result column="img_type" jdbcType="INTEGER" property="imgType" />
+    <result column="img_path" jdbcType="VARCHAR" property="imgPath" />
+    <result column="img_desc" jdbcType="VARCHAR" property="imgDesc" />
+    <result column="img_size" jdbcType="INTEGER" property="imgSize" />
+    <result column="img_resolution" jdbcType="VARCHAR" property="imgResolution" />
+    <result column="img_suffix" jdbcType="VARCHAR" property="imgSuffix" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="updater_id" jdbcType="INTEGER" property="updaterId" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_logo_pic" jdbcType="INTEGER" property="isLogPic" />
+    <result column="projname" jdbcType="VARCHAR" property="projname" />
+    <result column="is_qualified" jdbcType="INTEGER" property="isQualified" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+    <result column="city_id" jdbcType="INTEGER" property="cityId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, proj_image.newcode, img_type, img_path, img_desc, img_size, img_resolution, img_suffix, proj_image.creator_id, proj_image.create_time, title,
+    proj_image.updater_id, proj_image.update_time,is_logo_pic,is_qualified
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from proj_image
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from proj_image
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.toutiao.officedict.dao.entity.officedict.ProjImage">
+    insert into proj_image (id, newcode, img_type,
+      img_path, img_desc, img_size, img_resolution, img_suffix,
+      creator_id, create_time, title, 
+      updater_id, update_time)
+    values (#{id,jdbcType=INTEGER}, #{newcode,jdbcType=INTEGER}, #{imgType,jdbcType=INTEGER},
+      #{imgPath,jdbcType=VARCHAR}, #{imgDesc,jdbcType=VARCHAR}, #{imgSize,jdbcType=INTEGER}, #{imgResolution,jdbcType=VARCHAR}, #{imgSuffix,jdbcType=VARCHAR},
+      #{creatorId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR}, 
+      #{updaterId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.toutiao.officedict.dao.entity.officedict.ProjImage">
+    insert into proj_image
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="newcode != null">
+        newcode,
+      </if>
+      <if test="imgType != null">
+        img_type,
+      </if>
+      <if test="imgPath != null">
+        img_path,
+      </if>
+      <if test="imgDesc != null">
+        img_desc,
+      </if>
+      <if test="imgSize != null">
+        img_size,
+      </if>
+      <if test="imgResolution != null">
+        img_resolution,
+      </if>
+      <if test="imgSuffix != null">
+        img_suffix,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+
+        create_time,
+
+      <if test="title != null">
+        title,
+      </if>
+      <if test="updaterId != null">
+        updater_id,
+      </if>
+        update_time,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="newcode != null">
+        #{newcode,jdbcType=INTEGER},
+      </if>
+      <if test="imgType != null">
+        #{imgType,jdbcType=INTEGER},
+      </if>
+      <if test="imgPath != null">
+        #{imgPath,jdbcType=VARCHAR},
+      </if>
+      <if test="imgDesc != null">
+        #{imgDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="imgSize != null">
+        #{imgSize,jdbcType=INTEGER},
+      </if>
+      <if test="imgResolution != null">
+        #{imgResolution,jdbcType=VARCHAR},
+      </if>
+      <if test="imgSuffix != null">
+        #{imgSuffix,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+
+        now(),
+
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="updaterId != null">
+        #{updaterId,jdbcType=INTEGER},
+      </if>
+        now(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.toutiao.officedict.dao.entity.officedict.ProjImage">
+    update proj_image
+    <set>
+      <if test="newcode != null">
+        newcode = #{newcode,jdbcType=INTEGER},
+      </if>
+      <if test="imgType != null">
+        img_type = #{imgType,jdbcType=INTEGER},
+      </if>
+      <if test="imgPath != null">
+        img_path = #{imgPath,jdbcType=VARCHAR},
+      </if>
+      <if test="imgDesc != null">
+        img_desc = #{imgDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="imgSize != null">
+        img_size = #{imgSize,jdbcType=INTEGER},
+      </if>
+      <if test="imgResolution != null">
+        img_resolution = #{imgResolution,jdbcType=VARCHAR},
+      </if>
+      <if test="imgSuffix != null">
+        img_suffix = #{imgSuffix,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="updaterId != null">
+        updater_id = #{updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isLogPic != null">
+        is_logo_pic = #{isLogPic,jdbcType=INTEGER}
+      </if>
+      <if test="isQualified != null">
+        is_qualified = #{isQualified,jdbcType=INTEGER}
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=INTEGER}
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.toutiao.officedict.dao.entity.officedict.ProjImage">
+    update proj_image
+    set newcode = #{newcode,jdbcType=INTEGER},
+      img_type = #{imgType,jdbcType=INTEGER},
+      img_path = #{imgPath,jdbcType=VARCHAR},
+      img_desc = #{imgDesc,jdbcType=VARCHAR},
+      img_size = #{imgSize,jdbcType=INTEGER},
+      img_resolution = #{imgResolution,jdbcType=VARCHAR},
+      img_suffix = #{imgSuffix,jdbcType=VARCHAR},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      title = #{title,jdbcType=VARCHAR},
+      updater_id = #{updaterId,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <insert id="saveProjImages" parameterType="java.util.List">
+    insert into proj_image (newcode, img_type,
+    img_path, title, img_desc,  img_size,
+    img_resolution, img_suffix,
+    creator_id, create_time)
+    values
+    <foreach collection="projImageList" index="index" item="image" separator=",">
+      (#{image.newcode}, #{image.imgType}, #{image.imgPath}, #{image.title}, #{image.imgDesc},  #{image.imgSize}, #{image.imgResolution}, #{image.imgSuffix}, #{image.creatorId}, now())
+    </foreach>
+  </insert>
+
+  <select id="esfPhotosList" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.domain.query.HousingProjectImageQuery">
+    SELECT
+    <include refid="Base_Column_List" />,projname
+    FROM proj_image
+    INNER JOIN proj_info
+    ON proj_image.newcode = proj_info.newcode
+    <where>
+       n_or_e=1 AND proj_image.is_qualified =0 AND proj_image.is_del=0
+      <if test="newcode != null" >
+        AND  newcode = #{newcode,jdbcType=INTEGER}
+      </if>
+      <if test="cityId != null and cityId !=''">
+        AND proj_info.city_id = #{cityId}
+      </if>
+      <if test="imgType != null">
+        AND img_type = #{imgType,jdbcType=INTEGER}
+      </if>
+      <if test="projname != null and projname !=''" >
+        AND proj_info.projname like CONCAT('%',#{projname},'%' )
+      </if>
+    </where>
+    ORDER BY newcode DESC
+  </select>
+
+
+  <select id="listHousingProjectOtherImages" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.domain.query.HousingProjectImageQuery">
+  SELECT
+  <include refid="Base_Column_List" />
+  FROM proj_image
+  <where>
+    is_del=0
+    <if test="newcode != null" >
+     AND newcode = #{newcode,jdbcType=INTEGER}
+    </if>
+    <if test="imgType != null">
+      AND img_type = #{imgType,jdbcType=INTEGER}
+    </if>
+  </where>
+  ORDER BY newcode DESC
+</select>
+
+  <select id="listTitleHousingProjectOtherImages" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.domain.query.HousingProjectImageQuery">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM proj_image
+    <where>
+      is_del=0
+      <if test="newcode != null" >
+        AND newcode = #{newcode,jdbcType=INTEGER}
+      </if>
+      <if test="imgTypeArray != null" >
+        AND img_type IN 
+        <foreach collection="imgTypeArray" item="imgType" index="index" open="(" close=")" separator=",">
+          #{imgType,jdbcType=INTEGER}
+        </foreach>
+      </if>
+    </where>
+    ORDER BY newcode DESC
+  </select>
+
+  <select id="listHousingProjectLayoutImages" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.domain.query.HousingProjectImageQuery">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM proj_image
+    <where>
+      img_type = 8
+      <if test="newcode != null">
+        AND newcode = #{newcode,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+</mapper>

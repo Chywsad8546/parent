@@ -1,0 +1,77 @@
+<link href="/static/plugins/bower_components/bootstrap-table/dist/bootstrap-table.min.css" rel="stylesheet" type="text/css" />
+
+<div class="container-fluid">
+
+    <!-- ============================================================== -->
+    <!-- Demo table -->
+    <!-- ============================================================== -->
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-wrapper collapse in" aria-expanded="true">
+                    <div class="panel-body">
+                        <form id="loupan_form" action="/test/test1" pageSize="15">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="control-label">First Name</label>
+                                            <input type="text" name="firstName" class="form-control" placeholder="John doe" value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="control-label">First Name</label>
+                                            <input type="text" name="firstName2" class="form-control" placeholder="John doe">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label class="control-label">Gender</label>
+                                            <select class="form-control">
+                                                <option value="">Male</option>
+                                                <option value="">Female</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions text-right">
+                                <button type="button" id="ld" class="btn btn-success"> <i class="fa fa-check"></i> 查询</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <div class="table-responsive">
+                    <table id="restable" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th data-field="name" >Task</th>
+                            <th >Progress</th>
+                            <th>Deadline</th>
+                            <th class="text-nowrap">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="no-records-found text-center">
+                            <td colspan="4">没有找到匹配的记录</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================== -->
+</div>
+
+<script src="/static/plugins/bower_components/bootstrap-table/dist/bootstrap-table.js"></script>
+<script src="/static/js/bootstrap-table-zh-CN.js"></script>
