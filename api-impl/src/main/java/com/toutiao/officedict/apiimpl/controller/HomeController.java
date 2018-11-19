@@ -18,9 +18,9 @@ public class HomeController {
         return  "redirect:/mvc/index.html";
     }
 
-//    @RequestMapping("/index")
-//    @IgnoreLogin
-//    public String homeIndex2() {
-//        return "index";
-//    }
+    @RequestMapping("/index")
+    @IgnoreLogin
+    public String homeIndex2() {
+        return  "redirect:/mvc/index.html";
+    }
 }
