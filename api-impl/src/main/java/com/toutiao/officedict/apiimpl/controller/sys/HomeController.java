@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @Date 2018/11/19 20:00
  */
 @Controller
+@RequestMapping("")
 public class HomeController {
 
     @RequestMapping("/")
