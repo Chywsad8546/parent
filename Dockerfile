@@ -1,5 +1,5 @@
 FROM java:8
-COPY  ./deploy/target/web.deploy-1.0-SNAPSHOT.jar /usr/share
+COPY  ./deploy/target/officedict.deploy-1.0-SNAPSHOT.jar /usr/share
 
-EXPOSE 8085
-ENTRYPOINT java -jar /usr/share/web.deploy-1.0-SNAPSHOT.jar
+EXPOSE 8081
+ENTRYPOINT java -jar /usr/share/officedict.deploy-1.0-SNAPSHOT.jar
