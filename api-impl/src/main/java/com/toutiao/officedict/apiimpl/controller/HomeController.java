@@ -1,4 +1,4 @@
-package com.toutiao.officedict.apiimpl.controller.sys;
+package com.toutiao.officedict.apiimpl.controller;
 
 import com.toutiao.officedict.apiimpl.authentication.IgnoreLogin;
 import org.springframework.stereotype.Controller;
@@ -15,12 +15,12 @@ public class HomeController {
     @RequestMapping("/")
     @IgnoreLogin
     public String homeIndex() {
-        return "/mvc/index.html";
+        return  "redirect:/mvc/index.html";
     }
 
-    @RequestMapping("/index")
-    @IgnoreLogin
-    public String homeIndex2() {
-        return "/mvc/index.html";
-    }
+//    @RequestMapping("/index")
+//    @IgnoreLogin
+//    public String homeIndex2() {
+//        return "index";
+//    }
 }
