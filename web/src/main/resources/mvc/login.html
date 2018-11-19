@@ -68,7 +68,7 @@
                     </div>
                 </div>
             </form>
-            <form class="form-horizontal" id="recoverform" action="/mvc/index">
+            <form class="form-horizontal" id="recoverform" action="/index">
                 <div class="form-group ">
                     <div class="col-xs-12">
                         <h3>Recover Password</h3>
@@ -130,7 +130,7 @@
 
                 if(res==0){
                     document.cookie = "loginName="+_username;
-                    window.location = '/index#mvc';
+                    window.location = '/mvc/index#mvc';
                 }
 
             },function (jqXHR, textStatus, errorThrown) {
