@@ -94,9 +94,10 @@ $(function(){
 
         //跳转楼盘修改页
         $('.project-detail').each(function () {
+
             var _id = $(this).data('id');
             $(this).on('click', function () {
-                window.location = '/index#mvc/newHouse/project-edit.html' + '?newcode=' + _id;
+                window.location = '/mvc/index.html#/mvc/newHouse/project-edit.html' + '?newcode=' + _id;
             });
         });
 
@@ -106,7 +107,7 @@ $(function(){
             var _id = $(this).data('id');
 
             $(this).on('click', function () {
-                window.location = '/index#mvc/project-layout.html' + '?newcode=' + _id;
+                window.location = '/mvc/index.html#/mvc/project-layout.html' + '?newcode=' + _id;
             });
         });
 
@@ -116,7 +117,7 @@ $(function(){
             var _id = $(this).data('id');
 
             $(this).on('click', function () {
-                window.location = '/index#mvc/price-management.html' + '?newcode=' + _id;
+                window.location = '/mvc/index.html#/mvc/price-management.html' + '?newcode=' + _id;
             });
         });
 
@@ -126,7 +127,7 @@ $(function(){
             var _id = $(this).data('id');
 
             $(this).on('click', function () {
-                window.location = '/index#mvc/project-album.html' + '?newcode=' + _id;
+                window.location = '/mvc/index.html#/mvc/project-album.html' + '?newcode=' + _id;
             });
         });
 
@@ -135,7 +136,7 @@ $(function(){
             var _id = $(this).data('id');
 
             $(this).on('click', function () {
-                window.location = '/index#mvc/project-coordinate.html' + '?newcode=' + _id;
+                window.location = '/mvc/index.html#/mvc/project-coordinate.html' + '?newcode=' + _id;
             });
         });
 

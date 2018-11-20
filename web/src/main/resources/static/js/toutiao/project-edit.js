@@ -18,14 +18,14 @@ $(function(){
 
     var _newCode = getQueryString('newcode');
     $('#sales-license').on('click', function () {
-        window.location = "/index#mvc/newHouse/sales-license-info.html" + "?newcode=" + _newCode;
+        window.location = "/mvc/index.html#/mvc/newHouse/sales-license-info.html" + "?newcode=" + _newCode;
     });
 
     $('#dynamic-info').on('click', function () {
-        window.location = "/index#mvc/newHouse/dynamic-info.html" + "?newcode=" + _newCode;
+        window.location = "/mvc/index.html#/mvc/newHouse/dynamic-info.html" + "?newcode=" + _newCode;
     });
     $('#activity-info').on('click', function () {
-        window.location = "/index#mvc/newHouse/activity-info.html" + "?newcode=" + _newCode;
+        window.location = "/mvc/index.html#/mvc/newHouse/activity-info.html" + "?newcode=" + _newCode;
     });
 
     var _housingType = $('input[name="housingType"]').val();
@@ -193,7 +193,7 @@ $('#sava-success-btn').click(function(){
                                 //window.location.reload();
                                 console.log(result)
                                 /* window.location = '/index#mvc/newHouse/project-detail.html' + '?newcode=' + result.newcode;*/
-                                window.location = '/index#mvc/newHouse/project-edit.html' + '?newcode=' + result.newcode;
+                                window.location = '/mvc/index.html#/mvc/newHouse/project-edit.html' + '?newcode=' + result.newcode;
                             });
                         });
                     }
@@ -215,7 +215,7 @@ $('#sava-success-btn').click(function(){
                                 //window.location.reload();
                                 console.log(result);
                                 /*   window.location = '/index#mvc/esf/project-detail.html' + '?newcode=' + result.newcode;*/
-                                window.location = '/index#mvc/esf/project-edit.html' + '?newcode=' + result.newcode;
+                                window.location = '/mvc/index.html#/mvc/esf/project-edit.html' + '?newcode=' + result.newcode;
                             });
                         });
                     }

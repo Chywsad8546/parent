@@ -160,7 +160,7 @@ $(function () {
             var cityId = $(this).data('city');
             console.log(cityId);
             $(this).on('click', function () {
-                var url = '/index#mvc/relation/notMatchUpdate.html' + '?ofCompany=' + company+ '&&id=' + _id+ '&&cityId=' + cityId;
+                var url = '/mvc/index.html#/mvc/relation/notMatchUpdate.html' + '?ofCompany=' + company+ '&&id=' + _id+ '&&cityId=' + cityId;
                 url=encodeURI(url);
                 window.location = url;
             });
