@@ -2,7 +2,9 @@ package com.toutiao.officedict.service.newhouse.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.toutiao.officedict.dao.entity.officedict.ProjImage;
+import com.toutiao.officedict.dao.entity.officedict.ProjectInfo;
 import com.toutiao.officedict.dao.mapper.officedict.ProjImageMapper;
+import com.toutiao.officedict.dao.mapper.officedict.ProjectInfoMapper;
 import com.toutiao.officedict.domain.query.HousingProjectImageQuery;
 import com.toutiao.officedict.service.newhouse.HousingProjectImageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class HousingProjectImageServiceImpl implements HousingProjectImageServic
 
     @Autowired
     private ProjImageMapper imageMapper;
+
+    @Autowired
+    private ProjectInfoMapper infoMapper;
 
     @Override
     public List<ProjImage> listHousingProjectLayoutImages(HousingProjectImageQuery imageQuery) {
@@ -87,12 +92,24 @@ public class HousingProjectImageServiceImpl implements HousingProjectImageServic
 
     @Override
     public int saveHousingProjectOtherImage(ProjImage image) {
-        return imageMapper.insertSelective(image);
+        imageMapper.insertSelective(image);
+
+        ProjectInfo projectInfo = new ProjectInfo();
+        projectInfo.setNewcode(image.getNewcode());
+
+        return infoMapper.updateByPrimaryKeySelective(projectInfo);
     }
 
     @Override
     public int deleteHousingProjectOtherImage(Integer imageId) {
-        return imageMapper.deleteByPrimaryKey(imageId);
+
+        ProjImage projImage = imageMapper.selectByPrimaryKey(imageId);
+        imageMapper.deleteByPrimaryKey(imageId);
+
+        ProjectInfo projectInfo = new ProjectInfo();
+        projectInfo.setNewcode(projImage.getNewcode());
+
+        return infoMapper.updateByPrimaryKeySelective(projectInfo);
     }
 
     @Override
@@ -100,12 +117,25 @@ public class HousingProjectImageServiceImpl implements HousingProjectImageServic
         ProjImage pi = new ProjImage();
         pi.setId(imageId);
         pi.setIsLogPic(1);
-        return imageMapper.updateByPrimaryKeySelective(pi);
+
+        imageMapper.updateByPrimaryKeySelective(pi);
+
+        ProjImage projImage = imageMapper.selectByPrimaryKey(imageId);
+        ProjectInfo projectInfo = new ProjectInfo();
+        projectInfo.setNewcode(projImage.getNewcode());
+
+        return infoMapper.updateByPrimaryKeySelective(projectInfo);
     }
 
     @Override
     public int setQualified(ProjImage projImage) {
-        return imageMapper.updateByPrimaryKeySelective(projImage);
+        imageMapper.updateByPrimaryKeySelective(projImage);
+
+        projImage = imageMapper.selectByPrimaryKey(projImage.getId());
+        ProjectInfo projectInfo = new ProjectInfo();
+        projectInfo.setNewcode(projImage.getNewcode());
+
+        return infoMapper.updateByPrimaryKeySelective(projectInfo);
     }
 
     @Override
@@ -113,6 +143,12 @@ public class HousingProjectImageServiceImpl implements HousingProjectImageServic
         ProjImage pi = new ProjImage();
         pi.setId(imageId);
         pi.setIsLogPic(0);
-        return imageMapper.updateByPrimaryKeySelective(pi);
+        imageMapper.updateByPrimaryKeySelective(pi);
+
+        ProjImage projImage = imageMapper.selectByPrimaryKey(imageId);
+        ProjectInfo projectInfo = new ProjectInfo();
+        projectInfo.setNewcode(projImage.getNewcode());
+
+        return infoMapper.updateByPrimaryKeySelective(projectInfo);
     }
 }
