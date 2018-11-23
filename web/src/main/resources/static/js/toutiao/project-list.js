@@ -136,7 +136,7 @@ $(function(){
             var _id = $(this).data('id');
 
             $(this).on('click', function () {
-                window.location = '/mvc/index.html#/mvc/project-coordinate.html' + '?newcode=' + _id;
+                window.location = '/mvc/index.html#project-coordinate.html' + '?newcode=' + _id;
             });
         });
 
