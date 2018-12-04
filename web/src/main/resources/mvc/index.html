@@ -87,21 +87,12 @@
                         <span class="caret"></span>
                     </a>
                     <ul id="cityListUl" class="dropdown-menu dropdown-user animated flipInY">
-                  <!--      <li><a onclick="chnageCity(12)"  href="javascript:void(0)"><span style="margin-right: 10px">12</span><span style="margin-right: 10px">北京</span><span style="margin-right: 10px">bj</span></a></li>
-                        <li><a  onclick="chnageCity(13)" href="javascript:void(0)"><span>aaa</span>上海</a></li>
-                        <li><a  onclick="chnageCity(14)" href="javascript:void(0)">天津</a></li>
-                        <li><a  onclick="chnageCity(45)" href="javascript:void(0)">成都</a></li>
-                        <li><a  onclick="chnageCity(204)" href="javascript:void(0)">长沙</a></li>
-                        <li><a  onclick="chnageCity(26)" href="javascript:void(0)">杭州</a></li>
-                        <li><a  onclick="chnageCity(65)" href="javascript:void(0)">南京</a></li>
-                        <li><a  onclick="chnageCity(142)" href="javascript:void(0)">南宁</a></li>
-                        <li><a  onclick="chnageCity(67)" href="javascript:void(0)">苏州</a></li>
-                        <li><a  onclick="chnageCity(155)" href="javascript:void(0)">太原</a></li>
-                        <li><a  onclick="chnageCity(194)" href="javascript:void(0)">武汉</a></li>
-                        <li><a  onclick="chnageCity(66)" href="javascript:void(0)">无锡</a></li>
-                        <li><a  onclick="chnageCity(103)" href="javascript:void(0)">郑州</a></li>
-                        <li><a  onclick="chnageCity(16)" href="javascript:void(0)">广州</a></li>
-                        <li><a  onclick="chnageCity(17)" href="javascript:void(0)">深圳</a></li>-->
+                        <!--<li style="float: left"><a  onclick="chnageCity(103)" href="javascript:void(0)">a</a></li>
+                        <li style="float: left"><a  onclick="chnageCity(16)" href="javascript:void(0)">b</a></li>
+                        <li><a  onclick="chnageCity(17)" href="javascript:void(0)">c</a></li>
+                            <li><a  onclick="chnageCity(103)" href="javascript:void(0)">郑州</a></li>
+                            <li><a  onclick="chnageCity(16)" href="javascript:void(0)">广州</a></li>
+                            <li><a  onclick="chnageCity(17)" href="javascript:void(0)">深圳</a></li>-->
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
@@ -200,9 +191,11 @@
 </div>
 
 <script type="text/html" id="cityListHtml">
+<!--
         <li><a  href="javascript:void(0)"><div class="cityLi1">城市编号</div><div class="cityLi2">城市</div><div class="cityLi3">城市简拼</div></a></li>
+-->
         {{each ress}}
-        <li><a onclick="chnageCity({{$value.cityId}})" href="javascript:void(0)"><div class="cityLi1">{{$value.cityId}}</div><div class="cityLi2">{{$value.cityName}}</div><div class="cityLi3">{{$value.cityAbbreviation}}</div></a></li>
+        <li  style="float: left;width: 82px"><a onclick="chnageCity({{$value.cityId}})" href="javascript:void(0)">{{$value.cityName}}</a></li>
         {{/each}}
 </script>
 
