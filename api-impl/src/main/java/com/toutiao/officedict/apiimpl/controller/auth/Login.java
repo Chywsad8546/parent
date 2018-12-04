@@ -11,8 +11,10 @@ import com.toutiao.officedict.common.authentication.menu;
 import com.toutiao.officedict.common.constant.resultcode.CommonResultCode;
 import com.toutiao.officedict.common.exceptions.NashRequestException;
 import com.toutiao.officedict.common.restmodel.NashResult;
+import com.toutiao.officedict.common.staticonst.City;
 import com.toutiao.officedict.common.util.NashBeanUtils;
 import com.toutiao.officedict.common.util.crypto.AES;
+import com.toutiao.officedict.common.util.officedict.CityMap;
 import com.toutiao.officedict.dao.entity.admin.SysMenuEntity;
 import com.toutiao.officedict.dao.entity.admin.SysRoleEntity;
 import com.toutiao.officedict.dao.entity.admin.SysUserEntity;
@@ -108,15 +110,54 @@ public class Login {
     @RequestMapping(value = {"/changeCity"}, method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     @Permission(ignore = true)
-    public NashResult changeCity(@RequestParam(value = "cityId", required = false) Integer cityId, HttpServletResponse response) throws Exception {
+    public NashResult changeCity(@RequestParam(value = "cityId", required = false, defaultValue = "12") Integer cityId, HttpServletResponse response) throws Exception {
         SerializableData serializableData = User.getCurrent().getSerializableData();
         serializableData.setCityId(cityId);
+        serializableData.setCityName(CityMap.getCityCNName(cityId));
         String cookievalue = AES.encrypt2(serializableData.toJson(), "apollocrm1234567");
         Cookie cookie = new Cookie(loginAndPermissionConfig.getCookiename(), cookievalue);
         cookie.setPath("/");
         response.addCookie(cookie);
         return NashResult.build(serializableData);
 
+    }
+
+    @RequestMapping(value = {"/getCityList"}, method = {RequestMethod.GET, RequestMethod.POST})
+    @ResponseBody
+    @Permission(ignore = true)
+    public NashResult getCityList() throws Exception {
+         ArrayList<City> cityList = new ArrayList<>();
+        cityList.add(new City(1,"石家庄","sjz"));
+        cityList.add(new City(12,"北京","bj"));
+        cityList.add(new City(13,"上海","sh"));
+        cityList.add(new City(14,"天津","tj"));
+        cityList.add(new City(15,"重庆","cq"));
+        cityList.add(new City(16,"广州","gz"));
+        cityList.add(new City(17,"深圳","sz"));
+        cityList.add(new City(18,"珠海","zh"));
+        cityList.add(new City(23,"惠州","huizhou"));
+        cityList.add(new City(24,"东莞","dg"));
+        cityList.add(new City(26,"杭州","hz"));
+        cityList.add(new City(45,"成都","cd"));
+        cityList.add(new City(55,"沈阳","sy"));
+        cityList.add(new City(56,"大连","dl"));
+        cityList.add(new City(65,"南京","nj"));
+        cityList.add(new City(66,"无锡","wuxi"));
+        cityList.add(new City(67,"苏州","suzhou"));
+        cityList.add(new City(75,"福州","fz"));
+        cityList.add(new City(84,"长春","changchun"));
+        cityList.add(new City(103,"郑州","zz"));
+        cityList.add(new City(113,"济南","jn"));
+        cityList.add(new City(114,"青岛","qd"));
+        cityList.add(new City(118,"烟台","yt"));
+        cityList.add(new City(123,"合肥","hf"));
+        cityList.add(new City(143,"海口","haikou"));
+        cityList.add(new City(144,"三亚","sanya"));
+        cityList.add(new City(176,"西安","xian"));
+        cityList.add(new City(194,"武汉","wh"));
+        cityList.add(new City(204,"长沙","cs"));
+        cityList.add(new City(214,"南昌","nc"));
+        return NashResult.build(cityList);
     }
 
     public SysUserResponse checkLoginNamePassword(String loginname, String password) {

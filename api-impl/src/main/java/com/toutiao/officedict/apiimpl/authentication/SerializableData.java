@@ -22,6 +22,7 @@ public class SerializableData implements Serializable {
     Integer cityId;
     SysRoleEntity currentRole;
     List<menu> menus;
+    String cityName;
 
     public String toJson() {
         return JSON.toJSONString(this);
