@@ -37,7 +37,30 @@ function getQueryStringZhongwen(name) {
     return null;
 }
 
-
+//添加url参数
+function ChangeParam(name,value)
+{
+    var url=window.location.href ;
+    var newUrl="";
+    var reg = new RegExp("(^|)"+ name +"=([^&]*)(|$)");
+    var tmp = name + "=" + value;
+    if(url.match(reg) != null)
+    {
+        newUrl= url.replace(eval(reg),tmp);
+    }
+    else
+    {
+        if(url.match("[\?]"))
+        {
+            newUrl= url + "&" + tmp;
+        }
+        else
+        {
+            newUrl= url + "?" + tmp;
+        }
+    }
+    location.href=newUrl;
+}
 
 
 

@@ -66,7 +66,7 @@
         event.preventDefault();
         try {
             var u = new URI(url);
-            u.addQuery("__suid", uniqueId())
+            u.addQuery("__suid", uniqueId());
             History.pushState('', '', u.toString());
         }catch (e){
             console.error(e);

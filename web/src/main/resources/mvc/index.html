@@ -250,7 +250,7 @@
     function chnageCity(cityId) {
         console.log(cityId)
         com.toutiao.officedict.project.changeCity.do({"cityId":cityId}, function(res){
-            sessionStorage.setItem('cityName', res.cityName);
+           // sessionStorage.setItem('cityName', res.cityName);
             location.reload();
         },function (jqXHR, textStatus, errorThrown) {
             console.log('error',jqXHR, textStatus, errorThrown)
@@ -293,10 +293,10 @@
         $(".preloader").fadeOut();
         com.toutiao.officedict.auth.getuser.do({},function (res) {
             $('#_index_loginname').text(res["user_name"]);
-            if (res["city_id"] == 12){
+         /*   if (res["city_id"] == 12){
                  sessionStorage.setItem('cityName',"北京");
-            }
-                $('#cityCurrentName').html(sessionStorage.getItem('cityName'));
+            }*/
+                $('#cityCurrentName').html(res["city_name"]);
 
            /* if(res.city_id==12){
                 $('#cityCurrentName').html("北京");
@@ -373,7 +373,7 @@
 
         $("#logout").click(function() {
             com.toutiao.officedict.project.logout.do({}, function (res) {
-                sessionStorage.removeItem('cityName');
+                //sessionStorage.removeItem('cityName');
                 window.location = '/mvc/login.html';
             }, function (jqXHR, textStatus, errorThrown) {
             })
