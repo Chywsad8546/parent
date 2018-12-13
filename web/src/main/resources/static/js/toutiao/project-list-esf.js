@@ -76,7 +76,7 @@ $(function(){
             $('#listpro').ttTable().showloading();
 
             $('#listpro').ttTable().load(res, total, pageNum);
-
+            $('.project-release').parents('tr').css('background-color', '#cddc39')
             esfRenderButton(pageNum);
 
         },function (jqXHR, textStatus, errorThrown) {

@@ -71,6 +71,8 @@ $(function(){
 
             renderButton(pageNum);
 
+            $('.project-release').parents('tr').css('background-color', '#cddc39')
+
         },function (jqXHR, textStatus, errorThrown) {
             console.log('error',jqXHR, textStatus, errorThrown)
         });
