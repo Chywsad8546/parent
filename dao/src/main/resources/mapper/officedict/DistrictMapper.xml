@@ -168,7 +168,7 @@
     d.district_id, d.district_name, d.city_id, d.coord_x, d.coord_y, d.sorting
     FROM district d
     join district_area_config on district_area_config.district_id=d.district_id
-    where district_area_config.house_type=#{housetype} and d.city_id=#{cityid}
+    where  d.city_id=#{cityid}
     group by d.district_id, d.district_name, d.city_id, d.coord_x, d.coord_y, d.sorting
   </select>
 
