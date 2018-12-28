@@ -24,6 +24,8 @@ public class ProjDynamicInfoQuery {
     @NotNull
     Integer newcode;
 
+    Integer cityId;
+
     /**
      * 当前页码，默认值为 1
      */

@@ -14,9 +14,10 @@
         <result column="is_del" property="isDel" jdbcType="INTEGER" />
         <result column="link_url" property="linkUrl" jdbcType="VARCHAR" />
         <result column="newcode" property="newcode" jdbcType="INTEGER" />
+        <result column="city_id" property="cityId" jdbcType="INTEGER" />
     </resultMap>
     <sql id="Base_Column_List" >
-      id,type,time, title, detail, creator_id, create_time, updater_id, update_time, is_del, link_url,newcode
+      id,type,time, title, detail, creator_id, create_time, updater_id, update_time, is_del, link_url,newcode,city_id
     </sql>
 
     <select id="dynamicInfoList" resultMap="BaseResultMap" parameterType="com.toutiao.officedict.domain.query.ProjDynamicInfoQuery" >
@@ -30,10 +31,10 @@
     <insert id="addDynamicInfo" parameterType="com.toutiao.officedict.domain.query.ProjDynamicInfoQuery">
             insert into proj_dynamic_info (type, time, title,
       detail, create_time,update_time,
-      link_url, newcode,is_del)
+      link_url, newcode,is_del,city_id)
     values (#{type,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, #{title,jdbcType=VARCHAR},
       #{detail,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
-      #{linkUrl,jdbcType=VARCHAR}, #{newcode,jdbcType=INTEGER}, #{isDel,jdbcType=INTEGER})
+      #{linkUrl,jdbcType=VARCHAR}, #{newcode,jdbcType=INTEGER}, #{isDel,jdbcType=INTEGER}, #{cityId,jdbcType=INTEGER})
     </insert>
 
     <select id="selectOne" resultMap="BaseResultMap" parameterType="Integer">

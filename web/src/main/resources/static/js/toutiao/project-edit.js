@@ -15,14 +15,14 @@ function getNowFormatDate() {
 }
 var _hnewCode = getQueryString('newcode');
 $(function(){
-
+    var city_id;
     var _newCode = getQueryString('newcode');
     $('#sales-license').on('click', function () {
         window.location = "/mvc/index.html#/mvc/newHouse/sales-license-info.html" + "?newcode=" + _newCode;
     });
 
     $('#dynamic-info').on('click', function () {
-        window.location = "/mvc/index.html#/mvc/newHouse/dynamic-info.html" + "?newcode=" + _newCode;
+        window.location = "/mvc/index.html#/mvc/newHouse/dynamic-info.html" + "?newcode=" + _newCode+"&cityId="+city_id;
     });
     $('#activity-info').on('click', function () {
         window.location = "/mvc/index.html#/mvc/newHouse/activity-info.html" + "?newcode=" + _newCode;
@@ -35,6 +35,7 @@ $(function(){
          * */
         com.toutiao.officedict.project.getHousingProject.do({"newcode": _newCode},function(res){
             getHousingProject(_newCode,res);
+            city_id = res.cityId;
         },function (jqXHR, textStatus, errorThrown) {
             console.log('error',jqXHR, textStatus, errorThrown)
         });
@@ -61,6 +62,7 @@ function getHousingProject(_newCode,res){
     // }
 
     var nicknameList = res.nickname.split(",");
+
     res.nickname=nicknameList;
     console.log(res);
     var getHousingProjectHtml = template('get-housing-project-template',res);
