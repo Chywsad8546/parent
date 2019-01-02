@@ -8,9 +8,9 @@
         <div class="col-lg-12 col-sm-12 col-xs-12">
             <div class="panel panel-info">
                 <div class="panel-heading">楼盘动态
-                    <duv class="pull-right">
+                    <div class="pull-right">
                         <a style="cursor: pointer;" id="addbutton" data-toggle="modal" data-target="#addlou">添加楼盘动态</a>
-                    </duv>
+                    </div>
                 </div>
 
                 <div class="panel-wrapper">
@@ -170,6 +170,7 @@
 
     $(function () {
 
+        var cityId = getQueryString('cityId');
         $('#dynamic-info-form').ttTable({
             paging:true,
             columns:[
@@ -206,6 +207,10 @@
                 {
                     field:"detail",
                     "title":"动态详细信息"
+                },
+                {
+                    field:"cityId",
+                    "title":"城市id"
                 },
                 {
                     render:function (d) {
@@ -278,6 +283,7 @@
         $('#subsave').click(function () {
             var result = $('#adresult').serializeJSON();
             result.newcode=_newCode;
+            result.cityId = cityId;
             result.detail=myTrim(result.detail);
             if(result.type=="" || result.time=="" || result.title=="" || result.detail==""){
                 swal({

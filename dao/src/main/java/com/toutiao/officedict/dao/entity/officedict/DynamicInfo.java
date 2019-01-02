@@ -22,4 +22,5 @@ public class DynamicInfo {
     String linkUrl;
     Integer newcode;
     Integer isDel;
+    Integer cityId;
 }
