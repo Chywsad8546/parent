@@ -63,10 +63,10 @@ public class EsfHousingProjectRestful extends BaseController {
         housingProjectRequest.setNOrE((short)1);
 
         ProjectInfo projInfo = new ProjectInfo();
-
+        BeanUtils.copyProperties(housingProjectRequest, projInfo);
+        //更新城市
         SerializableData serializableData = User.getCurrent().getSerializableData();
         projInfo.setCityId(serializableData.getCityId());
-        BeanUtils.copyProperties(housingProjectRequest, projInfo);
 
         return NashResult.build(housingProjectService.createProj(projInfo));
     }
