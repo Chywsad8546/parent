@@ -23,6 +23,24 @@ $(function(){
              },
             {
                 render:function (d) {
+                    if( d['saling'] == 1){
+                        return "在售"
+                    }else if( d['saling'] == 0){
+                        return "售完"
+                    }else if( d['saling'] == 2){
+                        return "不在售"
+                    }else if( d['saling'] == 3){
+                        return "出租"
+                    }else if( d['saling'] == 4){
+                        return "租售"
+                    }else if( d['saling'] == 5){
+                        return "待售"
+                    }
+                },
+                "title":"在售状态"
+            },
+            {
+                render:function (d) {
                     if( d['isApprove'] == 1){
                         return "<div class='button-box'>"
                             + "<button class='btn btn-info project-detail' data-id='" + d['newcode']+ "'>详情</button>"
