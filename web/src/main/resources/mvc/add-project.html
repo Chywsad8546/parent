@@ -29,7 +29,7 @@
 
                         <form class="form-horizontal user-defined-form" id="add-office-form" method="post">
 
-                            <input type="hidden" name="cityId" value="12"><!--默认城市北京-->
+                            <input type="hidden" id="cityId" name="cityId" value="12"><!--默认城市北京-->
 
                             <div class="form-group">
                                 <label for="projname" class="control-label col-md-2 required">楼盘名称</label>
@@ -227,10 +227,17 @@
 <script src="/api/project/selectApi.js"></script>
 <script src="/static/js/jquery.serializejson.min.js"></script>
 <script src="/static/js/toutiao/add-project.js"></script>
+<script src="/api/auth/auth.js"></script>
 <script>
     function addNickName() {
         $('#addbicknameid').before("<input type='text' id='nickname' name='nickname' class='form-control' placeholder='' value=''>")
+
     }
+
+    com.toutiao.officedict.auth.getuser.do({},function (res) {
+        $('#cityId').val(res["city_id"]);
+    });
+
 
 /*    function bresidental() {
 
