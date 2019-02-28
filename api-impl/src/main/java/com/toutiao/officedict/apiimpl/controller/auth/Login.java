@@ -135,6 +135,7 @@ public class Login {
         cityList.add(new City(16,"广州","gz"));
         cityList.add(new City(17,"深圳","sz"));
         cityList.add(new City(18,"珠海","zh"));
+        cityList.add(new City(20, "佛山","foshan"));
         cityList.add(new City(23,"惠州","huizhou"));
         cityList.add(new City(24,"东莞","dg"));
         cityList.add(new City(26,"杭州","hz"));
@@ -144,15 +145,19 @@ public class Login {
         cityList.add(new City(65,"南京","nj"));
         cityList.add(new City(66,"无锡","wuxi"));
         cityList.add(new City(67,"苏州","suzhou"));
+        cityList.add(new City(68,"徐州","xuzhou"));
         cityList.add(new City(75,"福州","fz"));
+        cityList.add(new City(76,"厦门","xiamen"));
         cityList.add(new City(84,"长春","changchun"));
         cityList.add(new City(103,"郑州","zz"));
         cityList.add(new City(113,"济南","jn"));
         cityList.add(new City(114,"青岛","qd"));
         cityList.add(new City(118,"烟台","yt"));
         cityList.add(new City(123,"合肥","hf"));
+        cityList.add(new City(142,"南宁","nanning"));
         cityList.add(new City(143,"海口","haikou"));
         cityList.add(new City(144,"三亚","sanya"));
+        cityList.add(new City(155,"太原","taiyuan"));
         cityList.add(new City(176,"西安","xian"));
         cityList.add(new City(194,"武汉","wh"));
         cityList.add(new City(204,"长沙","cs"));
