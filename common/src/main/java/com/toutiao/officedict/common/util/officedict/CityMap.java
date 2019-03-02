@@ -26,6 +26,7 @@ public class CityMap {
         cityMap.put(16, "广州");
         cityMap.put(17, "深圳");
         cityMap.put(18, "珠海");
+        cityMap.put(20, "佛山");
         cityMap.put(23, "惠州");
         cityMap.put(24, "东莞");
         cityMap.put(26, "杭州");
@@ -35,15 +36,19 @@ public class CityMap {
         cityMap.put(65, "南京");
         cityMap.put(66, "无锡");
         cityMap.put(67, "苏州");
+        cityMap.put(68, "徐州");
         cityMap.put(75, "福州");
+        cityMap.put(76, "厦门");
         cityMap.put(84, "长春");
         cityMap.put(103, "郑州");
         cityMap.put(113, "济南");
         cityMap.put(114, "青岛");
         cityMap.put(118, "烟台");
         cityMap.put(123, "合肥");
+        cityMap.put(142, "南宁");
         cityMap.put(143, "海口");
         cityMap.put(144, "三亚");
+        cityMap.put(155, "太原");
         cityMap.put(176, "西安");
         cityMap.put(194, "武汉");
         cityMap.put(204, "长沙");
