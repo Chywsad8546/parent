@@ -16,6 +16,9 @@ import com.toutiao.officedict.domain.newHouse.SalesDynamicInfo;
 import com.toutiao.officedict.domain.newHouse.SalesLicenseInfo;
 import com.toutiao.officedict.domain.query.HousingProjectQuery;
 import com.toutiao.officedict.service.newhouse.HousingProjectService;
+import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -35,6 +38,8 @@ public class NewHouseHousingProjectRestful extends BaseController {
     @Autowired
     private HousingProjectService housingProjectService;
 
+    private static final Logger logger = LoggerFactory.getLogger(NewHouseHousingProjectRestful.class);
+
     /**
      * 楼盘列表-新房
      * @param query
@@ -48,8 +53,9 @@ public class NewHouseHousingProjectRestful extends BaseController {
         query.setProjFlag(0);
         SerializableData serializableData = User.getCurrent().getSerializableData();
         query.setCurrentCityId(serializableData.getCityId());
+        logger.error(DateTime.now().toString());
         List<ProjectInfo> projInfoList = housingProjectService.listHousingProject(query);
-
+        logger.error(DateTime.now().toString());
         return NashResult.build(projInfoList);
     }
 
