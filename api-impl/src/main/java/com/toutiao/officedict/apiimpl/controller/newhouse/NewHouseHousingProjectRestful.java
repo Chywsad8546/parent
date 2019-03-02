@@ -60,7 +60,7 @@ public class NewHouseHousingProjectRestful extends BaseController {
         String end = DateTime.now().toString();
 
         String result = start + "---" + end;
-        return NashResult.build(result);
+        return NashResult.build(projInfoList);
     }
 
     /**
