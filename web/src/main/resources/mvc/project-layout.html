@@ -112,12 +112,12 @@
                                 <label for="reference-sell-state" class="control-label col-sm-2">销售状态:</label>
                                 <div class="col-sm-4">
                                     <select id="reference-sell-state"  name="salesStatus" class="form-control">
-                                        <option value ="0" {{if salesStatus==0}}selected{{/if}}>售完</option>
-                                        <option value ="1" {{if salesStatus==1}}selected{{/if}}>在售</option>
-                                        <option value="2" {{if salesStatus==2}}selected{{/if}}>不在售</option>
-                                        <option value="3" {{if salesStatus==3}}selected{{/if}}>出租</option>
-                                        <option value="4" {{if salesStatus==4}}selected{{/if}}>租售</option>
-                                        <option value="5" {{if salesStatus==5}}selected{{/if}}>待售</option>
+                                        <option value ="0">售完</option>
+                                        <option value ="1" selected>在售</option>
+                                        <option value="2">不在售</option>
+                                        <option value="3">出租</option>
+                                        <option value="4">租售</option>
+                                        <option value="5">待售</option>
                                     </select>
                                 </div>
                             </div>
@@ -358,7 +358,7 @@
 
                     if(!d['referenceTotalPrice'])
                         return "待定";
-                    return d['referenceTotalPrice'] + "万元/套";
+                    return d['referenceTotalPrice'] + "元/套";
                 },
                 "title":"参考总价"
             },

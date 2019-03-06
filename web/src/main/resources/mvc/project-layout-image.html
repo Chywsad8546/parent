@@ -122,9 +122,15 @@
             },
             {
                 render:function (d) {
-                    return "<a class='image-popup-vertical-fit' href='" + _imgPrefix + d['imgPath'] + "-original" + "' title=''>"
-                        + "<img src='" + _imgPrefix + d['imgPath'] + "-tt400x300" + "' width='100'>"
-                        + "</a>";
+                    if(d['imgPath'].indexOf('http') == 0){
+                        return "<a class='image-popup-vertical-fit' href='" + d['imgPath'] + "' title=''>"
+                            + "<img src='" + d['imgPath'] + "' width='100'>"
+                            + "</a>";
+                    }else{
+                        return "<a class='image-popup-vertical-fit' href='" + _imgPrefix + d['imgPath'] + "-original" + "' title=''>"
+                            + "<img src='" + _imgPrefix + d['imgPath'] + "-tt400x300" + "' width='100'>"
+                            + "</a>";
+                    }
                 },
                 "title":"图片（鼠标点击查看大图）"
             },
