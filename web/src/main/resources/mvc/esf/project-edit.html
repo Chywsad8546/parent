@@ -68,11 +68,19 @@
             </select>
         </div>
     </div>
+
+    <div class="form-group">
+        <label for="residential-category" class="control-label col-md-2 required">业态/物业类别</label>
+        <div class="col-md-10" id="property-type" data-name="propertyType" data-value="{{propertyType}}" data-attribute1="categoryId" data-attribute2="categoryName">
+        </div>
+    </div>
+
     <div class="form-group">
         <label for="residential-category" class="control-label col-md-2 required">住宅类别</label>
         <div class="col-md-10" id="residential-category" data-name="residentialCategory[]" data-value="{{residentialCategory}}" data-attribute1="categoryId" data-attribute2="categoryName">
         </div>
     </div>
+
     <div class="form-group">
         <label for="build-category" class="control-label col-md-2">建筑类别</label>
         <div class="col-md-10" data-name="buildCategory[]" data-value="{{buildCategory}}" id="build-category" data-attribute1="buildCategoryId" data-attribute2="buildCategoryName">
