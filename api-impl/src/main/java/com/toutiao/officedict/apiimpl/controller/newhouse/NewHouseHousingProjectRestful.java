@@ -75,11 +75,18 @@ public class NewHouseHousingProjectRestful extends BaseController {
                                                @ModelAttribute("user") User user) {
 
         housingProjectRequest.setCreatorId(user.getUserId());
+
+        //更新城市
+        SerializableData serializableData = User.getCurrent().getSerializableData();
+        housingProjectRequest.setCityId(serializableData.getCityId());
+
         //新房楼盘标志位
         housingProjectRequest.setNOrE((short) 0);
 
         ProjectInfo projInfo = new ProjectInfo();
+
         BeanUtils.copyProperties(housingProjectRequest, projInfo);
+
 
         return NashResult.build(housingProjectService.createProj(projInfo));
     }
