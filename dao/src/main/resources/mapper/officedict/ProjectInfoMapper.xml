@@ -1634,6 +1634,9 @@
     <if test="isDel != null">
       AND is_del = #{isDel}
     </if>
+    <if test="saling != null">
+      AND saling = #{saling}
+    </if>
     <if test="imgCount == 0">
      AND imgcount ISNULL
     </if>

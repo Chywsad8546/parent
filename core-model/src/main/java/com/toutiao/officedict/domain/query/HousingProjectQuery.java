@@ -67,4 +67,10 @@ public class HousingProjectQuery {
     private Integer imgCount;
 
     private Integer isActivity;
+
+    /**
+     * 销售状态 0售完,1在售,2不在售,3出租,4租售,5待售
+     */
+    private Integer saling;
+
 }
