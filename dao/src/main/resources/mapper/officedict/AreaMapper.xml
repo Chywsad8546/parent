@@ -169,6 +169,7 @@
     join district_area_config on district_area_config.area_id=area.area_id
     JOIN district on district.district_id=district_area_config.district_id
     WHERE district.city_id = #{cityid}
+    AND district_area_config.house_type = #{houseType};
 
   </select>
 

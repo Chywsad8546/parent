@@ -16,6 +16,9 @@ import com.toutiao.officedict.domain.newHouse.SalesDynamicInfo;
 import com.toutiao.officedict.domain.newHouse.SalesLicenseInfo;
 import com.toutiao.officedict.domain.query.HousingProjectQuery;
 import com.toutiao.officedict.service.newhouse.HousingProjectService;
+import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -26,6 +29,7 @@ import java.util.List;
 
 /**
  * 新房楼盘管理
+ *
  * @author WuShoulei on 2017/11/15
  */
 @RestController
@@ -35,12 +39,15 @@ public class NewHouseHousingProjectRestful extends BaseController {
     @Autowired
     private HousingProjectService housingProjectService;
 
+    private static final Logger logger = LoggerFactory.getLogger(NewHouseHousingProjectRestful.class);
+
     /**
      * 楼盘列表-新房
+     *
      * @param query
      * @return
      */
-    @RequestMapping(value= "/listHousingProject")
+    @RequestMapping(value = "/listHousingProject")
     @ResponseBody
     public NashResult listNewHouseHousingProject(HousingProjectQuery query) {
 
@@ -48,13 +55,17 @@ public class NewHouseHousingProjectRestful extends BaseController {
         query.setProjFlag(0);
         SerializableData serializableData = User.getCurrent().getSerializableData();
         query.setCurrentCityId(serializableData.getCityId());
+        String start = DateTime.now().toString();
         List<ProjectInfo> projInfoList = housingProjectService.listHousingProject(query);
+        String end = DateTime.now().toString();
 
+        String result = start + "---" + end;
         return NashResult.build(projInfoList);
     }
 
     /**
      * 添加/创建项目-新房
+     *
      * @param housingProjectRequest
      * @return
      */
@@ -64,17 +75,25 @@ public class NewHouseHousingProjectRestful extends BaseController {
                                                @ModelAttribute("user") User user) {
 
         housingProjectRequest.setCreatorId(user.getUserId());
+
+        //更新城市
+        SerializableData serializableData = User.getCurrent().getSerializableData();
+        housingProjectRequest.setCityId(serializableData.getCityId());
+
         //新房楼盘标志位
-        housingProjectRequest.setNOrE((short)0);
+        housingProjectRequest.setNOrE((short) 0);
 
         ProjectInfo projInfo = new ProjectInfo();
+
         BeanUtils.copyProperties(housingProjectRequest, projInfo);
+
 
         return NashResult.build(housingProjectService.createProj(projInfo));
     }
 
     /**
      * 查询项目-新房
+     *
      * @param newcode
      * @return
      */
@@ -87,6 +106,7 @@ public class NewHouseHousingProjectRestful extends BaseController {
 
     /**
      * 更新项目-新房
+     *
      * @param housingProjectRequest
      * @return
      */
@@ -106,6 +126,7 @@ public class NewHouseHousingProjectRestful extends BaseController {
 
     /**
      * 删除项目-新房
+     *
      * @param housingProjectRequest
      * @return
      */
@@ -124,6 +145,7 @@ public class NewHouseHousingProjectRestful extends BaseController {
 
     /**
      * 发布项目-新房
+     *
      * @param housingProjectRequest
      * @return
      */
@@ -139,6 +161,7 @@ public class NewHouseHousingProjectRestful extends BaseController {
 
     /**
      * 取消发布项目-新房
+     *
      * @param housingProjectRequest
      * @return
      */
@@ -154,6 +177,7 @@ public class NewHouseHousingProjectRestful extends BaseController {
 
     /**
      * 获取某个楼盘的预售证列表
+     *
      * @param newcode
      * @return
      */
@@ -172,6 +196,7 @@ public class NewHouseHousingProjectRestful extends BaseController {
 
     /**
      * 保存预售许可证
+     *
      * @return
      */
     @RequestMapping(value = "/saveSalesLicense", method = RequestMethod.POST)
@@ -182,7 +207,7 @@ public class NewHouseHousingProjectRestful extends BaseController {
         List<SalesLicenseInfo> salesLicenseInfos = new ArrayList<>();
 
         ProjectInfo projectInfo = new ProjectInfo();
-        for (SalesLicenseInfoRequest infoRequest:salesLicenseInfoRequestList) {
+        for (SalesLicenseInfoRequest infoRequest : salesLicenseInfoRequestList) {
 
             projectInfo.setNewcode(infoRequest.getNewcode());
 
@@ -201,6 +226,7 @@ public class NewHouseHousingProjectRestful extends BaseController {
 
     /**
      * 获取某个楼盘的楼盘动态列表
+     *
      * @param newcode
      * @return
      */
@@ -219,6 +245,7 @@ public class NewHouseHousingProjectRestful extends BaseController {
 
     /**
      * 保存楼盘动态信息
+     *
      * @return
      */
     @RequestMapping(value = "/saveDynamicInfo", method = RequestMethod.POST)
@@ -229,7 +256,7 @@ public class NewHouseHousingProjectRestful extends BaseController {
 
         ProjectInfo projectInfo = new ProjectInfo();
 
-        for (DynamicInfoRequest infoRequest:dynamicInfoRequestList) {
+        for (DynamicInfoRequest infoRequest : dynamicInfoRequestList) {
 
             projectInfo.setNewcode(infoRequest.getNewcode());
 
@@ -248,6 +275,7 @@ public class NewHouseHousingProjectRestful extends BaseController {
 
     /**
      * 是否开启楼盘活动
+     *
      * @param projectInfo
      * @return
      */

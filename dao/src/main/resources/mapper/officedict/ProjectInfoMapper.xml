@@ -1588,14 +1588,17 @@
   </update>
 
   <select id="selectProjInfoList" resultMap="BaseResultListMap" parameterType="com.toutiao.officedict.domain.query.HousingProjectQuery">
-    SELECT
-    <include refid="Base_Column_ListSql" />
-    FROM proj_info
-    LEFT JOIN district on district.district_id=proj_info.district_id
-    LEFT JOIN area on area.area_id=proj_info.area_id
-    LEFT JOIN
-    (select newcode as inewcode,count(*) as imgcount from proj_image group by newcode)
-    i  on proj_info.newcode = i.inewcode
+    select * from
+    (SELECT
+    <include refid="Base_Column_ListSql" />,
+    (select count(*) from proj_image where newcode = proj_info.newcode) as imgcount
+    FROM
+    proj_info
+    LEFT JOIN district ON district.district_id = proj_info.district_id
+    LEFT JOIN area ON area.area_id = proj_info.area_id
+    ORDER BY
+    update_time DESC
+    ) proj_info
     WHERE 1=1
     <if test="newcode != null">
       AND  newcode = #{newcode}

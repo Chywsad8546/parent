@@ -40,7 +40,7 @@ public interface AreaMapper extends BaseDao {
     Area selectByAreaName(String areaName);
 
     List<Area> selectByDistrictID(AreaQuery areaQuery);
-    List<AreaWithDistrictID> selectByCityIdAndHouseType(@Param("cityid") Integer cityid, @Param("housetype") Integer housetype);
+    List<AreaWithDistrictID> selectByCityIdAndHouseType(@Param("cityid") Integer cityid, @Param("houseType") Integer housetype);
 
 
 }
